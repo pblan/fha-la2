@@ -96,7 +96,7 @@
         $$
 
         $$
-            f^{-1}(A)  = [0;1] \times [0;20]
+            f^{-1}(A)  = [-1;1] \times [0;20]
         $$
     \end{solution}
 
@@ -144,6 +144,7 @@
             $$
         \end{solution}
 
+        \newpage
         \part
         Wir definieren
         $$
@@ -155,6 +156,40 @@
         $$
         Beweisen Sie: $f$ ist eine Bijektion. Was folgt daraus für die Mächtigkeit von $\N$, $2\N$ und $\Z$?
         \begin{solution}
+            $f(n)$ ist genau dann eine Bijektion, wenn $f$ injektiv und surjektiv ist.
+
+            \emph{Injektivität:} $f(n_1) = f(n_2) \implies n_1 = n_2$
+
+            Für $x \in 2\N + 1$\footnote{$2\N + 1$ bezeichnet hier die Menge aller ungeraden Zahlen $\{2x + 1 \mid x \in \N\}$}, $y \in 2\N$ kann offensichtlich nicht $\Z^- \ni f(x) = f(y) \in \Z^+$ gelten.
+
+            Seien $n_1, n_2 \in 2\N$. Dann gilt:
+            $$
+                \begin{aligned}
+                                 & f(n_1) = f(n_2)               &  & \implies n_1 = n_2                  \\
+                    \equiv \quad & \frac{n_1}{2} = \frac{n_2}{2} &  & \implies n_1 = n_2 \quad \checkmark
+                \end{aligned}
+            $$
+
+            Seien $n_1, n_2 \in 2\N + 1$. Dann gilt:
+            $$
+                \begin{aligned}
+                                 & f(n_1) = f(n_2)                     &  & \implies n_1 = n_2                  \\
+                    \equiv \quad & -\frac{n_1-1}{2} = -\frac{n_2-1}{2} &  & \implies n_1 = n_2 \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Surjektivität:} $\forall m \in \Z, \exists n \in \N : f(n) = m$
+
+            Sei $f(n) = m \in \Z^- \cup \{0\}$. Dann gilt:
+            $$
+                f(n) = m \iff  -\frac{n-1}{2} = m \implies n = -(2m+1) \implies n \in 2\N + 1 \quad \checkmark
+            $$
+
+            Sei $f(n) = m \in \Z^+$. Dann gilt:
+            $$
+                f(n) = m \iff   \frac{n}{2} = m \implies n = 2m \implies n \in 2\N \quad \checkmark
+            $$
+
 
         \end{solution}
     \end{parts}
@@ -304,7 +339,7 @@
                     f(B) = \left\{ \vektor{1, 0}, \vektor{0, 4}, \vektor{-2, 0} \right\}
                 \end{aligned}
             $$
-            $f(b_1) = -2f(b_3) \implies \{f(b_1), f(b_2\} = \{ (1,0), (0, 4) \}$ ist eine Basis von $\im(f)$.\qed
+            $f(b_1) = -2f(b_3) \implies \{f(b_1), f(b_2\} = \{ (1,0), (0, 4) \}$ ist eine Basis von $\im(f) = \R^2$.\qed
         \end{solution}
 
         \newpage
