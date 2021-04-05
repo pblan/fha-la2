@@ -1,0 +1,324 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usepackage{footnote}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\defect}{def}
+\DeclareMathOperator{\rg}{rg}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 01}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 01}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 05. April 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Gegeben ist die Abbildung
+    $$
+        f : \R^2 \ni \vektor{x_1 \\ x_2} \to \vektor{x_1^2 \\ \frac{1}{2}x_2} \in \R^2
+    $$
+    sowie die Menge $A = [-1; 1] \times [0; 10]$.
+
+    Bestimmen Sie $f\left(\vektor{1\\1}\right)$, $f^{-1} \left(\vektor{1\\1}\right)$, $f(A)$, $f^{-1}(A)$.
+    \begin{solution}
+        $$
+            f\left(\vektor{1                  \\1}\right) = \vektor{1 \\ \frac{1}{2}}
+        $$
+
+        $$
+            f^{-1} \left(\vektor{1            \\1}\right) = \left\{ \vektor{-1 \\ 2}, \vektor{1 \\ 2} \right\}
+        $$
+
+        $$
+            f(A)       =  [0;1] \times [0;5]
+        $$
+
+        $$
+            f^{-1}(A)  = [0;1] \times [0;20]
+        $$
+    \end{solution}
+
+    \newpage
+    \question
+    \begin{parts}
+        \part Sei $M \neq \emptyset$ und $\Pot(M)$ die Potenzmenge von $M$.
+        Wir betrachten die Abbildung
+        $$\varphi : M \to \Pot(M), \varphi(m) = \{m\} \text{ für } m \in M$$
+        Beweisen oder widerlegen Sie, dass $\varphi$ injektiv bzw. surjektiv ist.
+        \begin{solution}
+            \emph{Injektivität:} $\varphi(m_1) = \varphi(m_2) \implies m_1 = m_2$
+            $$
+                \begin{aligned}
+                                 & \varphi(m_1) = \varphi(m_2) &  & \implies m_1 = m_2                  \\
+                    \equiv \quad & \{m_1\} = \{m_2\}           &  & \implies m_1 = m_2 \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Surjektivität:} $\forall n \in \Pot(M), \exists m \in M : \varphi(m) = n \iff \forall n \in \Pot(M) : \varphi^{-1}(n) \neq \emptyset$
+            $$
+                M := \{0, 1\} \implies \varphi^{-1}(\{0, 1\}) = \emptyset \quad \lightning
+            $$
+        \end{solution}
+
+        \part
+        Zwei Mengen $M_1$, $M_2$ sind "`gleichmächtig"' im Sinne von Cantor ($\abs{M_1} = \abs{M_2}$), wenn es eine Bijektion zwischen $M_1$ und $M_2$ gibt.
+        Sind die beiden Mengen endlich, impliziert dies, dass $M_1$ und $M_2$ gleich viele Elemente enthalten.
+        Man zeige, dass es im Cantorschen Sinne "`so viele gerade wie natürliche Zahlen gibt"', indem man beweist, dass $\varphi : \N \to 2\N, \varphi(n)=2n$ eine Bijektion ist.
+        \begin{solution}
+            $\varphi : \N \to 2\N, \varphi(n)=2n$ ist genau dann eine Bijektion, wenn $\varphi$ injektiv und surjektiv ist.
+
+            \emph{Injektivität:} $\varphi(x_1) = \varphi(x_2) \implies x_1 = x_2$
+            $$
+                \begin{aligned}
+                                 & \varphi(x_1) = \varphi(x_2) &  & \implies x_1 = x_2                  \\
+                    \equiv \quad & 2x_1 = 2x_2                 &  & \implies x_1 = x_2                  \\
+                    \equiv \quad & x_1 = x_2                   &  & \implies x_1 = x_2 \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Surjektivität:} $\forall y \in 2\N, \exists x \in \N : \varphi(x) = y$
+            $$
+                y \in 2\N \iff y = 2x, x\in\N \iff y = \varphi(x) \quad \checkmark
+            $$
+        \end{solution}
+
+        \part
+        Wir definieren
+        $$
+            f(n) = \begin{cases}
+                -\frac{n-1}{2} & , n \text{ ungerade} \\
+                \frac{n}{2}    & , n \text{ gerade}
+            \end{cases},
+            f : \N \to \Z
+        $$
+        Beweisen Sie: $f$ ist eine Bijektion. Was folgt daraus für die Mächtigkeit von $\N$, $2\N$ und $\Z$?
+        \begin{solution}
+
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Welche der folgenden Abbildungen von $\R^2 \to \R^3$ sind linear?
+    Bestimmen Sie gegebenenfalls den Kern.
+    \begin{parts}
+        \part $f_1(x_1, x_2) = \vektor{-x_2 \\ -x_1 \\ 5x_1-7x_2}$
+        \begin{solution}
+            $f_1$ ist genau dann \emph{linear}, wenn $f_1$ \emph{homogen} und \emph{additiv} ist.
+
+            \emph{Homogenität:} $\forall x \in \R^2, \lambda \in \R: f_1(\lambda  x) = \lambda  f_1(x)$
+            $$
+                \begin{aligned}
+                                 & f_1(\lambda  x)                 &  & = \lambda  f_1(x)        \\
+                    \equiv \quad & f_1(\lambda  x_1, \lambda  x_2) &  & = \lambda  f_1(x_1, x_2) \\
+                    \equiv \quad & \vektor{-\lambda  x_2                                         \\ -\lambda  x_1 \\ 5 \lambda  x_1-7  \lambda  x_2} &&= \lambda  \vektor{-x_2 \\ -x_1 \\ 5x_1-7x_2} \\
+                    \equiv \quad & \lambda  \vektor{-x_2                                         \\ -x_1 \\ 5x_1-7x_2} &&= \lambda  \vektor{-x_2 \\ -x_1 \\ 5x_1-7x_2} \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Additivität:} $\forall x, y \in \R^2: f_1(x + y) = f_1(x) + f_1(y)$
+            $$
+                \begin{aligned}
+                                 & f_1(x + y)                &  & = f_1(x) + f_1(y)               \\
+                    \equiv \quad & f_1(x_1 + y_1, x_2 + y_2) &  & = f_1(x_1, x_2) + f_1(y_1, y_2) \\
+                    \equiv \quad & \vektor{-(x_2 + y_2)                                           \\ -(x_1 + y_1) \\ 5(x_1 + y_1)-7(x_2 + y_2)} &&= \vektor{-x_2 \\ -x_1 \\ 5x_1-7x_2} + \vektor{-y_2 \\ -y_1 \\ 5y_1-7y_2}\\
+                    \equiv \quad & \vektor{-x_2-y_2                                               \\ -x_1 - y_1 \\ 5x_1 + 5y_1-7x_2 - 7y_2} &&= \vektor{-x_2-y_2 \\ -x_1 - y_1 \\ 5x_1 + 5y_1-7x_2 - 7y_2} \quad \checkmark
+                \end{aligned}
+            $$
+
+            Damit ist $f_1$ linear. \qed
+
+            $$
+                \ker(f_1) = f_1^{-1}(0_{\R^3}) = \left\{ \vektor{0 \\ 0} \right\} = \left\{ 0_{\R^2} \right\}
+            $$\qed
+        \end{solution}
+
+        \part $f_2(x_1, x_2) = \vektor{x_1 + 1 \\ x_2 - 1 \\ 3}$
+        \begin{solution}
+            $$
+                f_2(0_{\R^2}) = \vektor{1 \\ -1 \\ 3} \neq 0_{\R^3} \quad \lightning
+            $$
+        \end{solution}
+
+        \newpage
+        \part $f_3(x_1, x_2) = \vektor{x_1  x_2 \\ 0 \\ x_1 + 1}$
+        \begin{solution}
+            $$
+                f_3(0_{\R^2}) = \vektor{0 \\ 0 \\ 1} \neq 0_{\R^3} \quad \lightning
+            $$
+        \end{solution}
+
+        \part $f_4(x_1, x_2) = \vektor{0 \\ x_1 - x_2 \\ x_1 + x_2}$
+        \begin{solution}
+            $f_4$ ist genau dann \emph{linear}, wenn $f_4$ \emph{homogen} und \emph{additiv} ist.
+
+            \emph{Homogenität:} $\forall x \in \R^2, \lambda \in \R: f_4(\lambda  x) = \lambda  f_4(x)$
+            $$
+                \begin{aligned}
+                                 & f_4(\lambda  x)                 &  & = \lambda  f_4(x)        \\
+                    \equiv \quad & f_4(\lambda  x_1, \lambda  x_2) &  & = \lambda  f_4(x_1, x_2) \\
+                    \equiv \quad & \vektor{0                                                     \\ \lambda  x_1 - \lambda  x_2 \\ \lambda  x_1 + \lambda  x_2} &&= \lambda  \vektor{0 \\ x_1 - x_2 \\ x_1 + x_2} \\
+                    \equiv \quad & \lambda  \vektor{0                                            \\ x_1 - x_2 \\ x_1 + x_2} &&= \lambda  \vektor{0 \\ x_1 - x_2 \\ x_1 + x_2} \quad \checkmark
+                \end{aligned}
+            $$
+            \emph{Additivität:} $\forall x, y \in \R^2: f_4(x + y) = f_4(x) + f_4(y)$
+            $$
+                \begin{aligned}
+                                 & f_4(x + y)                &  & = f_4(x) + f_1(y)               \\
+                    \equiv \quad & f_4(x_1 + y_1, x_2 + y_2) &  & = f_4(x_1, x_2) + f_4(y_1, y_2) \\
+                    \equiv \quad & \vektor{0                                                      \\ x_1 + y_1 - x_2 - y_2 \\ x_1 + y_1 + x_2 + y_2} &&= \vektor{0 \\ x_1 - x_2 \\ x_1 + x_2} + \vektor{0 \\ y_1 - y_2 \\ y_1 + y_2}\\
+                    \equiv \quad & \vektor{0                                                      \\ x_1 + y_1 - x_2 - y_2 \\ x_1 + y_1 + x_2 + y_2} &&= \vektor{0 \\ x_1 + y_1 - x_2 - y_2 \\ x_1 + y_1 + x_2 + y_2} \quad \checkmark
+                \end{aligned}
+            $$
+
+            Damit ist $f_4$ linear. \qed
+
+            $$
+                \ker(f_4) = f_4^{-1}(0_{\R^3}) =\footnote{$x_1 - x_2 = x_1 + x_2 = 0 \implies x_1 = x_2 = 0$} \left\{ \vektor{0 \\ 0} \right\} = \left\{ 0_{\R^2} \right\}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Gegeben sei die Abbildung $f : \R^3 \to \R^2$ mit $f(x_1, x_2, x_3) = (x_1-2x_3, 4x_2)$
+    \begin{parts}
+        \part
+        Zeigen Sie: $f$ ist linear.
+        \begin{solution}
+            $f$ ist genau dann \emph{linear}, wenn $f$ \emph{homogen} und \emph{additiv} ist.
+
+            \emph{Homogenität:} $\forall x \in \R^3, \lambda \in \R: f(\lambda  x) = \lambda  f(x)$
+            $$
+                \begin{aligned}
+                                 & f(\lambda  x)                                  &  & = \lambda  f(x)                              \\
+                    \equiv \quad & f(\lambda  x_1, \lambda  x_2, \lambda  x_3)    &  & = \lambda  f(x_1, x_2, x_3)                  \\
+                    \equiv \quad & (\lambda  x_1-2  \lambda  x_3, 4 \lambda  x_2) &  & = \lambda  (x_1-2x_3, 4x_2)                  \\
+                    \equiv \quad & \lambda  (x_1-2x_3, 4x_2)                      &  & = \lambda  (x_1-2x_3, 4x_2) \quad \checkmark
+                \end{aligned}
+            $$
+            \emph{Additivität:} $\forall x, y \in \R^3: f(x + y) = f(x) + f_4(y)$
+            $$
+                \begin{aligned}
+                                 & f(x + y)                                 &  & = f(x) + f(y)                                               \\
+                    \equiv \quad & f(x_1 + y_1, x_2 + y_2, x_3 + y_3)       &  & = f(x_1, x_2, x_3) + f(y_1, y_2, y_3)                       \\
+                    \equiv \quad & (x_1 + y_1-2(x_3 + y_3), 4(x_2 + y_2))   &  & = (x_1-2x_3, 4x_2) + (y_1-2y_3, 4y_2)                       \\
+                    \equiv \quad & (x_1 + y_1-2 x_3 -2  y_3, 4 x_2 +4  y_2) &  & = (x_1 + y_1-2 x_3 -2  y_3, 4 x_2 +4  y_2) \quad \checkmark
+                \end{aligned}
+            $$
+
+            Damit ist $f$ linear. \qed
+        \end{solution}
+
+        \part
+        Bestimmen Sie den Kern von $f$ und geben Sie $\dim(\ker(f))$ an.
+        \begin{solution}
+            $$
+                f(x_1, x_2, x_3) = 0 \iff
+                \begin{pmatrix}[ccc|c]
+                    1 & 0 & -2 & 0 \\
+                    0 & 4 & 0  & 0
+                \end{pmatrix}
+                \implies x_2 = 0 \land x_1 = 2x_3
+            $$
+            Daraus folgt:
+            $$
+                \ker(f) = f^{-1}(0) = \left\{ (2\lambda, 0, \lambda) \mid \lambda \in \R \right\} \implies \defect(f) = \dim(\ker(f)) = 1
+            $$\qed
+        \end{solution}
+
+        \part
+        Berechnen Sie die $\dim(\im(f))$ bzw. $\rg(f)$ und bestimmen Sie $\im(f)$.
+        \begin{solution}
+            Nach dem Rangsatz gilt:
+            $$
+                \dim \R^3 = \defect(f) + \rg(f) \implies \rg(f) = 2
+            $$
+
+            Sei $B = \{b_1, b_2, b_3\} = \left\{ (1, 0, 0), (0, 1, 0), (0, 0, 1) \right\}$ eine Basis des $\R^3$.
+            Dann ist $f(B)$ ein Erzeugendensystem von $\im(f)$ (wenn $f$ isomorph ist, dann sogar eine Basis).
+            $$
+                \begin{aligned}
+                    f(B) = \left\{ \vektor{1, 0}, \vektor{0, 4}, \vektor{-2, 0} \right\}
+                \end{aligned}
+            $$
+            $f(b_1) = -2f(b_3) \implies \{f(b_1), f(b_2\} = \{ (1,0), (0, 4) \}$ ist eine Basis von $\im(f)$.\qed
+        \end{solution}
+
+        \newpage
+        \part
+        Ist die Abbildung $f$ injektiv oder surjektiv?
+        \begin{solution}
+            $$
+                \ker(f)\neq \{0_{\R^3}\} \implies f \text{ ist nicht injektiv}
+            $$
+
+            $$
+                \rg(f) = \dim(\R^2) \iff f \text{ ist surjektiv}
+            $$\qed
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}
