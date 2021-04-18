@@ -1,0 +1,248 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usepackage{footnote}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\defect}{def}
+\DeclareMathOperator{\rg}{rg}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 02}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 02}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 11. April 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{3}
+    \question
+    Zeigen Sie welche der folgenden Abbildungen injektiv, surjektiv oder bijektiv sind.
+    Wie muss ggf. der Definitionsbereich bzw. Bildbereich geändert werden, damit die Abbildung bijektiv wird?
+
+    \begin{parts}
+        \part
+        $f : \R \to \R, x \to x^2 - x - 2$
+        \begin{solution}
+            \emph{Injektivität:} $f(x_1) = f(x_2) \implies x_1 = x_2$
+            $$
+                f\left(0\right) = f\left(1\right) = -2 \quad \lightning
+            $$
+
+            \emph{Surjektivität:} $\forall y \in \R, \exists x \in \R : f(x) = y \iff \forall y \in \R : f^{-1}(y) \neq \emptyset$
+            $$
+                f^{-1}(-4) = \emptyset \quad \lightning
+            $$
+
+            Wir wissen, dass es sich hier um eine Parabel handelt.
+
+            Damit die Funktion nun bijektiv wird, benötigen wir den Scheitelpunkt der Parabel
+            $$
+                x_S = -\frac{p}{2} = \frac{1}{2} \implies y_S = f(x_S) = -\frac{9}{4}.
+            $$
+
+            Schrenken wir nun den Definitionsbereich auf $\R_{\geq x_S} = \R_{\geq \frac{1}{2}}$ (Injektivität) und den Wertebereich auf $\R_{\geq y_S} = \R_{\geq -\frac{9}{4}}$ (Surjektivität) ein, dann ist $f$ bijektiv.\qed
+        \end{solution}
+
+        \part
+        $g : \R \to \R, x \to x^3 - x$
+        \begin{solution}
+            \emph{Injektivität:} $g(x_1) = g(x_2) \implies x_1 = x_2$
+            $$
+                g\left(0\right) = g\left(1\right) = 0 \quad \lightning
+            $$
+
+            \emph{Surjektivität:} $\forall y \in \R, \exists x \in \R : g(x) = y \iff \forall y \in \R : g^{-1}(y) \neq \emptyset$ gilt offensichtlich.
+
+            Schrenken wir den Definitionsbereich auf $\R_{\geq 1}$ und den Wertebereich auf $\R_{\geq f(1)} = \R_{\geq 0}$ ein, dann ist $g$ insgesamt bijektiv.\qed
+        \end{solution}
+
+        \newpage
+
+        \part
+        $f : \R^2 \to \R^2, \vektor{x \\ y} \to \vektor{2y \\ x-2}$
+        \begin{solution}
+            \emph{Injektivität:} $f\left(\vektor{x_1 \\ y_1}\right) = f\left(\vektor{x_2 \\ y_2}\right) \implies \vektor{x_1 \\ y_1} = \vektor{x_2 \\ y_2}$
+            $$
+                \begin{aligned}
+                                 & f\left(\vektor{x_1 \\ y_1}\right) = f\left(\vektor{x_2 \\ y_2}\right) && \implies \vektor{x_1 \\ y_1} = \vektor{x_2 \\ y_2}            \\
+                    \equiv \quad & \vektor{2y_1       \\ x_1-2} = \vektor{2y_2 \\ x_2-2}           &  & \implies \vektor{x_1 \\ y_1} = \vektor{x_2 \\ y_2} \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Surjektivität:} $\forall y \in \R^2, \exists x \in \R^2 : f\left(x\right) = y \iff \forall y \in \R^2 : f^{-1}\left(y\right) \neq \emptyset$
+
+            Mit der (wohldefinierten) Umkehrfunktion
+            $$
+                f^{-1} : \R^2 \to \R^2, \vektor{y_1 \\ y_2} \to \vektor{y_2 + 2 \\ \frac{y_1}{2}}
+            $$
+            gilt die Surjektivität offensichtlich.
+
+            Damit ist $f$ bereits bijektiv.\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+
+    \question
+    Wir betrachten $\mathcal{C}[0, 1]$, die Menge der stetigen Funktionen auf $[0, 1]$.
+    \begin{parts}
+        \part
+        Zeigen Sie: Die Auswertung einer stetigen Funktion in einem festen Punkt $a \in [0, 1]$, d.h. die Abbildung
+        $$
+            \varphi_a : \mathcal{C}[0, 1] \to \R, \varphi_a(f) = f(a)
+        $$
+        ist linear.
+        \begin{solution}
+            $\varphi_a$ ist genau dann \emph{linear}, wenn $\varphi_a$ \emph{homogen} und \emph{additiv} ist.
+
+            \emph{Homogenität:} $\forall f \in \mathcal{C}[0, 1], \lambda \in \R: \varphi_a(\lambda  f) = \lambda  \varphi_a(f)$
+            $$
+                \begin{aligned}
+                                 & \varphi_a(\lambda  f) &  & = \lambda  \varphi_a(f)         \\
+                    \equiv \quad & \lambda f(a)          &  & = \lambda f(a) \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Additivität:} $\forall f, g \in \mathcal{C}[0, 1]: \varphi_a(f + g) = \varphi_a(f) + \varphi_a(g)$
+            $$
+                \begin{aligned}
+                                 & \varphi_a(f + g) &  & = \varphi_a(f) + \varphi_a(g)  \\
+                    \equiv \quad & (f + g)(a)       &  & = f(a) + g(a)                  \\
+                    \equiv \quad & f(a) + g(a)      &  & = f(a) + g(a) \quad \checkmark
+                \end{aligned}
+            $$
+
+            Damit ist $\varphi_a$ linear. \qed
+        \end{solution}
+
+        \part
+        Ist $\varphi_a$ injektiv und surjektiv?
+        \begin{solution}
+            \emph{Injektivität:}
+
+            Aus $\dim \mathcal{C}[0,1] = \infty > \dim \R = 1$ folgt, dass $\varphi_a$ nicht injektiv sein kann.
+
+            \emph{Surjektivität:}
+
+            Sei $f(x) = c$ mit $c\in \R\setminus\{0\}$.
+
+            Dann ist $\dim L(\varphi_a(f)) = 1 = \dim \R$.
+            Damit ist $\varphi_a(f)$ bereits surjektiv, da $\rg \varphi_a(f) = \dim \R$.\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+
+    \question
+    Bilden die folgenden Mengen mit den angegebenen Verknüpfungen Vektorräume?
+
+    \begin{parts}
+        \part
+        $M = \{a \in \R\}$ mit $a + a = a$ und $ka = a, k \in \R$
+        \begin{solution}
+            Offensichtlich sind die Addition und Skalarmultiplikation jeweils als Identitätsabbildung definiert.
+            Außerdem handelt es sich hier um eine einelementige Menge.
+
+            Da jede Verknüpfung von Identitätsabbildungen wieder das Element selbst erzeugen, ist $M$ trivialerweise ein Vektorraum, da jedes Vektorraumaxion jeweils bereits trivial ist.\qed
+        \end{solution}
+
+        \part
+        $M = \left\{  \vektor{x_1 \\ y_1 \\ z_1}, \vektor{x_2 \\ y_2 \\ z_2} \in \R^3\right\}$ mit $\vektor{x_1 \\ y_1 \\ z_1} + \vektor{x_2 \\ y_2 \\ z_2} = \vektor{x_2 \\ y_1 \\ z_1}$, $k\vektor{x_1 \\ y_1 \\ z_1} = \vektor{kx_1 \\ ky_1 \\ kz_1}, k\in\R$
+        \begin{solution}
+            Seien $(1, 0, 0)^T, (0, 0, 0)^T \in M$ gegeben.
+            Es muss gelten:
+            $$
+                \begin{aligned}
+                                 & \vektor{1 \\ 0 \\ 0} + \vektor{0 \\ 0 \\ 0} && = \vektor{0 \\ 0 \\ 0} + \vektor{1 \\ 0 \\ 0} \\
+                    \equiv \quad & \vektor{0 \\ 0 \\ 0} && = \vektor{1 \\ 0 \\ 0} \quad \lightning
+                \end{aligned}
+            $$
+            Damit ist $M$ kein Vektorraum.\qed
+        \end{solution}
+
+        \part
+        $M = \left\{ \vektor{x \\ y} \in \R^2, x\geq 0 \right\}$ mit der Vektoraddition und Skalarmultiplikation
+        \begin{solution}
+            Sei $((x, y)^T)^{-1}\in M$ das zu $(x, y)^T \in M$ inverse Element. Dann gilt offensichtlich:
+            $$
+                \forall \vektor{x \\ y} \in \R^2, x > 0 \not\exists \vektor{x \\ y}^{-1} \in M: \vektor{x \\ y} + \vektor{x \\ y}^{-1} = 0_{\R^2} \quad \lightning
+            $$
+            Damit ist $M$ kein Vektorraum.\qed
+        \end{solution}
+
+        \part
+        $M = \left\{ \vektor{x_1 \\ y_1}, \vektor{x_2 \\ y_2} \in \R^2 \right\}$ mit $\vektor{x_1 \\ y_1} + \vektor{x_2 \\ y_2} = \vektor{x_1 + x_2 + 1 \\ y_1 + y_2 + 1}$, $k\vektor{x_1 \\ y_1} = \vektor{kx_1 \\ ky_1}, k\in\R$
+        \begin{solution}
+            Seien $(1, 1)^T, (2, 2)^T \in M$ und $k=2\in\R$ gegeben.
+            Es muss gelten:
+            $$
+                \begin{aligned}
+                                 & 2 \left( \vektor{1 \\ 1} + \vektor{2 \\ 2} \right) && = 2\vektor{1 \\ 1} + 2\vektor{2 \\ 2} \\
+                    \equiv \quad & 2 \vektor{4        \\ 4}  && = \vektor{2 \\ 2} + \vektor{4 \\ 4} \\
+                    \equiv \quad & \vektor{8          \\ 8}  && = \vektor{7 \\ 7}\quad \lightning
+                \end{aligned}
+            $$
+            Damit ist $M$ kein Vektorraum.\qed
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}

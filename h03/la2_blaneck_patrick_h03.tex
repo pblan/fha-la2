@@ -1,0 +1,372 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usepackage{footnote}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\defect}{def}
+\DeclareMathOperator{\rg}{rg}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 03}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 03}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 18. April 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Gegeben sind die folgenden linearen Abbildungen.
+    Geben Sie die zugehörigen Abbildungsmatrizen an.
+
+    \begin{parts}
+        \part
+        $f_1(x_1, x_2) = \vektor{-x_2 \\ -x_1 \\ 5x_1-7x_2}$
+        \begin{solution}
+            Sei $B_2$ die kanonische Einheitsbasis vom $\R^2$ und $B_3$ die kanonische Einheitsbasis vom $\R^3$.
+
+            Dann ist die Abbildungsmatrix von $f_1$ gegeben mit
+            $$
+                M_{B_3}^{B_2} (f_1) = \vektor{~ \\f(e_1) & f(e_2)\\ ~} = \vektor{0 & -1 \\ -1 & 0 \\ 5 & -7 }
+            $$\qed
+        \end{solution}
+
+        \part
+        $f_2(x_1, x_2) = \vektor{0 \\ x_1 - x_2 \\ x_1 + x_2}$
+        \begin{solution}
+            Sei $B_2$ die kanonische Einheitsbasis vom $\R^2$ und $B_3$ die kanonische Einheitsbasis vom $\R^3$.
+
+            Dann ist die Abbildungsmatrix von $f_2$ gegeben mit
+            $$
+                M_{B_3}^{B_2} (f_2) = \vektor{~ \\f(e_1) & f(e_2)\\ ~} = \vektor{0 & 0\\ 1 & -1 \\ 1 & 1}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+
+    \question
+    Es sei $\lambda \in \R$ und $x \in \R^n$.
+    Der Ausdruck $\lambda x$ kann als lineare Abbildung interpretiert werden.
+
+    Wie lauten in jedem Fall die Matrizen der zugehörigen Abbildungen?
+    \begin{parts}
+        \part
+        $\R^n \to \R^n : x \to \lambda x$
+        \begin{solution}
+            $f_a : \R^n \to \R^n, x \to \lambda x$
+
+            Sei $B$ die kanonische Einheitsbasis vom $\R^n$. Dann ist die Abbildungsmatrix gegeben mit
+            $$
+                M^{B}_{B}(f_a) =  \vektor{~ \\f_a(e_1) & f_a(e_2) & \ldots & f_a(e_{n-1}) & f_a(e_n)\\ ~} = \vektor{\lambda & 0 & \ldots & 0 & 0 \\ 0 & \lambda & \ldots & 0 & 0 \\ \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & \ldots & \lambda & 0 \\ 0 & 0 & \ldots & 0 & \lambda}
+            $$\qed
+        \end{solution}
+
+        \part
+        $\R \to \R^n : \lambda \to \lambda x$
+        \begin{solution}
+            $f_b : \R \to \R^n : \lambda \to \lambda x$
+
+            Sei $B_1$ die kanonische Einheitsbasis von $\R$ ($\{1\}$) und $B_n$ die kanonische Einheitsbasis vom $\R^n$. Dann ist die Abbildungsmatrix gegeben mit
+            $$
+                M^{B_1}_{B_n}(f_b) = \vektor{f_b(e)} = \vektor{x_1 \\ x_2 \\ \vdots \\ x_{n-1} \\ x_n}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+
+    \question
+    Sei
+    $$
+        F\left(\vektor{x\\y\\z}\right) = \vektor{x + y + 2z \\ -3x + z \\ -x + 2y + 5z}
+    $$
+    \begin{parts}
+        \part
+        Geben Sie für obige Abbildung die Abbildungsmatrix an.
+        \begin{solution}
+            $F : \R^3 \to \R^3$
+
+            Sei $B$ die kanonische Einheitsbasis des $\R^3$.
+            Dann ist die Abbildungsmatrix gegeben mit
+            $$
+                M^B_B (F) = \vektor{~ \\F(e_1) & F(e_2) & F(e_3)\\ ~} = \vektor{1 & 1 & 2\\ -3 & 0 & 1\\ -1 & 2 & 5}
+            $$\qed
+        \end{solution}
+
+        \part
+        Bestimmen Sie $\ker(F)$ und dessen Dimension.
+        \begin{solution}
+            %$\det M^B_B = -(-3) \cdot \det \vektor{1 & 2 \\ 2 & 5} - 1\cdot \det \vektor{1 & 1 \\ -1 & 2} = 3 \cdot 1 - 1 \cdot 3 = 0 \implies$ linear abhängig.
+
+            $$
+                M^B_B \cdot \vektor{x \\ y \\ z} = \vektor{1 & 1 & 2\\ -3 & 0 & 1\\ -1 & 2 & 5} \cdot \vektor{x \\ y \\ z} = \vektor{0 \\ 0 \\ 0}
+            $$
+
+            Wir erhalten also ein Lineares Gleichungssystem, dessen Lösung eine Basis von $\ker F$ ist:
+            $$
+                \begin{sysmatrix}{c c c | c}
+                    1 & 1 & 2 & 0 \\ -3 & 0 & 1 & 0 \\ -1 & 2 & 5 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{c c c | c}
+                    1 & 1 & 2 & 0 \\ 0 & 3 & 7 & 0 \\ 0 & 3 & 7 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{c c c | c}
+                    1 & 1 & 2 & 0 \\ 0 & 3 & 7 & 0 \\ 0 & 0 & 0 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{c c c | c}
+                    -3 & 0 & 1 & 0 \\ 0 & \frac{3}{7} & 1 & 0 \\ 0 & 0 & 0 & 0
+                \end{sysmatrix}
+            $$
+
+            Daraus können wir für den Kern folgern, dass $\ker F = \span{\vektor{1 & -7 & 3}^T}$ und $\defect F = 1$. \qed
+        \end{solution}
+
+        \part
+        Bestimmen Sie mit Hilfe der Dimensionsformel $\dim(\im (F))$.
+        \begin{solution}
+            $$
+                \dim \R^3 = \defect F + \rg F \implies \rg F = 2
+            $$\qed
+        \end{solution}
+
+        \part
+        Geben Sie eine Basis des Bildes an.
+        \begin{solution}
+            Wegen $\rg F = 2$ wissen wir, dass wir zwei linear unabhängige Vektoren aus $M^B_B$ auswählen können, die dann automatisch eine Basis von $\im F$ ergeben.
+
+            Wir wählen $\im F = \span{ \left\{ \vektor{1 & 0 & 2}^T, \vektor{2 & 1 & 5}^T\right\} }$.\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+
+    \question
+    Sei $0 \neq v \in \R^n$ gegeben.
+    Die Abbildung
+    $$
+        S : x \to x-2 \frac{\scalarprod{v, x}}{\norm{v}^2}v
+    $$
+    heißt \emph{Spiegelung} an der Hyperebene $\scalarprod{x, v} = 0$.
+    Hierbei stehen $\scalarprod{\cdot, \cdot}$ für das Standardskalarprodukt und $\norm{\cdot}$ für die euklidische Norm.
+
+    \begin{parts}
+        \part
+        Verifizieren Sie durch eine Skizze im Fall $n = 2$, dass es sich in der Tat bei $S$ um eine Spiegelung handelt (Was sind Hyperebenen im Fall $n = 2$?).
+        \begin{solution}
+
+            \begin{center}
+                \begin{tikzpicture}[scale=1]
+                    \begin{axis}[
+                            width=14cm,
+                            unit vector ratio*=1 1 1,
+                            axis lines = middle,
+                            ymin=-5,
+                            ymax=5,
+                            xmin=-5,
+                            xmax=5,
+                            xlabel = $x$,
+                            ylabel = $y$,
+                            xtick distance=1,
+                            ytick distance=1,
+                        ]
+
+                        \draw[black,->,thick] (axis cs:0,0) -- (axis cs:1,4) node [midway, left] {$v$};
+                        \addlegendimage{black,->}
+                        \addlegendentry{$v = (1, 4)^T$}
+
+                        \draw[red,->] (axis cs:0,0) -- (axis cs:2,2) node [midway, above left] {$x_1$};
+                        \addlegendimage{red,->}
+                        \addlegendentry{$x_1 = (2, 2)^T$}
+
+                        \draw[red,->, dotted] (axis cs:0,0) -- (axis cs:14/17,-46/17);
+
+                        \draw[blue,->] (axis cs:0,0) -- (axis cs:-3,4) node [midway, below left] {$x_2$};
+                        \addlegendimage{blue,->}
+                        \addlegendentry{$x_2 = (-3,4)^T$}
+
+                        \draw[blue,->, dotted] (axis cs:0,0) -- (axis cs:-77/17,-36/17);
+
+                        \draw[green,->] (axis cs:0,0) -- (axis cs:4,1) node [midway, above left] {$x_3$};
+                        \addlegendimage{green,->}
+                        \addlegendentry{$x_3 = (4, 1)^T$}
+
+                        \draw[green,->, dotted] (axis cs:0,0) -- (axis cs:52/17,-47/17);
+
+                        \draw[gray,dashed] (axis cs:-4,1) -- (axis cs:4,-1); %node [midway, left] {$v$};
+                        %\addlegendimage{blue,->}
+                        %\addlegendentry{$v = \lambda (1, 4)^T$}
+
+                        %\addplot[gray!50] fill between[of=A and B, soft clip={domain=0.4:9/11}];
+                        %\addplot[gray!50] fill between[of=B and C, soft clip={domain=9/11:1.71429}];
+                        %\draw (axis cs:2,2) node[] {\small{feasible region}};
+                    \end{axis}
+                \end{tikzpicture}
+            \end{center}
+
+            (Hyperebenen im Fall $n=2$ sind offensichtlich Geraden.)
+        \end{solution}
+
+        \newpage
+
+        \part
+        Zeigen Sie: $S$ ist linear.
+        \begin{solution}
+            $S$ ist ein Homomorphismus, genau dann wenn $S$ additiv und homogen ist.
+
+            \emph{Additivität:} $S(x) + S(y) = S(x + y)$
+            $$
+                \begin{aligned}
+                                 & S(x) + S(y)                                                                                         &  & = S(x + y)                                                           \\
+                    \equiv \quad & x-2 \frac{\scalarprod{v, x}}{\norm{v}^2}v + y-2 \frac{\scalarprod{v, y}}{\norm{v}^2}v               &  & = (x+y)-2 \frac{\scalarprod{v, (x+y)}}{\norm{v}^2}v                  \\
+                    \equiv \quad & (x+y)-2 \left( \frac{\scalarprod{v, x}}{\norm{v}^2} + \frac{\scalarprod{v, y}}{\norm{v}^2} \right)v &  & = (x+y)-2 \frac{\scalarprod{v, (x+y)}}{\norm{v}^2}v                  \\
+                    \equiv \quad & (x+y)-2 \frac{\scalarprod{v, (x+y)}}{\norm{v}^2}v                                                   &  & = (x+y)-2 \frac{\scalarprod{v, (x+y)}}{\norm{v}^2}v \quad \checkmark
+                \end{aligned}
+            $$
+
+            \emph{Homogenität:} $\lambda S(x) = S(\lambda x)$
+            $$
+                \begin{aligned}
+                                 & \lambda S(x)                                                   &  & = S(\lambda x)                                                               \\
+                    \equiv \quad & \lambda \left(x-2 \frac{\scalarprod{v, x}}{\norm{v}^2}v\right) &  & = \lambda x-2 \frac{\scalarprod{v,\lambda x}}{\norm{v}^2}v                   \\
+                    \equiv \quad & \lambda x-2 \lambda\frac{\scalarprod{v, x}}{\norm{v}^2}v       &  & = \lambda x-2 \frac{\scalarprod{v,\lambda x}}{\norm{v}^2}v                   \\
+                    \equiv \quad & \lambda x-2 \frac{\scalarprod{v, \lambda x}}{\norm{v}^2}v      &  & = \lambda x-2 \frac{\scalarprod{v,\lambda x}}{\norm{v}^2}v  \quad \checkmark
+                \end{aligned}
+            $$
+
+            Damit ist $S$ ein Homomorphismus.\qed
+        \end{solution}
+
+        \part
+        Das \emph{dyadische Produkt} zweier Vektoren $v, w \in \R^n$ ist definiert als die Matrix $A$ mit den Komponenten $a_{ij} = v_iw_j, 1 \leq i, j \leq n$.
+        Sei weiter $f(x) := Ax$.
+        Zeigen Sie: $\rg(f) = 1$.
+        \begin{solution}
+            Wir visualisieren uns einmal die Matrix $A$ wie folgt:
+            $$
+                A := \vektor{v_1w_1 & v_1w_2  & \ldots & v_1w_{n-1} & v_1w_n \\ v_2w_1 & v_2w_2  & \ldots & v_2w_{n-1} & v_2w_n \\ \vdots & \vdots & \ddots & \vdots & \vdots \\ v_{n-1}w_1 & v_{n-1}w_2  & \ldots & v_{n-1}w_{n-1} & v_{n-1}w_n \\ v_nw_1 & v_nw_2  & \ldots & v_nw_{n-1} & v_nw_n}
+            $$
+
+            Direkt wird ersichtlich, dass gilt
+            $$
+                f(x) = Ax = \vektor{~ \\ x_1w_1v + x_2w_2v + \ldots + x_{n-1}w_{n-1}v + x_nw_nv \\ ~} = \scalarprod{w, x}v
+            $$
+
+            Offensichtlich erzeugt $f$ nur eine Gerade mit Richtungsvektor $v$.
+
+            Damit ist $\rg f = \rg Ax = \dim \span v = 1$.\qed
+        \end{solution}
+
+        \newpage
+
+        \part
+        Bestimmen Sie die Abbildungsmatrix von $S$. Verwenden Sie dazu das dyadische Produkt.
+        \begin{solution}
+            %Es gilt
+            %$$
+            %    f(x) = Ax = \vektor{~ \\ x_1w_1v + x_2w_2v + \ldots + x_{n-1}w_{n-1}v + x_nw_nv \\ ~} = \scalarprod{w, x}v
+            %$$
+
+            Sei $H$ gegeben mit
+            $$
+                H = I - \frac{2(v \oplus v)}{\norm{v}^2}
+            $$
+
+            Dann gilt
+            $$
+                Hx = x- \frac{2(v \oplus v) x}{\norm{v}^2} \overset{(c)}{=} x-2\frac{\scalarprod{v,x}}{\norm{v}^2}v = S(x)
+            $$
+
+            Sei $B$ die kanonische Einheitsbasis vom $\R^n$.
+            Dann ist die Abbildungsmatrix gegeben mit
+            $$
+                M^B_B (S) = \vektor{~ \\ S(e_1) & S(e_2) & \cdots & S(e_{n-1}) & S(e_n) \\ ~} = I -\frac{2}{\norm{v}^2}\vektor{v_1^2 & 0 & \cdots & 0 & 0 \\ 0 & v_2^2 & \cdots & 0 & 0 \\ \vdots & \vdots & \ddots & \vdots & \vdots \\ 0 & 0 & \cdots & v_{n-1}^2 & 0 \\ 0 & 0 & \cdots & 0 & v_n^2}
+            $$
+        \end{solution}
+
+        \part
+        Ist $S$ ein Isomorphismus?
+        Wenn ja, bestimmen Sie die Umkehrabbildung.
+        Andernfalls bestimmen Sie $\ker(S)$ und $\im(S)$.
+        \begin{solution}
+            $S$ ist ein Homomorphismus.
+            Damit ist $S$ nun isomorph, wenn $S$ bijektiv ist.
+
+            Aus der Abbildungsmatrix $M^B_B(S)$ aus (d) können wir direkt sehen, dass $\rg S = n$ gilt.
+            Damit ist $S$ bereits surjektiv und wegen des Rangsatzes mit
+            $$
+                \dim \R^n = \rg S + \defect S \implies \defect S = 0
+            $$
+            ist $S$ injektiv und damit insgesamt bijektiv.
+
+            Da $S(S(x)) = x$ für alle $x \in \R^n$ (nach Definition) ist $S$ bereits involutorisch (selbstinvers).\qed
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}
