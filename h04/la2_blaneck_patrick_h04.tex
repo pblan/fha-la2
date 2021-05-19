@@ -1,0 +1,499 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usepackage{footnote}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[r] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\defect}{def}
+\DeclareMathOperator{\rg}{rg}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 04}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 04}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 25. April 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Bestimmen Sie den Rang der zu den folgenden Matrizen gehörenden linearen Abbildungen:
+    \begin{parts}
+        \part  $A_1 = \vektor{-3 & 2 & 1 \\ -4 & 0 & -2}$
+        \begin{solution}
+            Wir berechnen zuerst den Kern der Matrix:
+            $$
+                \begin{sysmatrix}{ccc|c}
+                    -3 & 2 & 1 & 0 \\
+                    -4 & 0 & -2 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{ccc|c}
+                    0 & 2 & \frac{5}{2} & 0 \\
+                    -4 & 0 & -2 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{ccc|c}
+                    0 & 4 & 5 & 0 \\
+                    2 & 0 & 1 & 0
+                \end{sysmatrix}
+            $$
+
+            Wir erhalten ein Gleichungssystem mit
+            $$
+                \begin{cases}
+                    4x_2 + 5x_3 = 0 \\
+                    2x_1 + x_3 = 0
+                \end{cases}
+            $$
+
+            Sei $x_3 = \lambda$.
+            Dann gilt:
+            $$
+                \begin{cases}
+                    4x_2 + 5\lambda = 0 \\
+                    2x_1 + \lambda = 0
+                \end{cases}
+                \implies
+                \begin{cases}
+                    x_2 = \frac{-5\lambda}{4} \\
+                    x_1 = \frac{-\lambda}{2}
+                \end{cases}
+            $$
+
+            Damit erhalten wir den Kern von $A_1$ mit
+            $$
+                \ker A_1 = \span{\vektor{-2 & -5 & 4}^T} \implies \defect A_2 = 1
+            $$
+            Damit gilt, dass $\rg A_1 = \dim \R^3 - \defect A_1 = 2$.\qed
+
+            \vspace{2em}
+            \textbf{Alternativ:}
+
+            Wir sehen direkt, dass $\left\{\vektor{-3 & -4}^T, \vektor{2 & 0}^T\right\}$ linear unabhängig $\implies \rg A_1 = 2$.\qed
+        \end{solution}
+
+        \newpage
+
+        \part $A_2 = \vektor{1 & 1 & 0 & 2 \\ 4 & 0 & 1 & 3 \\ 6 & 2 & 1 & 7 \\ 1 & 0 & 0 & 1}$
+        \begin{solution}
+            %Es gilt nach dem Laplace'schen Entwicklungssatz:
+            %$$
+            %    \begin{aligned}
+            %        \det A_2 & = -1 \cdot \det \vektor{1               & 0 & 2 \\ 0 & 1 & 3 \\ 2 & 1 & 7} + 1 \cdot \det \vektor{1 & 1 & 0 \\ 4 & 0 & 1 \\ 6 & 2 & 1} \\
+            %                 & = - \left( 1\cdot \vektor{1             & 3     \\ 1 & 7} + 2 \cdot \det \vektor{0 & 1 \\ 2 & 1} \right) + \left( 1\cdot \det \vektor{0 & 1 \\ 2 & 1} - 1\cdot \det \vektor{4 & 1 \\ 6 & 1} \right) \\
+            %                 & = -(4 + 2 \cdot (-2)) + (-2 - (-2)) = 0
+            %    \end{aligned}
+            %$$
+
+            Wir berechnen zuerst den Kern der Matrix:
+            $$
+                \begin{sysmatrix}{cccc|c}
+                    1 & 1 & 0 & 2 & 0 \\
+                    4 & 0 & 1 & 3 & 0 \\
+                    6 & 2 & 1 & 7 & 0 \\
+                    1 & 0 & 0 & 1 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccc|c}
+                    0 & 1 & 0 & 1 & 0 \\
+                    4 & 0 & 1 & 3 & 0 \\
+                    6 & 2 & 1 & 7 & 0 \\
+                    1 & 0 & 0 & 1 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccc|c}
+                    0 & 1 & 0 & 1 & 0 \\
+                    4 & 0 & 1 & 3 & 0 \\
+                    6 & 0 & 1 & 5 & 0 \\
+                    1 & 0 & 0 & 1 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccc|c}
+                    0 & 1 & 0 & 1 & 0 \\
+                    1 & 0 & 1 & 0 & 0 \\
+                    0 & 0 & 0 & 0 & 0 \\
+                    1 & 0 & 0 & 1 & 0
+                \end{sysmatrix}^{(*)}
+            $$
+
+            Wir erhalten ein Gleichungssystem mit
+            $$
+                \begin{cases}
+                    x_2 + x_4 = 0 \\
+                    x_1 + x_3 = 0 \\
+                    x_1 + x_4 = 0
+                \end{cases}
+            $$
+
+            Sei $x_1 = \lambda$.
+            Dann gilt:
+            $$
+                \begin{cases}
+                    x_2 + x_4 = 0     \\
+                    \lambda + x_3 = 0 \\
+                    \lambda + x_4 = 0
+                \end{cases}
+                \implies
+                \begin{cases}
+                    x_2 + x_4 = 0  \\
+                    x_3 = -\lambda \\
+                    x_4 = -\lambda
+                \end{cases}
+                \implies
+                \begin{cases}
+                    x_2 = \lambda  \\
+                    x_3 = -\lambda \\
+                    x_4 = -\lambda
+                \end{cases}
+            $$
+
+            Damit erhalten wir den Kern von $A_2$ mit
+            $$
+                \ker A_2 = \span{\vektor{1 & 1 & -1 & -1}^T} \implies \defect A_2 = 1
+            $$
+
+            Damit gilt, dass $\rg A_2 = \dim \R^4 - \defect A_2 = 3$.\qed
+
+            \vspace{2em}
+            \textbf{Alternativ:}
+
+            Wir sehen direkt, dass in $(*)$ $\left\{\vektor{0 & 1 & 0 & 1}^T, \vektor{1 & 0 & 0 & 0}^T, \vektor{1 & 0 & 0 & 1}^T\right\}$ linear unabhängig $\implies \rg A_2 = 3$.\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+
+    \question
+    Bestimmen Sie den Rang der zu der folgenden Matrix gehörenden linearen Abbildung
+    $$
+        A = \vektor{1 & t & t^2 \\ t & 1 & t \\ t^2 & t & 1}
+    $$
+    in Abhängigkeit von $t$.
+    \begin{solution}
+        Wir bestimmen zuerst die Determinante von $A$:
+        $$
+            \det A = 1 + t^4 + t^4 - t^4 -t^2-t^2 = t^4 - 2t^2 + 1
+        $$
+
+        Wir wissen, dass $\rg A = 3 \iff \det A \neq 0$ (da $A \in \R^{3\times 3}$). Sei $u = t^2$, dann gilt:
+        $$
+            \det A = u^2 - 2u + 1 = 0 \implies u_{1,2} = 1 \pm \sqrt{1 - 1} = 1 \implies t \in \left\{-1, 1\right\} \quad \checkmark
+        $$
+
+        Damit wissen wir, dass $t \in \R \setminus \left\{-1, 1\right\} \implies \rg A = 3$.
+
+        $$
+            t = -1 \implies A = \vektor{1 & -1 & 1 \\ -1 & 1 & -1 \\ 1 & -1 & 1} \implies \rg A = 1
+        $$
+        $$
+            t = 1 \implies A = \vektor{1 & 1 & 1 \\ 1 & 1 & 1 \\ 1 & 1 & 1} \implies \rg A = 1
+        $$
+
+        Damit wissen wir, dass $t \in \left\{-1, 1\right\} \implies \rg A = 1$.\qed
+    \end{solution}
+
+    \newpage
+
+    \question
+    Bestimmen Sie das Bild, den Rang, den Kern und die Dimension des Kerns der linearen Abbildung $f(x) = A\cdot x, f : \R^4 \to \R^4$ mit
+    $$
+        A = \vektor{1 & 3 & 0 & -2 \\ 2 & 1 & 4 & 1 \\ 0 & 1 & -1 & -1 \\ -1 & 0 & -2 & -1}.
+    $$
+    \begin{solution}
+        Wir bestimmen zuerst den Rang der Matrix mithilfe eines Linearen Gleichungssystems:
+        $$
+            \begin{sysmatrix}{cccc|c}
+                1 & 3 & 0 & -2 & 0 \\
+                2 & 1 & 4 & 1 & 0 \\
+                0 & 1 & -1 & -1 & 0 \\
+                -1 & 0 & -2 & -1 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{cccc|c}
+                0 & 3 & -2 & -3 & 0 \\
+                2 & 1 & 4 & 1 & 0 \\
+                0 & 1 & -1 & -1 & 0 \\
+                -1 & 0 & -2 & -1 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{cccc|c}
+                0 & 0 & 1 & 0 & 0 \\
+                2 & 1 & 4 & 1 & 0 \\
+                0 & 1 & -1 & -1 & 0 \\
+                -1 & 0 & -2 & -1 & 0
+            \end{sysmatrix}
+        $$
+        $$
+            \sim
+            \begin{sysmatrix}{cccc|c}
+                0 & 0 & 1 & 0 & 0 \\
+                2 & 1 & 0 & 1 & 0 \\
+                0 & 1 & 0 & -1 & 0 \\
+                -1 & 0 & 0 & -1 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{cccc|c}
+                0 & 0 & 1 & 0 & 0 \\
+                2 & 2 & 0 & 0 & 0 \\
+                0 & 1 & 0 & -1 & 0 \\
+                -1 & 0 & 0 & -1 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{cccc|c}
+                0 & 0 & 1 & 0 & 0 \\
+                1 & 1 & 0 & 0 & 0 \\
+                0 & 1 & 0 & -1 & 0 \\
+                1 & 0 & 0 & 1 & 0
+            \end{sysmatrix}
+        $$
+
+        Wir erhalten ein Gleichungssystem mit
+        $$
+            \begin{cases}
+                x_3 = 0       \\
+                x_1 + x_2 = 0 \\
+                x_2 - x_4 = 0 \\
+                x_1 + x_4 = 0
+            \end{cases}
+        $$
+
+        Sei $x_1 = \lambda$. Dann gilt:
+        $$
+            \begin{cases}
+                x_3 = 0           \\
+                \lambda + x_2 = 0 \\
+                x_2 - x_4 = 0     \\
+                \lambda + x_4 = 0
+            \end{cases}
+            \implies
+            \begin{cases}
+                x_3 = 0        \\
+                x_2 = -\lambda \\
+                x_2 - x_4 = 0  \\
+                x_4 = -\lambda
+            \end{cases}
+            \implies
+            \begin{cases}
+                x_3 = 0        \\
+                x_2 = -\lambda \\
+                0 = 0          \\
+                x_4 = -\lambda
+            \end{cases}
+        $$
+
+        Damit erhalten wir den Kern von $A$ mit
+        $$
+            \ker A = \span{ \left\{\vektor{1 & -1 & 0 & -1}^T \right\}} \implies \defect A = 1.
+        $$
+
+        Damit gilt nach dem Rangsatz auch
+        $$
+            \rg A = \dim \R^4 - \defect A = 3,
+        $$
+        womit wir uns drei linear unabhängige Vektoren aus $A$ auswählen können, die dann eine Basis von $\im A$ ergeben.
+
+        Wir wählen
+        $$
+            \im A = \span{\left\{ \vektor{1 & 2 & 0 & -1}^T, \vektor{3 & 1 & 1 & 0}^T, \vektor{0 & 4 & -1 & -2}^T \right\}}
+        $$\qed
+    \end{solution}
+
+    \newpage
+
+    \question
+    Berechnen Sie in Abhängigkeit von $x$
+    $$
+        A = \vektor{2 & 1 & 2 & 3 \\ 2 & 5 & 4 & 3 \\ 1 & 2 & 5 & x \\ 2 & 1 & 3 & 5}
+    $$
+    \begin{parts}
+        \part
+        den Kern
+        \begin{solution}
+            Wir berechnen zuerst die Determinante von $A$:
+            $$
+                \begin{aligned}
+                    \det A & = \det \vektor{1                   & 2 & 3 \\ 5 & 4 & 3 \\ 1 & 3 & 5} - 2\cdot\det \vektor{2 & 2 & 3 \\ 2 & 4 & 3 \\ 2 & 3 & 5} + 5\cdot\det \vektor{2 & 1 & 3 \\ 2 & 5 & 3 \\ 2 & 1 & 5} - x\cdot\det \vektor{2 & 1 & 2 \\ 2 & 5 & 4 \\ 2 & 1 & 3}\\
+                           & = 0 - 2\cdot8 + 5\cdot16 - x\cdot8         \\                                                                     \\
+                           & = 64-8x
+                \end{aligned}
+            $$
+
+            Wir wissen, dass für $\det A = 64-8x \neq 0 \iff x \neq 8$ die Vektoren in $A$ linear unabhängig sind.
+            Damit gilt $x\in \R\setminus\{8\} \implies \ker A = \{0\}$.
+
+            Für $x=8$ gilt
+            $$
+                A = \vektor{2 & 1 & 2 & 3 \\ 2 & 5 & 4 & 3 \\ 1 & 2 & 5 & 8 \\ 2 & 1 & 3 & 5}.
+            $$
+
+            Wir berechnen nun den Kern von $A$ mithilfe eines Linearen Gleichungssystems:
+            $$
+                \begin{sysmatrix}{cccc|c}
+                    2 & 1 & 2 & 3 & 0 \\
+                    2 & 5 & 4 & 3 & 0 \\
+                    1 & 2 & 5 & 8 & 0 \\
+                    2 & 1 & 3 & 5 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccc|c}
+                    2 & 1 & 2 & 3 & 0 \\
+                    0 & 4 & 2 & 0 & 0 \\
+                    1 & 2 & 5 & 8 & 0 \\
+                    0 & 0 & 1 & 2 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccc|c}
+                    2 & 1 & 2 & 3 & 0 \\
+                    0 & 2 & 1 & 0 & 0 \\
+                    1 & 0 & 4 & 8 & 0 \\
+                    0 & 0 & 1 & 2 & 0
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccc|c}
+                    0 & 1 & 0 & -1 & 0 \\
+                    0 & 2 & 1 & 0 & 0 \\
+                    1 & 0 & 0 & 0 & 0 \\
+                    0 & 0 & 1 & 2 & 0
+                \end{sysmatrix}
+            $$
+
+            Wir erhalten folgendes Gleichungssystem:
+            $$
+                \begin{cases}
+                    x_2 - x_4 = 0  \\
+                    2x_2 + x_3 = 0 \\
+                    x_1 = 0        \\
+                    x_3 + 2x_4 = 0
+                \end{cases}
+            $$
+
+            Sei $x_2 = \lambda$. Dann gilt:
+            $$
+                \begin{cases}
+                    \lambda - x_4 = 0  \\
+                    2\lambda + x_3 = 0 \\
+                    x_1 = 0            \\
+                    x_3 + 2x_4 = 0
+                \end{cases}
+                \implies
+                \begin{cases}
+                    x_4 = \lambda   \\
+                    x_3 = -2\lambda \\
+                    x_1 = 0         \\
+                    x_3 + 2x_4 = 0
+                \end{cases}
+                \implies
+                \begin{cases}
+                    x_4 = \lambda   \\
+                    x_3 = -2\lambda \\
+                    x_1 = 0         \\
+                    0 = 0
+                \end{cases}
+            $$
+
+            Damit erhalten wir den Kern von $A$ mit
+            $$
+                \ker A = \span{\{\vektor{0 & 1 & -2 & 1}\}^T}.
+            $$\qed
+        \end{solution}
+
+        \part
+        die Dimension des Kerns
+        \begin{solution}
+            $$
+                x\in \R\setminus\{8\} \implies \ker A = \{0\} \implies \defect A = 0
+            $$
+            $$
+                x = 8 \implies \ker A  = \span{\{\vektor{0 & 1 & -2 & 1}\}^T} \implies \defect A = 1
+            $$\qed
+        \end{solution}
+
+        \part
+        den Rang
+        \begin{solution}
+            $$
+                x\in \R\setminus\{8\} \implies \defect A = 0 \implies \rg A = \dim \R^4 - \defect A = 4
+            $$
+            $$
+                x = 8 \implies \defect A = 1 \implies \rg A = \dim \R^4 - \defect A = 3
+            $$\qed
+        \end{solution}
+
+        \part
+        das Bild
+        \begin{solution}
+            Wir wissen, dass wir uns immer $\abs{\rg A}$-viele linear unabhängige Vektoren aus $A$ aussuchen dürfen, um eine Basis von $\im A$ zu bilden.
+
+            $$
+                x\in \R\setminus\{8\} \implies\rg A = 4 \implies \span{\left\{ \vektor{2 \\ 2 \\ 1 \\ 2}, \vektor{1 \\ 5 \\ 2 \\ 1}, \vektor{2 \\ 4 \\ 5 \\ 3}, \vektor{3 \\ 3 \\ x \\ 5} \right\}} = \im A
+            $$
+            $$
+                x = 8 \implies  \rg A = 3 \implies \span{\left\{ \vektor{2 \\ 2 \\ 1 \\ 2}, \vektor{1 \\ 5 \\ 2 \\ 1}, \vektor{2 \\ 4 \\ 5 \\ 3} \right\}} = \im A
+            $$\qed
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}

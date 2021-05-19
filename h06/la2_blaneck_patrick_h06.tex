@@ -1,0 +1,527 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[r] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 06}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 06}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 10. Mai 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    $\A  = (e_1, e_2, e_3)$, $\A' = (a'_1, a'_2, a'_3)$ und $\A'' = (a''_1, a''_2, a''_3)$ bilden mit den kanonischen Einheitsvektoren $e_1, e_2, e_3$ sowie
+    $$
+        a'_1 = \vektor{1\\0\\0}, a'_2 = \vektor{1\\1\\0}, a'_3 = \vektor{1\\1\\1}
+    $$
+    bzw.
+    $$
+        a''_1 = \vektor{1\\-1\\0}, a''_2 = \vektor{-1\\0\\1}, a''_3 = \vektor{0\\1\\1}
+    $$
+    jeweils Basen des $\R^3$.
+    \begin{parts}
+        \part
+        Bestimmen Sie die Transformationsmatrizen $T^{\A'}_{\A}$ sowie $T^{\A}_{\A'}$.
+        \begin{solution}
+            Wir wissen:
+            $$
+                \begin{aligned}
+                    T^{\A'}_{\A} & = \A^{-1}\A'                                  \\
+                    T^{\A}_{\A'} & = \A'^{-1}\A = \left(T^{\A'}_{\A}\right)^{-1}
+                \end{aligned}
+            $$
+
+            Wir wissen auch, dass $\A = I \implies \A^{-1} = \A$.
+
+            Berechnen von $\A'^{-1}$:
+            $$
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 1 & 1 & 1 & 0 & 0 \\
+                    0 & 1 & 1 & 0 & 1 & 0 \\
+                    0 & 0 & 1 & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 1 & 0 & 1 & 0 & -1 \\
+                    0 & 1 & 0 & 0 & 1 & -1 \\
+                    0 & 0 & 1 & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 0 & 0 & 1 & -1 & 0 \\
+                    0 & 1 & 0 & 0 & 1 & -1 \\
+                    0 & 0 & 1 & 0 & 0 & 1
+                \end{sysmatrix}
+            $$
+
+            Damit gilt:
+            $$
+                T^{\A'}_{\A} = \A^{-1}\A' = \vektor{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1} \vektor{1 & 1 & 1 \\ 0 & 1 & 1 \\ 0 & 0 & 1} = \vektor{1 & 1 & 1 \\ 0 & 1 & 1 \\ 0 & 0 & 1}
+            $$
+            und
+            $$
+                T^{\A}_{\A'} = \A'^{-1}\A = \vektor{1 & -1 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & 1} \vektor{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1} = \vektor{1 & -1 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & 1}.
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part
+        Bestimmen Sie die Transformationsmatrizen $T^{\A''}_{\A}$ sowie $T^{\A}_{\A''}$.
+        \begin{solution}
+            Wir wissen:
+            $$
+                \begin{aligned}
+                    T^{\A''}_{\A} & = \A^{-1}\A''                                   \\
+                    T^{\A}_{\A''} & = \A''^{-1}\A = \left(T^{\A''}_{\A}\right)^{-1}
+                \end{aligned}
+            $$
+
+            Berechnen von $\A''^{-1}$:
+            $$
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & -1 & 0 & 1 & 0 & 0 \\
+                    -1 & 0 & 1 & 0 & 1 & 0 \\
+                    0 & 1 & 1 & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 0 & 1 & 1 & 0 & 1 \\
+                    -1 & 0 & 1 & 0 & 1 & 0 \\
+                    0 & 1 & 1 & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 0 & 1 & 1 & 0 & 1 \\
+                    0 & 0 & 1 & \nicefrac{1}{2} & \nicefrac{1}{2} & \nicefrac{1}{2} \\
+                    0 & 1 & 1 & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+            $$
+            $$
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 0 & 0 & \nicefrac{1}{2} & -\nicefrac{1}{2} & \nicefrac{1}{2} \\
+                    0 & 1 & 0 & -\nicefrac{1}{2} & -\nicefrac{1}{2} & \nicefrac{1}{2}\\
+                    0 & 0 & 1 & \nicefrac{1}{2} & \nicefrac{1}{2} & \nicefrac{1}{2}
+                \end{sysmatrix}
+                =
+                \frac{1}{2}\vektor{1 & -1 & 1 \\ -1 & -1 & 1 \\ 1 & 1 & 1}
+            $$
+            Damit gilt:
+            $$
+                T^{\A''}_{\A} = \A^{-1}\A'' = \vektor{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1} \vektor{1 & -1 & 0 \\ -1 & 0 & 1 \\ 0 & 1 & 1} = \vektor{1 & -1 & 0 \\ -1 & 0 & 1 \\ 0 & 1 & 1}
+            $$
+            und
+            $$
+                T^{\A}_{\A''} = \A''^{-1}\A = \frac{1}{2}\vektor{1 & -1 & 1 \\ -1 & -1 & 1 \\ 1 & 1 & 1} \vektor{1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1} = \frac{1}{2}\vektor{1 & -1 & 1 \\ -1 & -1 & 1 \\ 1 & 1 & 1}.
+            $$\qed
+        \end{solution}
+        \part
+        Bestimmen Sie die Transformationsmatrizen $T^{\A'}_{\A''}$ sowie $T^{\A''}_{\A'}$.
+        \begin{solution}
+            Wir wissen:
+            $$
+                \begin{aligned}
+                    T^{\A'}_{\A''} & = \A''^{-1}\A'                                    \\
+                    T^{\A''}_{\A'} & = \A'^{-1}\A'' = \left(T^{\A'}_{\A''}\right)^{-1}
+                \end{aligned}
+            $$
+
+            Damit gilt:
+            $$
+                T^{\A'}_{\A''} = \A''^{-1}\A' = \frac{1}{2}\vektor{1 & -1 & 1 \\ -1 & -1 & 1 \\ 1 & 1 & 1} \vektor{1 & 1 & 1 \\ 0 & 1 & 1 \\ 0 & 0 & 1} = \frac{1}{2}\vektor{1 & 0 & 1 \\ -1 & -2 & -1 \\ 1 & 2 & 3}
+            $$
+            und
+            $$
+                T^{\A''}_{\A'} = \A'^{-1}\A'' = \vektor{1 & -1 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & 1} \vektor{1 & -1 & 0 \\ -1 & 0 & 1 \\ 0 & 1 & 1} = \vektor{2 & -1 & -1 \\ -1 & -1 & 0 \\ 0 & 1 & 1}.
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part
+        Bestimmen Sie die Koordinaten des Vektors $\vektor{1 & 0 & 1}^T$ bzgl. der Basen $\A'$ und $\A''$ unter Zuhilfenahme der in der Vorlesung benutzten Schreibweise.
+        \begin{solution}
+            Sei $x = \vektor{1 & 0 & 1}^T$.
+
+            Dann gilt für $x$ bzgl. $\A'$:
+            $$
+                x = K_{\A'}(x) = T^{\A}_{\A'} \cdot K_{\A}(x) = \vektor{1 & -1 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & 1} \vektor{1 \\ 0 \\ 1} = \vektor{1 \\ -1 \\ 1},
+            $$
+            bzw. bzgl. $\A''$:
+            $$
+                x = K_{\A''}(x) = T^{\A}_{\A''} \cdot K_{\A}(x) = \frac{1}{2}\vektor{1 & -1 & 1 \\ -1 & -1 & 1 \\ 1 & 1 & 1} \vektor{1 \\ 0 \\ 1} = \vektor{1 \\ 0 \\ 1}.
+            $$\qed
+        \end{solution}
+
+    \end{parts}
+
+    \newpage
+    \question
+    Die Kavalierprojektion dient dazu, dreidimensionale Objekte zweidimensional darzustellen.
+    Die zugehörige Projektionsmatrix bzgl. der kanonischen Basen $\A$ und $\B$ lautet
+    $$
+        M^\A_\B = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1}.
+    $$
+    Die Vektoren $(a'_1, a'_2, a'_3) = \left(\vektor{1 \\ 0 \\ 0}, \vektor{1 \\ 1 \\ 0}, \vektor{1 \\ 1 \\ 1}\right)$ spannen einen Spat auf und bilden die Basis $\A'$.
+    \begin{parts}
+        \part Zeichnen Sie den Spat.
+        \begin{solution}
+
+            \begin{center}
+                \begin{tikzpicture}[scale=1]
+                    \begin{axis}[
+                            %view={10}{30},
+                            width=20cm,
+                            unit vector ratio*=1 1 1,
+                            axis lines = middle,
+                            ymin=-0.5,
+                            ymax=3,
+                            xmin=-0.5,
+                            xmax=3,
+                            zmin=-0.5,
+                            zmax=2,
+                            xlabel = $x$,
+                            ylabel = $y$,
+                            zlabel = $z$,
+                            xtick distance=1,
+                            ytick distance=1,
+                            ztick distance=1,
+                            xticklabels=\empty,
+                            yticklabels=\empty,
+                            zticklabels=\empty,
+                            disabledatascaling,
+                        ]
+
+                        \node[above left] at (axis cs:0,0,0) {$A$};
+                        \node[below] at (axis cs:1,0,0) {$B$};
+                        \node[below] at (axis cs:2,1,0) {$C$};
+                        \node[above left] at (axis cs:1,1,0) {$D$};
+                        \node[above left] at (axis cs:1,1,1) {$E$};
+                        \node[below right] at (axis cs:2,1,1) {$F$};
+                        \node[above right] at (axis cs:3,2,1) {$G$};
+                        \node[above left] at (axis cs:2,2,1) {$H$};
+
+                        \draw[thick,red,->] (axis cs:0,0,0) -- (axis cs:1,0,0) node [midway, below] {$a'_1$};
+                        \draw[thick,blue,->,dashed] (axis cs:0,0,0) -- (axis cs:1,1,0) node [midway, above left] {$a'_2$};
+                        \draw[thick,purple,->] (axis cs:0,0,0) -- (axis cs:1,1,1) node [midway, below right] {$a'_3$};
+
+
+
+                        \draw (axis cs:1,0,0) -- (axis cs:2,1,0);
+                        \draw[dashed] (axis cs:2,1,0) -- (axis cs:1,1,0);
+                        \draw (axis cs:1,1,1) -- (axis cs:2,1,1) -- (axis cs:3,2,1) -- (axis cs: 2,2,1) -- (axis cs:1,1,1);
+                        \draw (axis cs:1,0,0) -- (axis cs:2,1,1);
+                        \draw (axis cs:2,1,0) -- (axis cs:3,2,1);
+                        \draw[dashed] (axis cs:1,1,0) -- (axis cs:2,2,1);
+
+                    \end{axis}
+
+                \end{tikzpicture}
+            \end{center}
+
+        \end{solution}
+
+        \newpage
+        \part Bestimmen Sie alle acht Eckpunkte des Spates sowie dessen Volumen.
+        \begin{solution}
+            Seien die Eckpunkte $A, B, \ldots, H$ und ihre Ortsvektoren $\vec{a}, \vec{b}, \ldots, \vec{h}$ gegeben mit:
+            $$
+                \begin{aligned}
+                    A: \vec{a} & = \vektor{0                      \\0\\0} \\
+                    B: \vec{b} & = a'_1 = \vektor{1               \\0\\0} \\
+                    C: \vec{c} & = a'_1 + a'_2 = \vektor{1        \\0\\0} + \vektor{1\\1\\0} = \vektor{2\\1\\0}\\
+                    D: \vec{d} & = a'_2 = \vektor{1               \\1\\0} \\
+                    E: \vec{e} & = a'_3 = \vektor{1               \\1\\1} \\
+                    F: \vec{f} & = a'_3 + a'_1 = \vektor{1        \\1\\0} + \vektor{1\\0\\0} = \vektor{2\\1\\1} \\
+                    G: \vec{g} & = a'_3 + a'_1 + a'_2 = \vektor{1 \\1\\1} + \vektor{1 \\0\\0} + \vektor{1\\1\\0} = \vektor{3\\2\\1} \\
+                    H: \vec{h} & = a'_3 + a'_2= \vektor{1         \\1\\1} + \vektor{1\\1\\0} = \vektor{2\\2\\1} \\
+                \end{aligned}
+            $$
+
+            Das Volumen des Spats ist bekanntermaßen gegeben mit:
+            $$
+                V = \scalarprod{a'_1 \times a'_2, a'_3}  = \scalarprod{\vektor{1\\0\\0} \times \vektor{1\\1\\0}, \vektor{1\\1\\1}} = \scalarprod{\vektor{0\\0\\1}, \vektor{1\\1\\1}} = 1
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part Projizieren Sie alle Eckpunkte des Spates mit Hilfe der Kavalierprojektion in die $\R^2$-Ebene.
+        \begin{solution}
+            Sei $x \in \R^3$ ein beliebiger Ortsvektor eines Eckpunktes des Spats.
+
+            Dann ist offensichtlich
+            $$
+                M^\A_\B \cdot K_{\A}(x)
+            $$
+            der projizierte Vektor im $\R^2$.
+
+            Angewandt auf alle Ortsvektoren bedeutet das:
+            $$
+                \begin{aligned}
+                    A': \vec{a'} & = M^\A_\B \cdot K_{\A}(\vec{a}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{0 \\ 0 \\ 0} = \vektor{0 \\ 0} \\
+                    B': \vec{b'} & = M^\A_\B \cdot K_{\A}(\vec{b}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{1 \\ 0 \\ 0} = \vektor{1 \\ 0} \\
+                    C': \vec{c'} & = M^\A_\B \cdot K_{\A}(\vec{c}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{2 \\ 1 \\ 0} = \vektor{2+\nicefrac{\sqrt{3}}{2} \\ \nicefrac{1}{2}} \\
+                    D': \vec{d'} & = M^\A_\B \cdot K_{\A}(\vec{d}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{1 \\ 1 \\ 0} = \vektor{1+\nicefrac{\sqrt{3}}{2} \\ \nicefrac{1}{2}} \\
+                    E': \vec{e'} & = M^\A_\B \cdot K_{\A}(\vec{e}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{1 \\ 1 \\ 1} = \vektor{1+\nicefrac{\sqrt{3}}{2} \\ \nicefrac{3}{2}} \\
+                    F': \vec{f'} & = M^\A_\B \cdot K_{\A}(\vec{f}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{2 \\ 1 \\ 1} = \vektor{2+\nicefrac{\sqrt{3}}{2} \\ \nicefrac{3}{2}} \\
+                    G': \vec{g'} & = M^\A_\B \cdot K_{\A}(\vec{g}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{3 \\ 2 \\ 1} = \vektor{3+\sqrt{3} \\ 2} \\
+                    H': \vec{h'} & = M^\A_\B \cdot K_{\A}(\vec{h}) = \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{2 \\ 2 \\ 1} = \vektor{2+\sqrt{3} \\ 2}
+                \end{aligned}
+            $$
+        \end{solution}
+
+        \newpage
+        \part Neben der kanonischen Basis $\B$ gibt es im $\R^2$ auch noch die Basis $\B' = (b'_1, b'_2)$ mit
+        $$
+            b'_1 = \vektor{1\\0}, b'_2 = \vektor{1\\1}.
+        $$
+        Bestimmen Sie die Abbildungsmatrix $M^{\A'}_{\B'}$ bzgl. der Basen $\A'$ und $\B'$.
+        \begin{solution}
+            Es gilt:
+            $$
+                \begin{aligned}
+                    M^{\A'}_{\B'} & =T^{\B}_{\B'} \cdot M^{\A}_{\B} \cdot T^{\A'}_{\A}                                                         \\
+                                  & = \vektor{1                                        & 1                                                     \\ 0 & 1}^{-1} \cdot \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{1 & 1 & 1 \\ 0 & 1 & 1 \\ 0 & 0 & 1} \\
+                                  & = \vektor{1                                        & -1                                                    \\ 0 & 1} \cdot \vektor{1 & \nicefrac{\sqrt{3}}{2} & 0 \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{1 & 1 & 1 \\ 0 & 1 & 1 \\ 0 & 0 & 1} \\
+                                  & = \vektor{1                                        & \nicefrac{\sqrt{3} - 1}{2} & -1                       \\ 0 & \nicefrac{1}{2} & 1} \cdot \vektor{1 & 1 & 1 \\ 0 & 1 & 1 \\ 0 & 0 & 1} \\
+                                  & = \vektor{1                                        & \nicefrac{\sqrt{3} + 1}{2} & \nicefrac{\sqrt{3}-1}{2} \\ 0 & \nicefrac{1}{2} & \nicefrac{3}{2}}
+                \end{aligned}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Gegeben sei die Basis $\B = (1, x, x^2, x^3)$ der Polynome vom Grad $\leq 3$.
+    Stellen Sie die Transformationsmatrix des Basiswechsels von $\B$ nach $\mathcal{C}$ auf mit
+    $$
+        \mathcal{C} = (1, x-c, (x-c)^2, (x-c)^3), \qquad c\in\R .
+    $$
+    \begin{solution}
+        Es gilt:
+        $$
+            \B = \vektor{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1} \quad \text{und} \quad \mathcal{C} = \vektor{1 & -c & c^2 & -c^3 \\ 0 & 1 & -2c & 3c^2 \\ 0 & 0 & 1 & -3c \\ 0 & 0 & 0 & 1}.
+        $$
+        Auch wissen wir:
+        $$
+            T^\B_\mathcal{C} = \mathcal{C}^{-1} \cdot \B.
+        $$
+        Fehlt uns also noch die Inverse von $\mathcal{C}$:
+        $$
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & -c & c^2 & -c^3 & 1 & 0 & 0 & 0 \\
+                0 & 1 & -2c & 3c^2 & 0 & 1 & 0 & 0  \\
+                0 & 0 & 1 & -3c & 0 & 0 & 1 & 0  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & -c & c^2 & -c^3 & 1 & 0 & 0 & 0 \\
+                0 & 1 & -2c & 3c^2 & 0 & 1 & 0 & 0  \\
+                0 & 0 & 1 & 0 & 0 & 0 & 1 & 3c  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+        $$
+        $$
+            \sim
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & -c & c^2 & -c^3 & 1 & 0 & 0 & 0 \\
+                0 & 1 & -2c & 0 & 0 & 1 & 0 & -3c^2  \\
+                0 & 0 & 1 & 0 & 0 & 0 & 1 & 3c  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & -c & c^2 & -c^3 & 1 & 0 & 0 & 0 \\
+                0 & 1 & 0 & 0 & 0 & 1 & 2c & 3c^2  \\
+                0 & 0 & 1 & 0 & 0 & 0 & 1 & 3c  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+        $$
+        $$
+            \sim
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & -c & c^2 & 0 & 1 & 0 & 0 & c^3 \\
+                0 & 1 & 0 & 0 & 0 & 1 & 2c & 3c^2  \\
+                0 & 0 & 1 & 0 & 0 & 0 & 1 & 3c  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & -c & 0 & 0 & 1 & 0 & -c^2 & -2c^3 \\
+                0 & 1 & 0 & 0 & 0 & 1 & 2c & 3c^2  \\
+                0 & 0 & 1 & 0 & 0 & 0 & 1 & 3c  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+        $$
+        $$
+            \sim
+            \begin{sysmatrix}{rrrr|rrrr}
+                1 & 0 & 0 & 0 & 1 & c & c^2 & c^3 \\
+                0 & 1 & 0 & 0 & 0 & 1 & 2c & 3c^2  \\
+                0 & 0 & 1 & 0 & 0 & 0 & 1 & 3c  \\
+                0 & 0 & 0 & 1 & 0 & 0 & 0 & 1
+            \end{sysmatrix}
+        $$
+
+        Damit gilt schließlich:
+        $$
+            T^\B_\mathcal{C} = \mathcal{C}^{-1} \cdot \B = \vektor{1 & c & c^2 & c^3 \\ 0 & 1 & 2c & 3c^2 \\ 0 & 0 & 1 & 3c \\ 0 & 0 & 0 & 1} \cdot \vektor{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1} = \vektor{1 & c & c^2 & c^3 \\ 0 & 1 & 2c & 3c^2 \\ 0 & 0 & 1 & 3c \\ 0 & 0 & 0 & 1}
+        $$\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Die untenstehende Transformationsmatrix für den $\R^2$ wurde durch eine Drehung, eine Spiegelung an einer Achse und eine Verzerrung (in dieser Reihenfolge) erstellt.
+    Geben Sie durch die drei einzelnen Transformationsmatrizen eine mögliche Lösung für die Zerlegung der Matrix an.
+    $$
+        T = \vektor{-\nicefrac{3\sqrt{3}}{2} & \nicefrac{3}{2} \\ \nicefrac{1}{2} & \nicefrac{\sqrt{3}}{2} }
+    $$
+
+    \emph{Hinweis:} Eine Verzerrung ist von der Form
+    $$
+        \vektor{a & 0 \\ 0 & b}, \quad a,b>0,
+    $$
+    d.h. in $x$-Richtung bzw. $y$-Richtung wird um den Faktor $a$ bzw. $b$ gedehnt oder gestaucht.
+    \begin{solution}
+        Wir wissen, dass eine Drehung/Rotation um den Winkel $\phi$ durch
+        $$
+            R_\phi = \vektor{\cos\phi & -\sin\phi \\ \sin\phi & \cos\phi},
+        $$
+        eine Spiegelung an der $y$-Achse durch
+        $$
+            S_y = \vektor{-1 & 0 \\ 0 & 1}
+        $$
+        und eine Verzerrung um $a$ in $x$-Richtung bzw. $b$ in $y$-Richtung dargestellt werden kann durch
+        $$
+            V_v = \vektor{a & 0 \\ 0 & b} \text{ mit } v = \vektor{a \\ b}.
+        $$
+
+        Wir wissen aus der Aufgabe, dass gilt:
+        $$
+            T = V_v \cdot S_y \cdot R_\phi = \vektor{a & 0 \\ 0 & b} \cdot \vektor{-1 & 0 \\ 0 & 1} \cdot \vektor{\cos\phi & -\sin\phi \\ \sin\phi & \cos\phi}
+        $$
+
+        Wir berechnen:
+        $$
+            \begin{aligned}
+                             & T                                &                 & = V_v \cdot S_y \cdot R \\
+                \equiv \quad & \vektor{-\nicefrac{3\sqrt{3}}{2} & \nicefrac{3}{2}                           \\ \nicefrac{1}{2} & \nicefrac{\sqrt{3}}{2} } && = \vektor{a & 0 \\ 0 & b} \cdot \vektor{-1 & 0 \\ 0 & 1} \cdot \vektor{\cos\phi & -\sin\phi \\ \sin\phi & \cos\phi} \\
+                \equiv \quad & \vektor{-\nicefrac{3\sqrt{3}}{2} & \nicefrac{3}{2}                           \\ \nicefrac{1}{2} & \nicefrac{\sqrt{3}}{2} } && = \vektor{-a & 0 \\ 0 & b} \cdot \vektor{\cos\phi & -\sin\phi \\ \sin\phi & \cos\phi} \\
+                \equiv \quad & \vektor{-\nicefrac{3\sqrt{3}}{2} & \nicefrac{3}{2}                           \\ \nicefrac{1}{2} & \nicefrac{\sqrt{3}}{2} } && = \vektor{-a \cos\phi & a\sin\phi \\ b\sin\phi & b\cos\phi}
+            \end{aligned}
+        $$
+        Wir erhalten die Gleichungen\footnote{Sei $\phi \notin \left\{ k \pi \mid k \in \frac{\Z}{2}\right\}$}:
+        $$
+            \begin{cases}
+                -a\cos\phi & = -\frac{3\sqrt{3}}{2} \\
+                a\sin\phi  & = \frac{3}{2}          \\
+                b\sin\phi  & = \frac{1}{2}          \\
+                b\cos\phi  & = \frac{\sqrt{3}}{2}
+            \end{cases}
+            \implies
+            \begin{cases}
+                a & = \frac{3\sqrt{3}}{2\cos\phi} = \frac{3}{2\sin\phi} \\
+                b & = \frac{1}{2\sin\phi} = \frac{\sqrt{3}}{2\cos\phi}
+            \end{cases}
+        $$
+
+        Wir erhalten weiterhin:\footnote{Analog für die andere Gleichung.}
+        $$
+            \begin{aligned}
+                               & \frac{3\sqrt{3}}{2\cos\phi} &  & = \frac{3}{2\sin\phi}        \\
+                \equiv \quad   & \frac{\sin\phi}{\cos\phi}   &  & = \frac{1}{\sqrt{3}}         \\
+                \equiv \quad   & \tan\phi                    &  & = \frac{1}{\sqrt{3}}         \\
+                \implies \quad & \phi                        &  & = \arctan \frac{1}{\sqrt{3}} \\
+                \equiv \quad   & \phi                        &  & = \frac{\pi}{6}
+            \end{aligned}
+        $$
+
+        Einsetzen für $a$ bzw. $b$ ergibt:
+        $$
+            \begin{aligned}
+                a & = \frac{3\sqrt{3}}{2\cos\phi} \implies a = 3 \\
+                b & = \frac{1}{2\sin\phi} \implies b = 1
+            \end{aligned}
+        $$
+
+        Damit ergibt sich schließlich eine Zerlegung für $T$ mit $v = \vektor{3\\1}$ und $\phi = \frac{\pi}{6}$ mit:
+        $$
+            T = V_{v} \cdot S_y \cdot R_\phi = \vektor{3 & 0 \\ 0 & 1} \cdot \vektor{-1 & 0 \\ 0 & 1} \cdot \vektor{\frac{\sqrt{3}}{2} & -\frac{1}{2} \\ \frac{1}{2} & \frac{\sqrt{3}}{2}}.
+        $$\qed
+    \end{solution}
+\end{questions}
+\end{document}

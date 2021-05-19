@@ -1,0 +1,515 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[r] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 05}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 05}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 03. Mai 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Gegeben sind die Matrizen
+    $$
+        A = \vektor{10 & 2 & 3 \\ 8 & 5 & 3 \\ 2 & 3 & 2}, \quad
+        B = \vektor{7 & 3 \\ 1 & 5}, \quad
+        C = \vektor{4 & 5 \\ 2 & 7 \\ 3 & 6}
+    $$
+    Welche der folgenden Matrixprodukte sind wohldefiniert?
+
+    Begründen Sie Ihre Aussagen und bestimmen Sie gegebenenfalls das Produkt der Matrizen.
+    \begin{parts}
+        \part
+        $A\cdot B$
+        \begin{solution}
+            $$
+                A\cdot B = \overset{3\times \pmb{3}}{\vektor{10 & 2 & 3 \\ 8 & 5 & 3 \\ 2 & 3 & 2}} \overset{\pmb{2}\times 2}{\vektor{7 & 3 \\ 1 & 5}} \quad \lightning \quad (3 \neq 2)
+            $$
+        \end{solution}
+
+        \part
+        $C\cdot B$
+        \begin{solution}
+            $$
+                C\cdot B = \overset{3\times \pmb{2}}{\vektor{4 & 5 \\ 2 & 7 \\ 3 & 6}} \overset{\pmb{2}\times 2}{\vektor{7 & 3 \\ 1 & 5}} = \vektor{33 & 37 \\ 21 & 41 \\ 27 & 39}
+            $$
+        \end{solution}
+
+        \part
+        $A\cdot C$
+        \begin{solution}
+            $$
+                A\cdot C = \overset{3\times \pmb{3}}{\vektor{10 & 2 & 3 \\ 8 & 5 & 3 \\ 2 & 3 & 2}} \overset{\pmb{3}\times 2}{\vektor{4 & 5 \\ 2 & 7 \\ 3 & 6}} = \vektor{53 & 82 \\ 51 & 93 \\ 20 & 43}
+            $$
+        \end{solution}
+
+        \newpage
+        \part
+        $A\cdot B \cdot C$
+        \begin{solution}
+            $$
+                A\cdot B \cdot C = \overset{3\times \pmb{3}}{\vektor{10 & 2 & 3 \\ 8 & 5 & 3 \\ 2 & 3 & 2}} \overset{\pmb{2}\times \pmb{2}}{\vektor{7 & 3 \\ 1 & 5}} \overset{\pmb{3}\times 2}{\vektor{4 & 5 \\ 2 & 7 \\ 3 & 6}} \quad \lightning \quad (3\neq 2 \land 2 \neq 3)
+            $$
+        \end{solution}
+
+        \part
+        $A\cdot C \cdot B$
+        \begin{solution}
+            $$
+                A\cdot C \cdot B = \overset{3\times \pmb{3}}{\vektor{10 & 2 & 3 \\ 8 & 5 & 3 \\ 2 & 3 & 2}} \overset{\pmb{3}\times \pmb{2}}{\vektor{4 & 5 \\ 2 & 7 \\ 3 & 6}} \overset{\pmb{2}\times 2}{\vektor{7 & 3 \\ 1 & 5}} = \vektor{53 & 82 \\ 51 & 93 \\ 20 & 43} \vektor{7 & 3 \\ 1 & 5} = \vektor{453 & 569 \\ 450 & 618 \\ 183 & 275}
+            $$
+        \end{solution}
+
+        \part
+        $C\cdot B \cdot A$
+        \begin{solution}
+            $$
+                C\cdot B \cdot A = \overset{3\times \pmb{2}}{\vektor{4 & 5 \\ 2 & 7 \\ 3 & 6}} \overset{\pmb{2}\times \pmb{2}}{\vektor{7 & 3 \\ 1 & 5}} \overset{\pmb{3}\times 3}{\vektor{10 & 2 & 3 \\ 8 & 5 & 3 \\ 2 & 3 & 2}} \quad \lightning \quad (2 \neq 3)
+            $$
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Es sind folgende Abbildungsmatrizen gegeben:
+    $$
+        A_\phi = \vektor{\cos(\phi) & -\sin(\phi) \\ \sin(\phi) & \cos(\phi)} \quad \text{und} \quad B = \vektor{1 & 0 \\ 0 & -1}
+    $$
+    Durch Matrix $A_\phi$ wird ein Vektor im $\R^2$ um den Winkel $\phi$ gedreht, die Matrix $B$ spiegelt selbigen an der $x$-Achse.
+    \begin{parts}
+        \part
+        Veranschaulichen Sie die Behauptungen am Beispiel des Vektors $x_0 = \vektor{2 \\ 1}$ und $\phi = \frac{\pi}{2}$, wobei $A = A_\frac{\pi}{2}$, indem Sie den Vektor selber und dessen Abbildungen $f_A(x_0) = A\cdot x_0$ und $f_B(x_0) = B \cdot x_0$ in ein Koordinatensystem einzeichnen.
+        \begin{solution}
+            \begin{center}
+                \begin{tikzpicture}[scale=1]
+                    \begin{axis}[
+                            width=14cm,
+                            unit vector ratio*=1 1 1,
+                            axis lines = middle,
+                            ymin=-4,
+                            ymax=4,
+                            xmin=-4,
+                            xmax=4,
+                            xlabel = $x$,
+                            ylabel = $y$,
+                            xtick distance=1,
+                            ytick distance=1,
+                            disabledatascaling,
+                        ]
+
+                        \draw[black,->] (axis cs:0,0) -- (axis cs:2,1) node [midway, above left] {$x_0$};
+                        \addlegendimage{black,->}
+                        \addlegendentry{$x_0 = (2, 1)^T$}
+
+                        \draw[red,->] (axis cs:0,0) -- (axis cs:-1,2);
+                        \addlegendimage{red,->}
+                        \addlegendentry{$f_A(x_0) = (-1,2)^T$}
+
+                        \draw[blue,->] (axis cs:0,0) -- (axis cs:2,-1);
+                        \addlegendimage{blue,->}
+                        \addlegendentry{$f_B(x_0) = (2,-1)^T$}
+
+                        \draw[thin, blue,dotted] (axis cs:2,1) -- (axis cs:2,-1);
+
+                        \draw [thin,red, dotted,->] (axis cs:0.5,0.25) arc [radius=0.55,start angle=26.56,end angle=116.56];
+                    \end{axis}
+
+                \end{tikzpicture}
+            \end{center}
+        \end{solution}
+
+        \newpage
+        \part
+        Zeichnen Sie auch die hintereinander geschalteten Abbildungen $f_{AB}(x) = A\cdot B \cdot x$ und $f_{BA}(x) = B\cdot A \cdot x$ von $x_0$ ein.
+        \begin{solution}
+            \begin{center}
+                \begin{tikzpicture}[scale=1]
+                    \begin{axis}[
+                            width=14cm,
+                            unit vector ratio*=1 1 1,
+                            axis lines = middle,
+                            ymin=-4,
+                            ymax=4,
+                            xmin=-4,
+                            xmax=4,
+                            xlabel = $x$,
+                            ylabel = $y$,
+                            xtick distance=1,
+                            ytick distance=1,
+                            disabledatascaling,
+                        ]
+
+                        \draw[black,->] (axis cs:0,0) -- (axis cs:2,1) node [midway, above left] {$x_0$};
+                        \addlegendimage{black,->}
+                        \addlegendentry{$x_0 = (2, 1)^T$}
+
+                        \draw[blue,->] (axis cs:0,0) -- (axis cs:-1,-2);
+                        \addlegendimage{blue,->}
+                        \addlegendentry{$f_{BA}(x_0) = (-1,-2)^T$}
+
+                        \draw[thin, blue,dotted] (axis cs:-1,2) -- (axis cs:-1,-2);
+
+                        \draw[red,->] (axis cs:0,0) -- (axis cs:1,2);
+                        \addlegendimage{red,->}
+                        \addlegendentry{$f_{AB}(x_0) = (1,2)^T$}
+
+                        \draw[very thin, dashed,->] (axis cs:0,0) -- (axis cs:2,-1);
+                        \draw[very thin, dashed,->] (axis cs:0,0) -- (axis cs:-1,2);
+
+                        \draw [red, dotted,->] (axis cs:0.5,-0.25) arc [radius=0.55,start angle=-26.57,end angle=63.43];
+
+                        %\draw[very thin,dotted] (axis cs:2,1) -- (axis cs:2,-1);
+                        %\draw [very thin,dotted] (axis cs:0.5,0.25) arc [radius=0.55,start angle=26.56,end angle=116.56];
+                    \end{axis}
+
+                \end{tikzpicture}
+            \end{center}
+        \end{solution}
+
+        \part
+        Wie sehen die Umkehrabbildungen zu $f_A(x)$ und $f_B(x)$ aus?
+        Stellen Sie dazu die Abbildungsmatrizen $A^{-1}$ und $B^{-1}$ auf.
+        \begin{solution}
+            Wir wissen, dass die generelle Inverse von $A_\phi$ einen Vektor um den Winkel $-\phi$ drehen muss.
+            Also gilt:
+            $$
+                A_\phi^{-1} = A_{-\phi} = \vektor{\cos(-\phi) & -\sin(-\phi) \\ \sin(-\phi) & \cos(-\phi)} = \vektor{\cos(\phi) & \sin(\phi) \\ -\sin(\phi) & \cos(\phi)}
+            $$
+            Für den Fall $\phi = \frac{\pi}{2}$ gilt dann:
+            $$
+                A^{-1}_\frac{\pi}{2} = \vektor{0 & 1 \\ -1 & 0}
+            $$
+            Da zweimaliges Spiegeln eines Vektors an einer beliebigen Achse wieder den Vektor selbst ergibt, gilt aus dem Kontext bereits, dass $B^{-1} = B$.\qed
+        \end{solution}
+
+        \newpage
+        \part
+        Bestimmen Sie die zugehörigen Abbildungsmatrizen zu den Umkehrabbildungen $f^{-1}_{AB}$ und $f^{-1}_{BA}$.
+        \begin{solution}
+            Wir wissen, dass die Abbildungsmatrizen von $f_{AB}$ und $f_{BA}$ jeweils $AB$ bzw. $BA$ sind.
+
+            Damit gilt auch:
+            $$
+                \begin{aligned}
+                    f^{-1}_{AB} & = (AB)^{-1} = B^{-1}A^{-1} = BA^{-1} = \vektor{1 & 0 \\ 0 & -1} \vektor{0 & 1 \\ -1 & 0} = \vektor{0 & 1 \\ 1 & 0}\\
+                    f^{-1}_{AB} & = (BA)^{-1} = A^{-1}B^{-1} = A^{-1}B = \vektor{0 & 1 \\ -1 & 0} \vektor{1 & 0 \\ 0 & -1} = \vektor{0 & -1 \\ -1 & 0}
+                \end{aligned}
+            $$\qed
+        \end{solution}
+
+        \part
+        Verifizieren Sie die Ergebnisse aus (b) und (d), indem Sie die Vektoren $f_{AB}(x_0)$ und $f_{BA}(x_0)$, die Sie zeichnerisch bei (b) erhalten haben mit den Matrizen aus (d) multiplizieren.
+        \begin{solution}
+            $$
+                \begin{aligned}
+                    f^{-1}_{AB} (f_{AB}(x_0)) = BA^{-1} f_{AB}(x_0) =  \vektor{0 & 1  \\ 1 & 0} \vektor{1 \\ 2} = \vektor{2 \\ 1} = x_0 \quad \checkmark \\
+                    f^{-1}_{BA} (f_{BA}(x_0)) = A^{-1}B f_{AB}(x_0) =  \vektor{0 & -1 \\ -1 & 0} \vektor{-1 \\ -2} = \vektor{2 \\ 1} = x_0 \quad \checkmark
+                \end{aligned}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Berechnen Sie mit Hilfe des Gauß-Algorithmus die Inverse zu folgenden Matrizen:
+    \begin{parts}
+        \part
+        $\vektor{0 & 0 & 2 & 0 \\ 1 & 0 & 0 & 1 \\ 0 & -1 & -3 & 0 \\ 2 & 1 & 5 & 3}$
+        \begin{solution}
+            $$
+                \begin{sysmatrix}{cccr|cccr}
+                    0 & 0 & 2 & 0   & 1 & 0 & 0 & 0 \\
+                    1 & 0 & 0 & 1   & 0 & 1 & 0 & 0 \\
+                    0 & -1 & -3 & 0 & 0 & 0 & 1 & 0 \\
+                    2 & 1 & 5 & 3   & 0 & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccr|cccr}
+                    0 & 0 & 1 & 0   & \nicefrac{1}{2} & 0 & 0 & 0 \\
+                    1 & 0 & 0 & 1   & 0 & 1 & 0 & 0 \\
+                    0 & -1 & 0 & 0 & \nicefrac{3}{2} & 0 & 1 & 0 \\
+                    2 & 1 & 0 & 3   & -\nicefrac{5}{2} & 0 & 0 & 1
+                \end{sysmatrix}
+            $$
+            $$
+                \sim
+                \begin{sysmatrix}{cccr|cccr}
+                    0 & 0 & 1 & 0   & \nicefrac{1}{2} & 0 & 0 & 0 \\
+                    1 & 0 & 0 & 1   & 0 & 1 & 0 & 0 \\
+                    0 & 1 & 0 & 0 & -\nicefrac{3}{2} & 0 & -1 & 0 \\
+                    0 & 1 & 0 & 1   & -\nicefrac{5}{2} & -2 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccr|cccr}
+                    0 & 0 & 1 & 0   & \nicefrac{1}{2} & 0 & 0 & 0 \\
+                    1 & 0 & 0 & 1   & 0 & 1 & 0 & 0 \\
+                    0 & 1 & 0 & 0 & -\nicefrac{3}{2} & 0 & -1 & 0 \\
+                    0 & 0 & 0 & 1   & -1 & -2 & 1 & 1
+                \end{sysmatrix}
+            $$
+            $$
+                \sim
+                \begin{sysmatrix}{cccr|cccr}
+                    0 & 0 & 1 & 0   & \nicefrac{1}{2} & 0 & 0 & 0 \\
+                    1 & 0 & 0 & 0   & 1 & 3 & -1 & -1 \\
+                    0 & 1 & 0 & 0 & -\nicefrac{3}{2} & 0 & -1 & 0 \\
+                    0 & 0 & 0 & 1   & -1 & -2 & 1 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cccr|cccr}
+                    1 & 0 & 0 & 0   & 1 & 3 & -1 & -1 \\
+                    0 & 1 & 0 & 0 & -\nicefrac{3}{2} & 0 & -1 & 0 \\
+                    0 & 0 & 1 & 0   & \nicefrac{1}{2} & 0 & 0 & 0 \\
+                    0 & 0 & 0 & 1   & -1 & -2 & 1 & 1
+                \end{sysmatrix}
+            $$
+
+            Damit ist
+            $$
+                \vektor{0 & 0 & 2 & 0 \\ 1 & 0 & 0 & 1 \\ 0 & -1 & -3 & 0 \\ 2 & 1 & 5 & 3}^{-1} = \vektor{1 & 3 & -1 & -1 \\-\nicefrac{3}{2} & 0 & -1 & 0 \\ \nicefrac{1}{2} & 0 & 0 & 0 \\ -1 & -2 & 1 & 1}
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part
+        $\vektor{a & 1 & 0 \\ 1 & b & 1 \\ 0 & 1 & c}$
+        \begin{solution}
+            $$
+                \begin{sysmatrix}{ccc|ccc}
+                    a & 1 & 0 & 1 & 0 & 0 \\
+                    1 & b & 1 & 0 & 1 & 0 \\
+                    0 & 1 & c & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{ccc|ccc}
+                    a & 1 & 0 & 1 & 0 & 0 \\
+                    1 & 0 & 1-bc & 0 & 1 & -b \\
+                    0 & 1 & c & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{ccc|ccc}
+                    a & 0 & -c & 1 & 0 & -1 \\
+                    1 & 0 & 1-bc & 0 & 1 & -b \\
+                    0 & 1 & c & 0 & 0 & 1
+                \end{sysmatrix}
+            $$
+            $$
+                \sim
+                \begin{sysmatrix}{ccc|ccc}
+                    a & 0 & -c & 1 & 0 & -1 \\
+                    0 & 0 & 1-bc +\nicefrac{c}{a} & -\nicefrac{1}{a} & 1 & \nicefrac{1}{a}-b \\
+                    0 & 1 & c & 0 & 0 & 1
+                \end{sysmatrix}
+            $$
+            $$
+                \overset{\footnote{Wir verzichten hier auf die Umformungsschritte. Die Aufgabe ist schon umständlich genug.}}{\sim}
+                \begin{sysmatrix}{ccc|ccc}
+                    a & 0 & -c & 1 & 0 & -1 \\
+                    0 & 0 & 1 & \frac{1}{a(bc-1)-c} & -\frac{a}{a(bc-1)-c} & \frac{ab-1}{a(bc-1)-c} \\
+                    0 & 1 & c & 0 & 0 & 1
+                \end{sysmatrix}
+            $$
+            $$
+                \overset{\footnote{Hier auch \dots}}{\sim}
+                \begin{sysmatrix}{ccc|ccc}
+                    a & 0 & 0 & \frac{a(bc-1)}{a(bc-1)-c} & \frac{-ac}{a(bc-1)-c} & \frac{a}{a(bc-1)-c} \\
+                    0 & 1 & 0 & -\frac{c}{a(bc-1)-c} & \frac{ac}{a(bc-1)-c} & \frac{a}{a(bc-1)-c} \\
+                    0 & 0 & 1 & \frac{1}{a(bc-1)-c} & -\frac{a}{a(bc-1)-c} & \frac{ab-1}{a(bc-1)-c}
+                \end{sysmatrix}
+            $$
+            $$
+                \overset{\footnote{\dots und der Schritt war dann ausnahmsweise mal trivial.}}{\sim}
+                \begin{sysmatrix}{ccc|ccc}
+                    1 & 0 & 0 & \frac{bc-1}{a(bc-1)-c} & \frac{-c}{a(bc-1)-c} & \frac{1}{a(bc-1)-c} \\
+                    0 & 1 & 0 & -\frac{c}{a(bc-1)-c} & \frac{ac}{a(bc-1)-c} & \frac{a}{a(bc-1)-c} \\
+                    0 & 0 & 1 & \frac{1}{a(bc-1)-c} & -\frac{a}{a(bc-1)-c} & \frac{ab-1}{a(bc-1)-c}
+                \end{sysmatrix}
+                =
+                \frac{1}{a(bc-1)-c} \vektor{bc-1 & -c & 1 \\ -c & ac & -a \\ 1 & -a & ab-1}
+            $$\qed
+        \end{solution}
+
+    \end{parts}
+
+    \newpage
+    \question
+    Die Spur einer quadratischen Matrix $M = (m_{ij})$ ist definiert durch
+    $$
+        \trace(M) = \sum^n_{i=1} m_{ii}
+    $$
+    \begin{parts}
+        \part
+        Zeigen Sie, dass die Spur eine lineare Abbildung darstellt.
+        \begin{solution}
+            Für einen Homomorphismus $\trace(M)$ muss gelten:
+
+            $\trace(M)$ ist homogen: $\lambda \trace(M) = \trace(\lambda M)$, mit $\lambda \in \R$:
+            $$
+                \begin{aligned}
+                                 & \lambda \trace(M)           &  & = \trace(\lambda M)                            \\
+                    \equiv \quad & \lambda \sum^n_{i=1} m_{ij} &  & = \sum^n_{i=1} \lambda m_{ij}                  \\
+                    \equiv \quad & \lambda \sum^n_{i=1} m_{ij} &  & = \lambda \sum^n_{i=1} m_{ij} \quad \checkmark
+                \end{aligned}
+            $$
+
+            $\trace(M)$ ist additiv: $\trace(M) + \trace(M') = \trace(M + M')$:
+            $$
+                \begin{aligned}
+                     & \trace(M) + \trace(M')                     &  & = \trace(M + M')                                   \\
+                     & \sum^n_{i=1} m_{ij} + \sum^n_{i=1} m'_{ij} &  & = \sum^n_{i=1} (m_{ij} + m'_{ij})                  \\
+                     & \sum^n_{i=1} (m_{ij} + m'_{ij})            &  & = \sum^n_{i=1} (m_{ij} + m'_{ij}) \quad \checkmark
+                \end{aligned}
+            $$
+
+            Damit ist $\trace(M)$ insgesamt ein Homomorphismus.\qed
+        \end{solution}
+
+        \part
+        Sei $\hat{A} = \vektor{1 & 2 & 3 \\ 0 & 1 & 0}$ und $\hat{B} = \hat{A}^T$.
+        \begin{subparts}
+            \subpart
+            Verifizieren Sie $\trace(\hat{A}\hat{B}) = \trace(\hat{B}\hat{A})$.
+            \begin{solution}
+                Es sei $A \in \R^{m\times n}, A^T = B \in \R^{n\times m}$.
+
+                Dann gilt offensichtlich:
+                $$
+                    \trace(AB) = \trace(AA^T) = \trace((A^TA)^T) = \trace((BA)^T) \overset{\text{Def.}}{=} \trace(BA)
+                $$\qed
+            \end{solution}
+
+            \subpart
+            Zeigen Sie, dass $\trace(AB) = \trace(BA)$, wobei $A \in \R^{m\times n}$ und $B \in \R^{n\times m}$.
+            \begin{solution}
+                $$
+                    \trace(AB) = \sum^m_{i=1} (AB)_{ii} = \sum^m_{i=1} \sum^n_{j=1} A_{ij}B_{ji} =\sum^n_{j=1}\sum^m_{i=1}  B_{ji}A_{ij} = \sum^n_{j=1} (BA)_{jj} = \trace(BA)
+                $$\qed
+            \end{solution}
+
+            \newpage
+            \subpart
+            Zeigen Sie, dass $\trace(A^TA) = 0$ genau dann, wenn $A = (0)$.
+            \begin{solution}
+                Sei $A = \vektor{0 & 0 \\ 0 & 0} \notin \R^{1\times 1}$. Dann gilt:
+                $$
+                    \trace(A^TA) = \trace\left(\vektor{0 & 0 \\ 0 & 0}\vektor{0 & 0 \\ 0 & 0}\right) = \trace\left(\vektor{0 & 0 \\ 0 & 0}\right) = 0 \quad \lightning
+                $$\qed
+
+                Das nächste Mal dann bitte eine sinnvolle Notation wählen!
+
+                $A= \vektor{0}$ ist nämlich eine $1\times 1$-Matrix. :)
+
+                \vspace{2em}
+                Angenommen, die Aufgabenstellung wäre:
+
+                Zeigen Sie, dass für $A \in \R^{m\times n} : \trace(A^TA) = 0$ genau dann gilt, wenn $A = O_{m,n}$.
+
+                Dann gilt nach (b)ii.:
+                $$
+                    \begin{aligned}
+                                     & \trace(AA^T)                             &  & = 0                                                          \\
+                        \equiv \quad & \sum^m_{i=1} (AA^T)_{ii}                 &  & = 0                                                          \\
+                        \equiv \quad & \sum^m_{i=1} \sum^n_{j=1} A_{ij}A^T_{ji} &  & = 0                                                          \\
+                        \equiv \quad & \sum^m_{i=1} \sum^n_{j=1} A_{ij}^2       &  & = 0 \land \forall i, j: A_{ij}^2 \geq 0 \implies A = O_{m,n}
+                    \end{aligned}
+                $$
+            \end{solution}
+
+            \subpart
+            Man zeige weiter:
+            $\trace(ABC) = \trace(BCA)$, aber i.a. $\trace(ABC) \neq \trace(BAC)$.
+            \begin{solution}
+                Wir wissen:
+                $$
+                    \trace(AB) = \trace(BA).
+                $$
+                Sei $D = BC$. Dann gilt:
+                $$
+                    \trace(ABC) = \trace(AD) = \trace(DA) = \trace(BCA)\footnote{Dies gilt insgesamt für zyklische Vertauschung.}
+                $$\qed
+
+                Seien $A = \vektor{0 & 1 \\ 0 & 0}$, $B = \vektor{0 & 0 \\ 1 & 0}$ und $C = \vektor{1 & 0 \\ 0 & 0}$.
+                Dann gilt:
+                $$
+                    \trace(ABC) = \trace\left(\vektor{1 & 0 \\ 0 & 0}\vektor{1 & 0 \\ 0 & 0}\right) = \trace \vektor{1 & 0 \\ 0 & 0} = 1
+                $$
+                $$
+                    \trace(BAC) =\footnote{$AC = O_{2,2}$} \trace\vektor{0 & 0 \\ 0 & 0} = 0 \quad \lightning
+                $$
+            \end{solution}
+        \end{subparts}
+    \end{parts}
+\end{questions}
+\end{document}

@@ -1,0 +1,544 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman, shorthands=off]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,angles,quotes,calc}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+  \newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 07}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 07}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 16. Mai 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Ein Architekt plant, auf dem Dach eines Hauses eine Antenne anzubringen (siehe Skizze).
+    Von seinem Bezugspunkt $A$ aus gesehen, soll sie senkrecht über der Stelle, die auf der Grundfläche des Hauses 5m nach rechts ($x$-Richtung) und 2m nach hinten ($y$-Richtung) liegt, auf dem Dach angebracht werden.
+
+    \begin{center}
+        \begin{tikzpicture}[scale=1]
+            \begin{axis}[
+                    view={45}{15},
+                    width=20cm,
+                    unit vector ratio*=1 1 1,
+                    axis lines = middle,
+                    ymin=-1,
+                    ymax=7,
+                    xmin=-1,
+                    xmax=12,
+                    zmin=-1,
+                    zmax=10,
+                    xlabel = $x$,
+                    ylabel = $y$,
+                    zlabel = $z$,
+                    xtick style={draw=none},
+                    ytick style={draw=none},
+                    ztick style={draw=none},
+                    xticklabels=\empty,
+                    yticklabels=\empty,
+                    zticklabels=\empty,
+                    disabledatascaling,
+                ]
+
+                \node (A) at (axis cs:0,0,0) {} node[below left] {$A$};
+                \node (B) at (axis cs:10,0,0) {};
+                \node (C) at (axis cs:10,5,0) {};
+                \node (D) at (axis cs:0,5,0) {};
+                \node (E) at (axis cs:0,0,6) {};
+                \node (F) at (axis cs:10,0,6) {} node[below right] {$B$};
+                \node (G) at (axis cs:10,5,6) {};
+                \node (H) at (axis cs:0,5,6) {};
+                \node (J) at (axis cs:0,2.5,8.5) {};
+                \node (I) at (axis cs:10,2.5,8.5) {};
+
+
+                \draw[] (A.center) -- (B.center) node [midway, below] {\small{10m}};
+                \draw[] (B.center) -- (C.center) node [midway, below right] {\small{5m}};
+                \draw[] (A.center) -- (E.center) node [midway, left] {\small{6m}};
+                \draw[] (B.center) -- (F.center);
+                \draw[] (C.center) -- (G.center);
+                \draw[] (E.center) -- (F.center);
+                \draw[] (F.center) -- (G.center);
+                \draw[] (E.center) -- (J.center);
+                \draw[] (G.center) -- (I.center);
+                \draw[] (F.center) -- (I.center);
+                \draw[] (I.center) -- (G.center);
+                \draw[] (I.center) -- (J.center);
+
+                \draw[dashed] (C.center) -- (D.center);
+                \draw[dashed] (A.center) -- (D.center);
+                \draw[dashed] (E.center) -- (H.center);
+                \draw[dashed] (D.center) -- (H.center);
+                \draw[dashed] (G.center) -- (H.center);
+                \draw[dashed] (J.center) -- (H.center);
+
+                \draw[->, red] (F.center) -- (axis cs:8,0,6) node [midway, below left] {$x'$};
+                \draw[->, red] (F.center) -- (axis cs:10,1,6) node [midway, below right] {$y'$};
+                \draw[->, red] (F.center) -- (axis cs:10,1,7) node [midway, left] {$z'$};
+
+                \pic [draw, "\tiny{$45^\circ$}", angle radius=20] {angle = G--F--I };
+                \pic [draw, "\tiny{$90^\circ$}", angle radius=20] {angle = F--I--G };
+
+                \draw[] (axis cs:5,2,8) -- (axis cs:5,2,9.2);
+                \draw[] (axis cs:4.5,2,9) -- (axis cs:5.5,2,9);
+                \draw[] (axis cs:4.5,2,8.9) -- (axis cs:5.5,2,8.9);
+            \end{axis}
+
+        \end{tikzpicture}
+    \end{center}
+
+    \newpage
+    \begin{parts}
+        \part
+        Berechnen Sie den Anfangspunkt der Antenne auf dem Dach vom Bezugspunkt $A$ aus gesehen.
+        \begin{solution}
+            Wir drehen uns einmal unsere Darstellung des Hauses wie folgt:
+
+            \begin{center}
+                \begin{tikzpicture}[scale=0.75]
+                    \begin{axis}[
+                            view={85}{5},
+                            width=20cm,
+                            unit vector ratio*=1 1 1,
+                            axis lines = middle,
+                            ymin=-1,
+                            ymax=7,
+                            xmin=-1,
+                            xmax=12,
+                            zmin=-1,
+                            zmax=10,
+                            xlabel = $x$,
+                            ylabel = $y$,
+                            zlabel = $z$,
+                            xtick style={draw=none},
+                            ytick style={draw=none},
+                            ztick style={draw=none},
+                            xticklabels=\empty,
+                            yticklabels=\empty,
+                            zticklabels=\empty,
+                            disabledatascaling,
+                        ]
+
+                        \node (A) at (axis cs:0,0,0) {} node[below left] {$A$};
+                        \node (B) at (axis cs:10,0,0) {};
+                        \node (C) at (axis cs:10,5,0) {};
+                        \node (D) at (axis cs:0,5,0) {};
+                        \node (E) at (axis cs:0,0,6) {};
+                        \node (F) at (axis cs:10,0,6) {};
+                        \node (G) at (axis cs:10,5,6) {};
+                        \node (H) at (axis cs:0,5,6) {};
+                        \node (J) at (axis cs:0,2.5,8.5) {};
+                        \node (I) at (axis cs:10,2.5,8.5) {};
+
+                        \draw[] (A.center) -- (B.center);
+                        \draw[] (B.center) -- (C.center);
+                        \draw[] (A.center) -- (E.center);
+                        \draw[] (B.center) -- (F.center);
+                        \draw[] (C.center) -- (G.center);
+                        \draw[] (E.center) -- (F.center);
+                        \draw[] (F.center) -- (G.center);
+                        \draw[] (E.center) -- (J.center);
+                        \draw[] (G.center) -- (I.center);
+                        \draw[] (F.center) -- (I.center);
+                        \draw[] (I.center) -- (G.center);
+                        \draw[] (I.center) -- (J.center);
+
+                        \draw[dashed] (C.center) -- (D.center);
+                        \draw[dashed] (A.center) -- (D.center);
+                        \draw[dashed] (E.center) -- (H.center);
+                        \draw[dashed] (D.center) -- (H.center);
+                        \draw[dashed] (G.center) -- (H.center);
+                        \draw[dashed] (J.center) -- (H.center);
+
+                        \node (Z1) at (axis cs:5,2,6) {};
+                        \node (Z2) at (axis cs:0,2,6) {};
+                        \node (Z3) at (axis cs:5,2,8) {};
+
+                        \draw[dotted] (axis cs:0,2,0) -- (axis cs:5,2,0);
+                        \draw[dotted] (axis cs:5,0,0) -- (axis cs:5,2,0) -- (axis cs:5,2,6);
+                        \draw[red, dashed] (axis cs:5,2,6) -- (axis cs:5,2,8) node [midway, right] {$z'$};
+
+                        \draw[red, dotted] (axis cs:5,2,6) -- (axis cs:5,0,6) -- (axis cs:5,2,8);
+
+                        \draw[fill=gray, fill opacity=0.15] (E.center) -- (F.center) -- (G.center) -- (H.center) -- (E.center) -- cycle;
+
+                        \draw[] (axis cs:5,2,8) -- (axis cs:5,2,9.2);
+                        \draw[] (axis cs:4.5,2,9) -- (axis cs:5.5,2,9);
+                        \draw[] (axis cs:4.5,2,8.9) -- (axis cs:5.5,2,8.9);
+                    \end{axis}
+
+                \end{tikzpicture}
+            \end{center}
+
+            Die $x$- bzw. $y$-Koordinaten des Antennenfußes sind aus der Aufgabe bereits gegeben mit $C_x = 5$ und $C_y = 2$.
+
+            Aus der Zeichnung wird weiterhin ersichtlich, dass sich die $z$-Koordinate zum einen aus der Höhe des Hauses, und zum anderen aus der gekennzeichneten Strecke $z'$ zusammensetzt.
+            Es gilt:
+            $$
+                C_z = 6 + z' = 6 + \tan(45^\circ) \cdot 2 = 6 + 2\tan\left(\frac{\pi}{4}\right) = 8
+            $$
+
+            Damit befindet sich der Anfangspunkt der Antenne bei $C = \vektor{5 & 2 & 8}^T$.\qed
+        \end{solution}
+
+        \newpage
+        \part
+        Der Dachdecker, der an dieser Stelle Dachziegel weglassen muss, nimmt als Bezugssystem die rechte untere Ecke des Daches $B$ und als Basisvektoren die eingezeichneten Richtungsvektoren $x'$, $y'$ und $z'$ (der Länge 1).
+        Berechnen Sie die Koordinaten des Punktes $C$ bzgl. seines Koordinatensystems.
+        \begin{solution}
+            Sei $\mathcal{A}$ die kanonische Einheitsbasis des $\R^3$ und $\mathcal{D}$ die Dachdeckerbasis.
+
+            Dann wissen wir, dass unsere Basis zuerst wie folgt verändert wird:
+            $$
+                T^{\mathcal{A}}_{\mathcal{D}} = \mathcal{D}^{-1} \cdot \mathcal{A} = \vektor{-1 & 0 & 0 \\ 0 & 1 & \nicefrac{1}{\sqrt{2}} \\ 0 & 0 & \nicefrac{1}{\sqrt{2}}}^{-1} \cdot I = \vektor{-1 & 0 & 0 \\ 0 & 1 & \nicefrac{1}{\sqrt{2}} \\ 0 & 0 & \nicefrac{1}{\sqrt{2}}}^{-1}.
+            $$
+
+            Es gilt:
+            $$
+                \begin{sysmatrix}{rrr|rrr}
+                    -1 & 0 & 0 & 1 & 0 & 0 \\
+                    0 & 1 & \nicefrac{1}{\sqrt{2}} & 0 & 1 & 0 \\
+                    0 & 0 & \nicefrac{1}{\sqrt{2}} & 0 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{rrr|rrr}
+                    -1 & 0 & 0 & 1 & 0 & 0 \\
+                    0 & 1 & \nicefrac{1}{\sqrt{2}} & 0 & 1 & 0 \\
+                    0 & 0 & 1 & 0 & 0 & \sqrt{2}
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{rrr|rrr}
+                    1 & 0 & 0 & -1 & 0 & 0 \\
+                    0 & 1 & 0 & 0 & 1 & -1 \\
+                    0 & 0 & 1 & 0 & 0 & \sqrt{2}
+                \end{sysmatrix}
+            $$
+            und damit:
+            $$
+                T^{\mathcal{A}}_{\mathcal{D}} = \vektor{-1 & 0 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & \sqrt{2}}.
+            $$
+
+            Möchten wir nun den Punkt $B$ in unserer Basis $\mathcal{D}$ darstellen, gilt:
+            $$
+                B = K_{\mathcal{D}}(B) = T^{\mathcal{A}}_{\mathcal{D}} \cdot B = \vektor{-1 & 0 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & \sqrt{2}} \cdot \vektor{10\\0\\6} = \vektor{-10 \\ -6 \\ 6\sqrt{2}}.
+            $$
+
+            Damit gilt, dass unser Koordinatensystem wie folgt verschoben wird:
+            $$
+                T(x', y', z') \to (x'+10, y'+6, z' - 6\sqrt{2}).
+            $$
+
+            Stellen wir nun $C$ in Basis $\mathcal{D}$ dar und wenden danach die beschriebene Translation an, erhalten wir:
+            $$
+                C = K_{\mathcal{D}}(C) = T^{\mathcal{A}}_{\mathcal{D}} \cdot C = \vektor{-1 & 0 & 0 \\ 0 & 1 & -1 \\ 0 & 0 & \sqrt{2}} \cdot \vektor{5\\2\\8} = \vektor{-5 \\ -6 \\ 8\sqrt{2}} \quad \text{ und }
+            $$
+            $$
+                T(-5, -6, 8\sqrt{2}) \to (5, 0, 2\sqrt{2}).
+            $$\qed
+        \end{solution}
+
+        \part
+        Wie lauten die Koordinaten des Bezugpunktes $A$ des Architekten im Koordinatensystem des Dachdeckers?
+        \begin{solution}
+            Wieder müssen wir zuerst eine Koordinatentransformation und anschließend eine Translation anwenden:
+            $$
+                A = K_{\mathcal{D}} (A) = T^{\mathcal{A}}_{\mathcal{D}} \cdot A = \vektor{0\\0\\0} \quad \text{und} \quad T(0,0,0) \to (10, 6, -6\sqrt{2})
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part
+        Wie muss die Transformation (Matrix und Verschiebungsvektor) aussehen, die einen beliebigen Punkt des Hauses aus dem Koordinatensystem des Dachdeckers in das des Architekten umrechnet?
+        Überprüfen Sie das Ergebnis, indem Sie das Ergebnis von (b) in das Ergebnis von (a) umrechnen.
+        \begin{solution}
+            Siehe Aufgabenteil (b).
+        \end{solution}
+
+        \part
+        Wie muss die Transformation (Matrix und Verschiebungsvektor) aussehen, die einen beliebigen Punkt des Hauses aus dem Koordinatensystem des Architekten in das des Dachdeckers umrechnet?
+        \begin{solution}
+            Für die Basistransformation gilt:
+            $$
+                T^{\mathcal{A}}_{\mathcal{D}} = \left(T^{\mathcal{A}}_{\mathcal{D}} \right)^{-1} = \mathcal{D} = \vektor{-1 & 0 & 0 \\ 0 & 1 & \nicefrac{1}{\sqrt{2}} \\ 0 & 0 & \nicefrac{1}{\sqrt{2}}}
+            $$
+
+            Für die Translation gilt:
+            $$
+                T(x, y, z) \to (x + 10, y, z + 6)\footnote{$T(x) = x -(- B)$}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Die Determinante der folgenden Matrix $A_1$ ist:
+    $$
+        \det(A_1) = \det \vektor{a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ a_{31} & a_{32} & a_{33} & a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44}} = d
+    $$
+    Berechnen Sie mit Hilfe von $\det(A_1)$ die Determinanten der folgenden Matrizen in Abhängigkeit von $c, d \in \R$:
+    \begin{parts}
+        \part
+        $$
+            A_2 = \vektor{a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ c\cdot a_{31} & c\cdot a_{32} & c\cdot a_{33} & c\cdot a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44}}
+        $$
+        \begin{solution}
+            $$
+                A_2 = \vektor{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & c & 0 \\ 0 & 0 & 0 & 1} \cdot A_1 \implies \abs{A_2} = c \cdot \abs{A_1} = cd
+            $$\qed
+        \end{solution}
+
+        \part
+        $$
+            A_3 =c\cdot  \vektor{a_{11} + a_{41} & a_{12} + a_{43}  & a_{13} + a_{43}  & a_{14} + a_{44}  \\ a_{21} & a_{22} & a_{23} & a_{24} \\ a_{31} & a_{32} & a_{33} & a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44}}
+        $$
+        \begin{solution}
+            $$
+                A_3 = \vektor{1 & 0 & 0 & 1 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1} \cdot c\cdot A_1 \implies \abs{A_3} =\footnote{$\forall M \in K^{n\times n} : \det(\lambda M) = \lambda^n \cdot \det(M)$, da jede Zeile mit $\lambda$ skaliert wird.} 1 \cdot c^4\cdot  \abs{A_1} = c^4d
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part
+        $$
+            A_4 = \vektor{a_{12} & a_{11} & a_{13} & a_{14} \\ a_{22} & a_{21} & a_{23} & a_{24} \\ a_{32} & a_{31} & a_{33} & a_{34} \\ a_{42} & a_{41} & a_{43} & a_{44}}
+        $$
+        \begin{solution}
+            $$
+                A_4 = A_1 \cdot \vektor{0 & 1 & 0 & 0 \\ 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1}\implies \abs{A_4} = \abs{A_1}\cdot (-1) = -d
+            $$\qed
+        \end{solution}
+        \part
+        $$
+            A_5 = \vektor{a_{11} + c\cdot a_{12} & a_{12} & a_{13} & a_{14} \\ a_{21} + c\cdot a_{22} & a_{22} & a_{23} & a_{24} \\ a_{31} + c\cdot a_{32} & a_{32} & a_{33} & a_{34} \\ a_{41} + c\cdot a_{42} & a_{42} & a_{43} & a_{44}}
+        $$
+        \begin{solution}
+            $$
+                A_5 = A_1 \cdot \vektor{1 & 0 & 0 & 0 \\ c & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1}\implies \abs{A_5} = \abs{A_1}\cdot 1 = d
+            $$\qed
+        \end{solution}
+        \part
+        $$
+            A_6 = \vektor{a_{11} & a_{12} & a_{13} & a_{14} \\ a_{21} & a_{22} & a_{23} & a_{24} \\ a_{11} + c\cdot a_{31} & a_{12} + c\cdot a_{32} & a_{13} + c\cdot a_{33} & a_{14} + c\cdot a_{34} \\ a_{41} & a_{42} & a_{43} & a_{44}}
+        $$
+        \begin{solution}
+            $$
+                A_6 = \vektor{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 1 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1} \cdot \vektor{1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & c & 0 \\ 0 & 0 & 0 & 1} \cdot A_1 \implies \abs{A_6} = 1 \cdot c \cdot \abs{A_1} = cd
+            $$\qed
+        \end{solution}
+
+        \newpage
+        \part
+        $$
+            A_7 = (A_1)^{-1}
+        $$
+        \begin{solution}
+            Wir wissen, dass wir mittels elementarer Zeilenoperationen (äquivalent zur linksseitigen Multiplikation mit Elementarmatrizen) $A_1$ zur Einheitsmatrix umformen können.
+
+            Sei $Z^{(i)}$ eine beliebige Elementarmatrix\footnote{Hier betrachten wir nur Zeilenoperationen.}. Damit gilt:
+            $$
+                I = \underbrace{\left(Z^{(n)} \cdot Z^{(n-1)} \cdot \ldots \cdot Z^{(2)} \cdot Z^{(1)}\right)}_{(A_1)^{-1}} \cdot A_1 = (A_1)^{-1} \cdot A_1
+            $$
+            $$
+                \implies \abs{I} = \abs{(A_1)^{-1}\cdot A_1} = \abs{(A_1)^{-1}} \cdot \abs{A_1}
+            $$
+            $$
+                \iff \abs{(A_1)^{-1}} = \frac{1}{\abs{A_1}} \implies \abs{(A_1)^{-1}} = \frac{1}{d}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Sei
+    $$
+        A = \vektor{1 & 0 \\ -5 & 2}
+    $$
+    \begin{parts}
+        \part
+        Bestimmen Sie Elementarmatrizen $M_1$ und $M_2$ mit $M_1M_2A = E$.
+        \begin{solution}
+            Es gilt:
+            $$
+                \begin{sysmatrix}{cc|cc}
+                    1 & 0 & 1 & 0 \\
+                    -5 & 2 & 0 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cc|cc}
+                    1 & 0 & 1 & 0 \\
+                    0 & 2 & 5 & 1
+                \end{sysmatrix}
+                \sim
+                \begin{sysmatrix}{cc|cc}
+                    1 & 0 & 1 & 0 \\
+                    0 & 1 & \frac{5}{2} & \frac{1}{2}
+                \end{sysmatrix}
+            $$
+            Damit gilt:
+            $$
+                A^{-1} = \vektor{1 & 0 \\ \frac{5}{2} & \frac{1}{2}} =\footnote{Das wird aus dem Kontext ersichtlich: Für $A^{-1}$ wird zuerst fünfmal \Rnum{1} auf \Rnum{2} addiert und anschließend wird \Rnum{2} mit $\frac{1}{2}$ skaliert.} \vektor{1 & 0 \\ 0 & \frac{1}{2}} \cdot \vektor{1 & 0 \\ 5 & 1}
+            $$
+            und schlussendlich:
+            $$
+                A^{-1} \cdot A = \vektor{1 & 0 \\ 0 & \frac{1}{2}} \cdot \vektor{1 & 0 \\ 5 & 1} \cdot A = M_1 M_2  A
+            $$\qed
+        \end{solution}
+
+        \part
+        Stellen Sie $A^{-1}$ als Produkt zweier Elementarmatrizen dar.
+        \begin{solution}
+            Siehe Aufgabenteil (a).
+        \end{solution}
+
+        \part
+        Schreiben Sie $A$ als Produkt von zwei Elementarmatrizen.
+        \begin{solution}
+            Es gilt:
+            $$
+                A = \vektor{1 & 0 \\ -5 & 2} =\footnote{Analoge Argumentation zu $A^{-1}$.} \vektor{1 & 0 \\ -5 & 1} \cdot \vektor{1 & 0 \\ 0 & 2}
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Gegeben seien drei Matrizen $A, B, C \in \R^{2\times 2}$ mit folgenden Eigenschaften:
+    \begin{itemize}
+        \item $A$ ist regulär mit $\det(A) = 10$.
+        \item Für $B$ gilt: $\det(A\cdot B) = 1$.
+        \item Für $C$ gilt: $B\cdot C$ ist singulär, d.h. nicht invertierbar.
+    \end{itemize}
+    berechnen Sie:
+    \begin{parts}
+        \part
+        $\det(C \cdot A)$
+        \begin{solution}
+            Wir wissen:
+            $$
+                B \cdot C \ \text{singulär} \iff \det(B\cdot C) = 0 \iff B \ \text{nicht invertierbar} \lor C \ \text{nicht invertierbar}
+            $$
+            und
+            $$
+                \det(A\cdot B) = 1 \neq 0 \implies A \ \text{invertierbar} \land B \ \text{invertierbar}
+            $$
+            Damit gilt dann schließlich:
+            $$
+                A \ \text{invertierbar} \land B \ \text{invertierbar} \land C \ \text{nicht invertierbar} \implies \det(C\cdot A) = 0
+            $$\qed
+        \end{solution}
+
+        \part
+        $\det(-A \cdot B^{-1})$
+        \begin{solution}
+            Wir wissen:
+            $$
+                \det(A\cdot B) = 1 \land \det(A) = 10 \implies \det(B) = \frac{1}{10} \implies \det(B^{-1}) = 10
+            $$
+            und
+            $$
+                \det(-A) =\footnote{$\forall M \in K^{n\times n} : \det(\lambda M) = \lambda^n \cdot \det(M)$, da jede Zeile mit $\lambda$ skaliert wird.} (-1)^2 \cdot \det(A) = \det(A)
+            $$
+            Damit gilt schließlich:
+            $$
+                A \ \text{invertierbar} \land B \ \text{invertierbar} \implies \det(-A \cdot B^{-1}) = \det(-A) \cdot \det(B^{-1}) = 100
+            $$\qed
+        \end{solution}
+        \part
+        $\det(B \cdot C - A\cdot B^{-1} \cdot C)$
+        \begin{solution}
+            Wir wissen, dass Matrixmultiplikation (rechts-)distributiv ist mit
+            $$
+                (A+B)C = AC + BC
+            $$
+            Damit gilt:
+            $$
+                \det(B \cdot C - A\cdot B^{-1} \cdot C) = \det((B - A\cdot B^{-1}) \cdot C) =\footnote{$C$ ist nicht invertierbar $\iff \abs{C} = 0$} \det(B - A\cdot B^{-1}) \cdot \det C =  0
+            $$\qed
+        \end{solution}
+        \part
+        $\det(C + C)$
+        \begin{solution}
+            Wir wissen:
+            $$
+                \det(C+C) = \det(2C) = 2^2\det(C) = 4\det(C) \land C \ \text{nicht invertierbar} \implies \det(C+C) = 0
+            $$\qed
+        \end{solution}
+
+    \end{parts}
+\end{questions}
+\end{document}
