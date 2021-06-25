@@ -1,0 +1,337 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman, shorthands=off]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,angles,quotes,calc}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+  \newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\newcommand{\dvektor}[1]{\begin{vmatrix*}[c] #1 \end{vmatrix*}}
+%\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\Sol}{Sol}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\col}{col}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 12}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 12}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 20. Juni 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Berechnen Sie das charakteristische Polynom und die Eigenwerte folgender Matrix:
+    $$
+        A =
+        \vektor{
+            a_1 & a_2 & a_3 & a_4 & \ldots & a_n \\
+            0 & 1 & 0 & 0 & \ldots & 0 \\
+            0 & 0 & 1 & 0 & \ldots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+            0 & 0 & 0 & \ldots & 1 & 0 \\
+            0 & 0 & 0 & \ldots & 0 & 1
+        }
+    $$
+    \begin{solution}
+        Es gilt offensichtlich für das charakteristische Polynom von $A$:
+        $$
+            \abs{A - \lambda I} = \left( a_1 - \lambda \right) \cdot (1 - \lambda)^{n-1}
+        $$
+
+        Damit sind die Eigenwerte gegeben mit:
+        $$
+            \lambda_1 = a_1 \quad \land \quad \lambda_2 = 1
+        $$\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Wie lautet die $QR$-Zerlegung von
+    $$
+        A = \vektor{3 & 1 \\ 4 & 5}?
+    $$
+    Lösen Sie anschließend mit dieser Zerlegung das lineare Gleichungssystem $Ax = b$ mit $b = \vektor{2 & 3}^T$.
+    \begin{solution}
+        Wir wenden das Gram-Schmidt-Verfahren auf die Spaltenvektoren an:\footnote{Wir sehen, dass die Vektoren orthogonal sind.}
+        $$
+            \begin{aligned}
+                v_1 \quad = \quad & \vektor{3                                                        \\4} \\
+                w_1 \quad = \quad & \frac{v_1}{\norm{v_1}} = \frac{1}{5}\vektor{3                    \\4} = \vektor{\nicefrac{3}{5}\\\nicefrac{4}{5}} \\
+                \\
+                v_2 \quad = \quad & \vektor{1                                                        \\5} \\
+                r_2 \quad = \quad & v_2 - \scalarprod{v_2, w_1}w_1                                   \\
+                = \quad           & \vektor{1                                                        \\ 5} - \left( \frac{1}{5} \right)^2\scalarprod{\vektor{1 \\ 5}, \vektor{3 \\ 4}}\vektor{3 \\ 4} =  \vektor{-\nicefrac{44}{25}                      \\ \nicefrac{33}{25}}\\
+                w_2 \quad = \quad & \frac{r_2}{\norm{r_2}} = \frac{5}{11} \vektor{-\nicefrac{44}{25} \\ \nicefrac{33}{25}} = \vektor{-\nicefrac{4}{5} \\ \nicefrac{3}{5}}
+            \end{aligned}
+        $$
+
+        Damit erhalten wir $Q$ mit
+        $$
+            Q = \vektor{w_1 & w_2} =  \vektor{\nicefrac{3}{5} & -\nicefrac{4}{5} \\ \nicefrac{4}{5} & \nicefrac{3}{5}} = \frac{1}{5} \vektor{3 & -4 \\ 4 & 3}
+        $$
+        Da $A$ quadratisch ist\footnote{\ldots und damit auch $Q$}, gilt:
+        $$
+            QR = A \quad \iff \quad R = Q^TA
+        $$
+        womit $R$ gegeben ist, mit
+        $$
+            R = Q^TA = \frac{1}{5}\vektor{3 & 4 \\ -4 & 3} \vektor{3 & 1 \\ 4 & 5} = \frac{1}{5} \vektor{25 & 23 \\ 0 & 11}
+        $$
+
+        Für das gegebene lineare Gleichungssystem $Ax = b$ ergibt sich dann:
+        $$
+            Ax = b \quad \iff \quad QRx = b  \quad \iff \quad Rx = Q^Tb
+        $$
+        $$
+            \begin{aligned}
+                \iff \quad     & \frac{1}{5} \vektor{25                                  & 23 \\ 0 & 11}x = \frac{1}{5}\vektor{3 & 4 \\ -4 & 3}\vektor{2\\3} \\
+                \iff \quad     & \vektor{25                                              & 23 \\ 0 & 11}x = \vektor{3 & 4 \\ -4 & 3}\vektor{2\\3} \\
+                \iff \quad     & \vektor{25                                              & 23 \\ 0 & 11}x = \vektor{18 \\ 1} \\
+                \implies \quad & 11x_2 = 1 \quad \land \quad 25x_1 + 23x_2 = 18               \\
+                \iff \quad     & x_2 = \frac{1}{11} \quad \land \quad x_1 = \frac{7}{11}      \\
+                \implies \quad & x = \vektor{\nicefrac{7}{11}                                 \\ \nicefrac{1}{11}}
+            \end{aligned}
+        $$\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Gegeben sind
+    $$
+        A_t = \vektor{1 & t \\ -2 & -1-t} \quad \text{und} \quad x_t = \vektor{-t \\ 2}, t \in \R
+    $$
+    Zeigen Sie, dass der Vektor $x_t$ Eigenvektor der Matrix $A_t$ ist.
+    Wie lautet der zugehörige Eigenwert?
+    Bestimmen Sie auch den zweiten Eigenwert.
+    \begin{solution}
+        Berechnen des charakteristischen Polynoms von $A_t$:
+        $$
+            \abs{A - \lambda I} = \abs{\vektor{1 - \lambda & t \\ -2  & -1-t-\lambda}} = (1-\lambda)(-1-t-\lambda) + 2t = \lambda^2 + t\lambda + t - 1
+        $$
+
+        Nullstellen des charakteristischen Polynoms (Eigenwerte):
+        $$
+            \lambda_{1,2} = -\frac{t}{2} \pm \sqrt{\left(\frac{t}{2}\right)^2 - t + 1} = -\frac{t}{2} \pm \sqrt{\frac{t^2-4t + 4}{4}} = -\frac{t}{2} \pm \frac{t-2}{2}
+        $$
+        $$
+            \lambda_1 = -1 \quad \land \quad \lambda_2 = -t +1
+        $$
+
+        Bestimmen des Eigenraums/der Eigenvektoren zum Eigenwert $\lambda_1$:
+        $$
+            \begin{sysmatrix}{cc|c}
+                1-\lambda_1 & t & 0 \\
+                -2 & -1-t-\lambda_1 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{cc|c}
+                2 & t & 0 \\
+                -2 & -t & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{cc|c}
+                2 & t & 0 \\
+                0 & 0 & 0
+            \end{sysmatrix}
+        $$
+        $$
+            \begin{aligned}
+                \implies \quad & 2x_1 + tx_2 = 0 \iff x_1 = -\frac{tx_2}{2}                               \\
+                \implies \quad & E(\lambda_1) = \ker(A-\lambda_1 I) = \operatorname{span}\left(\vektor{-t \\ 2}\right) \ni x_t
+            \end{aligned}
+        $$
+
+        Insgesamt sind also die Eigenwerte $\lambda_1 = -1$ und $\lambda_2 = -t+1$ und $x_t$ Eigenvektor zu $\lambda_1$.\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Berechnen Sie die Eigenwerte und zugehörigen Eigenvektoren von
+    $$
+        A = \vektor{-1 & -2 & -1 \\ -2 & 1 & 1 \\ -3 & 8 & 3}.
+    $$
+    \begin{solution}
+        Bestimmen des charakteristischen Polynoms von $A$:
+        $$
+            \abs{A - \lambda I} = \abs{\vektor{-1 - \lambda & -2 & -1 \\ -2 & 1 - \lambda & 1 \\ -3 & 8 & 3 - \lambda}} = \ldots = -\lambda^3 + 3 \lambda^2 + 16\lambda + 12
+        $$
+        Wir raten eine Nullstelle bei $\lambda_1 = -2$ und können dann wie folgt umformen:
+
+        \begin{center}
+            \begingroup\mathcode`X=\lambda
+            \polylongdiv[style=C]{-X^3+3X^2+16X+12}{X+2}
+            \endgroup
+        \end{center}
+
+        $$
+            -\lambda^2 + 5\lambda + 6 = 0 \quad \iff \quad \lambda^2 - 5\lambda - 6 = 0
+        $$
+        Die Nullstellen des Restpolynoms können wir dann bequem mit der $pq$-Formel berechnen:
+        $$
+            \lambda_{2, 3} = \frac{5}{2} \pm \sqrt{\left(\frac{5}{2}\right)^2 + 6} = \frac{5}{2} \pm \sqrt{\frac{49}{4}} = \frac{5}{2} \pm \frac{7}{2}
+        $$
+        $$
+            \lambda_2 = -1 \quad \land \quad \lambda_3 = 6
+        $$
+
+        \newpage
+        Nun berechnen wir die dazugehörigen Eigenräume bzw. Eigenvektoren:
+        \begin{itemize}
+            \item $\lambda_1 = -2:$
+                  $$
+                      \begin{sysmatrix}{ccc|c}
+                          -1 - \lambda_1 & -2 & -1 & 0 \\
+                          -2 & 1 - \lambda_1 & 1 & 0 \\
+                          -3 & 8 & 3 - \lambda_1 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          1 & -2 & -1 & 0 \\
+                          -2 & 3 & 1 & 0 \\
+                          -3 & 8 & 5 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          1 & 0 & 1 & 0 \\
+                          0 & 1 & 1 & 0 \\
+                          0 & 0 & 0 & 0
+                      \end{sysmatrix}
+                  $$
+
+                  $$
+                      \begin{aligned}
+                          \implies \quad & x_1 = -x_3 \quad \land  \quad x_2 = -x_3                                    \\
+                          \implies \quad & E(\lambda_1) = \ker(A - \lambda_1 I) = \operatorname{span}\left( \vektor{-1 \\ -1 \\ 1} \right)
+                      \end{aligned}
+                  $$
+            \item $\lambda_2 = -1:$
+                  $$
+                      \begin{sysmatrix}{ccc|c}
+                          -1 - \lambda_2 & -2 & -1 & 0 \\
+                          -2 & 1 - \lambda_2 & 1 & 0 \\
+                          -3 & 8 & 3 - \lambda_2 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          0 & -2 & -1 & 0 \\
+                          -2 & 2 & 1 & 0 \\
+                          -3 & 8 & 4 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          0 & 2 & 1 & 0 \\
+                          1 & 0 & 0 & 0 \\
+                          0 & 0 & 0 & 0
+                      \end{sysmatrix}
+                  $$
+                  $$
+                      \begin{aligned}
+                          \implies \quad & x_3 = -2x_2 \quad \land  \quad x_1 = 0                                     \\
+                          \implies \quad & E(\lambda_2) = \ker(A - \lambda_2 I) = \operatorname{span}\left( \vektor{0 \\ 1 \\ -2} \right)
+                      \end{aligned}
+                  $$
+            \item $\lambda_3 = 6:$
+                  $$
+                      \begin{sysmatrix}{ccc|c}
+                          -1 - \lambda_3 & -2 & -1 & 0 \\
+                          -2 & 1 - \lambda_3 & 1 & 0 \\
+                          -3 & 8 & 3 - \lambda_3 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          -7 & -2 & -1 & 0 \\
+                          -2 & -5 & 1 & 0 \\
+                          -3 & 8 & -3 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          7 & 2 & 1 & 0 \\
+                          0 & -31 & 9 & 0 \\
+                          0 & 0 & 0 & 0
+                      \end{sysmatrix}
+                  $$
+
+                  $$
+                      \begin{aligned}
+                          \implies \quad & 9x_3 = 31x_2 \quad \land \quad 7x_1 + 2x_2 + x_3 = 0                        \\
+                          \iff \quad     & x_2 = \frac{9}{31}x_3 \quad \land \quad 7x_1 = -\frac{49}{31}x_3            \\
+                          \iff \quad     & x_2 = \frac{9}{31}x_3 \quad \land \quad x_1 = -\frac{7}{31}x_3              \\
+                          \implies \quad & E(\lambda_3) = \ker(A - \lambda_3 I) = \operatorname{span}\left( \vektor{-7 \\ 9 \\ 31} \right)
+                      \end{aligned}
+                  $$
+        \end{itemize}
+        \qed
+    \end{solution}
+\end{questions}
+\end{document}

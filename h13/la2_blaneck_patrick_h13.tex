@@ -1,0 +1,386 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman, shorthands=off]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,angles,quotes,calc}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+  \newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\newcommand{\dvektor}[1]{\begin{vmatrix*}[c] #1 \end{vmatrix*}}
+%\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Eig}{\operatorname{Eig}}
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\Sol}{Sol}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\col}{col}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 13}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 13}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 27. Juni 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{5}
+    \question
+    Gesucht ist die Matrix $A$ mit den Eigenwerten $1$ und $4$ und den zugehörigen Eigenvektoren $\vektor{4\\1}$ und $\vektor{2\\1}$.
+    \begin{solution}
+        Wir wissen, dass $A$ diagonalisierbar ist.
+        Damit gilt
+        $$
+            \begin{aligned}
+                A & \quad = SDS^{-1}                    \\
+                  & \quad = \vektor{4              & 2  \\ 1 & 1} \vektor{1 & 0 \\ 0 & 4} \vektor{4 & 2 \\ 1 & 1}^{-1} \\
+                  & \quad = \vektor{4              & 2  \\ 1 & 1} \vektor{1 & 0 \\ 0 & 4} \frac{1}{2} \vektor{1 & -2 \\ -1 & 4} \\
+                  & \quad = \frac{1}{2} \vektor{4  & 2  \\ 1 & 1} \vektor{1 & -2 \\ -4 & 16} \\
+                  & \quad = \frac{1}{2} \vektor{-4 & 24 \\ -3 & 14}
+            \end{aligned}
+        $$\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Sei $A = \vektor{0 & -1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1}$.
+    \begin{parts}
+        \part
+        Berechnen Sie die Eigenwerte und zugehörigen Eigenvektoren.
+        \begin{solution}
+            Das charakteristische Polynom $\chi(A)$ ist gegeben mit:
+            $$
+                \chi(A) = (-\lambda)^2(1-\lambda) + 1 = -\lambda^3 + \lambda^2 -\lambda + 1
+            $$
+
+            Wir erraten eine Nullstelle $\lambda_1 = 1$ und erhalten nach dem Abspalten des Linearfaktors $(\lambda-1)$:
+
+            \vspace{1em}
+            \begin{center}
+                \begingroup\mathcode`X=\lambda
+                \polylongdiv[style=C]{-X^3+X^2-X+1}{X-1}
+                \endgroup
+            \end{center}
+
+            $$
+                -\lambda^2-1 = 0 \iff \lambda^2 + 1 = 0 \implies \lambda_2 = -i \quad \land \quad \lambda_3 = i
+            $$
+
+            Wir berechnen nun die dazugehörigen Eigenvektoren:
+            \begin{itemize}
+                \item $\Eig(A, \lambda_1) = \ker(A-\lambda_1 E)$
+                      $$
+                          \begin{sysmatrix}{ccc|c}
+                              0 -\lambda_1 & -1 & 0 & 0 \\
+                              1 & 0 -\lambda_1  & 0 & 0 \\
+                              0 & 0 & 1 -\lambda_1  & 0
+                          \end{sysmatrix}
+                          \sim
+                          \begin{sysmatrix}{ccc|c}
+                              -1 & -1 & 0 & 0 \\
+                              1 & -1  & 0 & 0 \\
+                              0 & 0 & 0  & 0
+                          \end{sysmatrix}
+                          \sim
+                          \begin{sysmatrix}{ccc|c}
+                              1 & 0 & 0 & 0 \\
+                              1 & -1  & 0 & 0 \\
+                              0 & 0 & 0  & 0
+                          \end{sysmatrix}
+                      $$
+                      $$
+                          \begin{aligned}
+                              \implies & \quad x_1 = 0 \quad \land \quad x_1 = x_2 \\
+                              \implies & \quad \Eig(A, 1) = \scalarprod{\vektor{0  \\0\\1}}
+                          \end{aligned}
+                      $$
+                \item $\Eig(A, \lambda_2) = \ker(A-\lambda_2 E)$
+                      $$
+                          \begin{sysmatrix}{ccc|c}
+                              0 -\lambda_2 & -1 & 0 & 0 \\
+                              1 & 0 -\lambda_2  & 0 & 0 \\
+                              0 & 0 & 1 -\lambda_2  & 0
+                          \end{sysmatrix}
+                          \sim
+                          \begin{sysmatrix}{ccc|c}
+                              i & -1 & 0 & 0 \\
+                              1 & i  & 0 & 0 \\
+                              0 & 0 & 1-i  & 0
+                          \end{sysmatrix}
+                          \sim
+                          \begin{sysmatrix}{ccc|c}
+                              0 & 0 & 0 & 0 \\
+                              1 & i  & 0 & 0 \\
+                              0 & 0 & 1-i  & 0
+                          \end{sysmatrix}
+                      $$
+                      $$
+                          \begin{aligned}
+                              \implies & \quad x_1 = -ix_2 \quad \land \quad x_3 = 0 \\
+                              \implies & \quad \Eig(A, -i) = \scalarprod{\vektor{-i  \\1\\0}}
+                          \end{aligned}
+                      $$
+                \item $\Eig(A, \lambda_3) = \ker(A-\lambda_3 E)$
+                      $$
+                          \begin{sysmatrix}{ccc|c}
+                              0 -\lambda_3 & -1 & 0 & 0 \\
+                              1 & 0 -\lambda_3  & 0 & 0 \\
+                              0 & 0 & 1 -\lambda_3  & 0
+                          \end{sysmatrix}
+                          \sim
+                          \begin{sysmatrix}{ccc|c}
+                              -i & -1 & 0 & 0 \\
+                              1 & -i  & 0 & 0 \\
+                              0 & 0 & 1+i  & 0
+                          \end{sysmatrix}
+                          \sim
+                          \begin{sysmatrix}{ccc|c}
+                              0 & 0 & 0 & 0 \\
+                              1 & -i  & 0 & 0 \\
+                              0 & 0 & 1+i  & 0
+                          \end{sysmatrix}
+                      $$
+                      $$
+                          \begin{aligned}
+                              \implies & \quad x_1 = ix_2 \quad \land \quad x_3 = 0 \\
+                              \implies & \quad \Eig(A, i) = \scalarprod{\vektor{i   \\1\\0}}
+                          \end{aligned}
+                      $$
+            \end{itemize}
+            \qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Berechnen Sie alle Eigenwerte und Eigenvektoren der folgenden Matrix
+    $$
+        A = \vektor{2 & 0 & 2 \\ 0 & 1 & 0 \\ 2 & 0 & 2}
+    $$
+    Ist die Matrix diagonalisierbar (d.h. existiert $VDV^{-1}$)?
+    Falls ja, wie würde dann eine Transformationsmatrix $V$ lauten?
+    \begin{solution}
+        Wir sehen direkt, dass $\det(A) = 0$ und damit $\lambda_1 = 0$.
+
+        Für das charakteristische Polynom $\chi(A)$ gilt:
+        $$
+            \chi(A) = (2-\lambda)^2(1-\lambda) - 4 = -\lambda^3 + 5\lambda^2 -4\lambda = 0
+        $$
+
+        Abspalten des Linearfaktors $(\lambda)$ ergibt:
+        $$
+            -\lambda^2 + 5\lambda - 4 = 0 \implies\footnote{Die $pq$-Formel ersparen wir uns hier einmal.} \lambda_2 = 1 \quad \land \quad \lambda_3 = 4
+        $$
+
+        Wir berechnen nun die dazugehörigen Eigenvektoren:
+        \begin{itemize}
+            \item $\Eig(A, \lambda_1 E) = \ker(A - \lambda_1E)$
+                  $$
+                      \begin{sysmatrix}{ccc|c}
+                          2 - \lambda_1 & 0 & 2 & 0 \\
+                          0 & 1 - \lambda_1 & 0 & 0 \\
+                          2 & 0 & 2 - \lambda_1 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          2 & 0 & 2 & 0 \\
+                          0 & 1 & 0 & 0 \\
+                          2 & 0 & 2 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          1 & 0 & 1 & 0 \\
+                          0 & 1 & 0 & 0 \\
+                          0 & 0 & 0 & 0
+                      \end{sysmatrix}
+                  $$
+                  $$
+                      \begin{aligned}
+                          \implies & \quad x_1 = -x_3 \quad \land \quad x_2 = 0 \\
+                          \implies & \quad \Eig(A, 0) = \scalarprod{\vektor{1   \\0\\-1}}
+                      \end{aligned}
+                  $$
+            \item $\Eig(A, \lambda_2 E) = \ker(A - \lambda_2E)$
+                  $$
+                      \begin{sysmatrix}{ccc|c}
+                          2 - \lambda_2 & 0 & 2 & 0 \\
+                          0 & 1 - \lambda_2 & 0 & 0 \\
+                          2 & 0 & 2 - \lambda_2 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          1 & 0 & 2 & 0 \\
+                          0 & 0 & 0 & 0 \\
+                          2 & 0 & 1 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          1 & 0 & 2 & 0 \\
+                          0 & 0 & 0 & 0 \\
+                          0 & 0 & 1 & 0
+                      \end{sysmatrix}
+                  $$
+                  $$
+                      \begin{aligned}
+                          \implies & \quad x_1 = -2x_3 \quad \land \quad x_3 = 0 \\
+                          \implies & \quad \Eig(A, 1) = \scalarprod{\vektor{0    \\1\\0}}
+                      \end{aligned}
+                  $$
+            \item $\Eig(A, \lambda_3 E) = \ker(A - \lambda_3E)$
+                  $$
+                      \begin{sysmatrix}{ccc|c}
+                          2 - \lambda_3 & 0 & 2 & 0 \\
+                          0 & 1 - \lambda_3 & 0 & 0 \\
+                          2 & 0 & 2 - \lambda_3 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          -2 & 0 & 2 & 0 \\
+                          0 & -3 & 0 & 0 \\
+                          2 & 0 & -2 & 0
+                      \end{sysmatrix}
+                      \sim
+                      \begin{sysmatrix}{ccc|c}
+                          1 & 0 & -1 & 0 \\
+                          0 & 1 & 0 & 0 \\
+                          0 & 0 & 0 & 0
+                      \end{sysmatrix}
+                  $$
+                  $$
+                      \begin{aligned}
+                          \implies & \quad x_1 = x_3 \quad \land \quad x_2 = 0 \\
+                          \implies & \quad \Eig(A, 4) = \scalarprod{\vektor{1  \\0\\1}}
+                      \end{aligned}
+                  $$
+
+                  Damit ist die Diagonalisierung von $A$ gegeben mit
+                  $$
+                      A = VDV^{-1} = \vektor{1 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 1} \vektor{0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 4} \vektor{1 & 0 & 1 \\ 0 & 1 & 0 \\ -1 & 0 & 1}^{-1}
+                  $$\qed
+        \end{itemize}
+    \end{solution}
+
+    \newpage
+    \question
+    Zeigen Sie:
+    \begin{parts}
+        \part
+        Eine Matrix ist genau dann invertierbar, wenn kein Eigenwert gleich $0$ ist.
+        \begin{solution}
+            Wir wissen, dass eine Matrix $A$ genau dann invertierbar ist, wenn $\det(A) \neq 0$ gilt.
+
+            Es ist also äquivalent zu zeigen, dass wenn $0$ Eigenwert von $A$ ist, dass $\det(A) = 0$ gilt.
+
+            \begin{itemize}
+                \item $\lambda = 0 \ \text{ist Eigenwert von} \ A \implies \det(A) = 0$:
+                      $$
+                          \begin{aligned}
+                              Ax = \lambda x \quad \implies \quad & (A-\lambda E)x = 0      \\
+                              \implies \quad                      & \det(A-\lambda E) = 0   \\
+                              \implies \quad                      & \det(A - 0 \cdot E) = 0 \\
+                              \implies \quad                      & \det(A) = 0
+                          \end{aligned}
+                      $$\qed
+                \item $\lambda = 0 \ \text{ist Eigenwert von} \ A \impliedby \det(A) = 0$:
+                      $$
+                          \begin{aligned}
+                              \det(A) = 0 \quad \implies \quad &
+                          \end{aligned}
+                      $$\qed
+            \end{itemize}
+        \end{solution}
+
+        \part
+        Das charakteristische Polynom einer $(2\times 2)$-Matrix lässt sich schreiben als
+        $$
+            \lambda^2 - \operatorname{spur}(A)\lambda + \det(A)
+        $$
+        \begin{solution}
+            Sei $A = \vektor{a & b \\ c & d}$.
+            Dann gilt offensichtlich:
+            $$
+                \begin{aligned}
+                    \chi(A) \quad = \quad & \det(A - \lambda E)                                  \\
+                    = \quad               & (a-\lambda)(b-\lambda) - bc                          \\
+                    = \quad               & ab -a\lambda - b\lambda + \lambda^2 - bc             \\
+                    = \quad               & \lambda^2 - (a+b)\lambda  + ab - bc                  \\
+                    = \quad               & \lambda^2 - \operatorname{spur}(A)\lambda  + \det(A)
+                \end{aligned}
+            $$\qed
+        \end{solution}
+
+        \part
+        A symmetrisch $\implies$ alle Eigenwerte sind reell.
+        Gilt die Umkehrung?
+        \begin{solution}
+
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}

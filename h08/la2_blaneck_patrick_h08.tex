@@ -81,7 +81,7 @@
 
 \title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 08}}
 \author{Patrick Gustav Blaneck}
-\date{Abgabetermin: 23. Mai 2021}
+\date{Abgabetermin: 24. Mai 2021}
 
 \begin{document}
 \maketitle
@@ -117,12 +117,12 @@
                 \vektor{0 & 0 & 35 \\ 2 & 0 & -7 \\ 0 & 1 & -3}
                 \underset{\frac{1}{35} \cdot \det(A)}{\xrightarrow{\text{\Rnum{1}: \Rnum{1} - 2 \Rnum{2}}}}
                 \vektor{0 & 0 & 1 \\ 2 & 0 & -7 \\ 0 & 1 & -3}
-                \underset{}{\xrightarrow{\text{(\Rnum{2}: \Rnum{2} + 7 \Rnum{1})} \ \land \ \text{(\Rnum{3}: \Rnum{3} + 3 \Rnum{1})}}}
+                \underset{}{\xrightarrow{\text{(\Rnum{2}: \Rnum{2} + 7 \Rnum{1})} \ \circ \ \text{(\Rnum{3}: \Rnum{3} + 3 \Rnum{1})}}}
                 \vektor{0 & 0 & 1 \\ 2 & 0 & 0 \\ 0 & 1 & 0}
             $$
             $$
                 \vektor{0 & 0 & 1 \\ 2 & 0 & 0 \\ 0 & 1 & 0}
-                \underset{(-1)\cdot(-1)\cdot \det A}{\xrightarrow{\text{(\Rnum{1}$\,\leftrightarrow\,$\Rnum{3})} \ \land \ \text{(\Rnum{1}$\,\leftrightarrow\,$\Rnum{2})}}}
+                \underset{(-1)\cdot(-1)\cdot \det A}{\xrightarrow{\text{(\Rnum{1}$\,\leftrightarrow\,$\Rnum{3})} \ \circ \ \text{(\Rnum{1}$\,\leftrightarrow\,$\Rnum{2})}}}
                 \vektor{2 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1}
             $$
             Es gilt:
@@ -241,63 +241,120 @@
 
     Was bedeutet die Bedingung geometrisch?
     \begin{solution}
-        
+        Wir entwickeln die Matrix nach der ersten Zeile:
+        $$
+            \begin{aligned}
+                                                   & 0                                                                                                                                                                                                                      =
+                \dvektor{
+                x^2 + y^2                          & x                                                                                                                                                                                                                                                                                              & y   & 1 \\
+                x_1^2 + y_1^2                      & x_1                                                                                                                                                                                                                                                                                            & y_1 & 1 \\
+                x_2^2 + y_2^2                      & x_2                                                                                                                                                                                                                                                                                            & y_2 & 1 \\
+                x_3^2 + y_3^2                      & x_3                                                                                                                                                                                                                                                                                            & y_3 & 1 \\
+                }
+                \\
+                \iff \quad                         & 0                                                                                                                                                                                                                      =
+                \left(x^2 + y^2\right)
+                \underbrace{
+                    \dvektor{
+                x_1                                & y_1                                                                                                                                                                                                                                                                                            & 1       \\
+                x_2                                & y_2                                                                                                                                                                                                                                                                                            & 1       \\
+                x_3                                & y_3                                                                                                                                                                                                                                                                                            & 1
+                    }
+                }_{a}
+                - x
+                \underbrace{
+                    \dvektor{
+                x_1^2 + y_1^2                      & y_1                                                                                                                                                                                                                                                                                            & 1       \\
+                x_2^2 + y_2^2                      & y_2                                                                                                                                                                                                                                                                                            & 1       \\
+                x_3^2 + y_3^2                      & y_3                                                                                                                                                                                                                                                                                            & 1
+                    }
+                }_{b}
+                + y
+                \underbrace{
+                    \dvektor{
+                x_1^2 + y_1^2                      & x_1                                                                                                                                                                                                                                                                                            & 1       \\
+                x_2^2 + y_2^2                      & x_2                                                                                                                                                                                                                                                                                            & 1       \\
+                x_3^2 + y_3^2                      & x_3                                                                                                                                                                                                                                                                                            & 1
+                    }
+                }_{c}
+                -
+                \underbrace{
+                    \dvektor{
+                x_1^2 + y_1^2                      & x_1                                                                                                                                                                                                                                                                                            & y_1     \\
+                x_2^2 + y_2^2                      & x_2                                                                                                                                                                                                                                                                                            & y_2     \\
+                x_3^2 + y_3^2                      & x_3                                                                                                                                                                                                                                                                                            & y_3
+                    }
+                }_{d}                                                                                                                                                                                                                                                                                                                                         \\
+                \iff \quad                         & 0   =                     a\left(x^2 + y^2\right) -bx + cy - d                                                                                                                                                                                                                                           \\
+                \overset{a \neq 0}{\implies} \quad & 0   =                                                                                                                                                             x^2 + y^2 -\frac{bx}{a} + \frac{cy}{a} - \frac{d}{a}          \qquad (*)                                                               \\
+                \iff \quad                         & 0   = x^2 + y^2 -\frac{bx}{a} + \frac{cy}{a} - \frac{d}{a} + \frac{b^2}{4a^2} - \frac{b^2}{4a^2} + \frac{c^2}{4a^2} - \frac{c^2}{4a^2}                                                                                                                                                                   \\
+                \iff \quad                         & 0   = \left(x^2 -\frac{bx}{a} + \frac{b^2}{4a^2} \right) + \left( y^2  + \frac{cy}{a} + \frac{c^2}{4a^2} \right) - \frac{d}{a} - \frac{b^2}{4a^2}  - \frac{c^2}{4a^2}                                                                                                                                    \\
+                \iff \quad                         & 0   = \left(x -\frac{b}{2a}\right)^2 + \left( y  + \frac{c}{2a} \right)^2 - \frac{d}{a} - \frac{b^2}{4a^2}  - \frac{c^2}{4a^2}                                                                                                                                                                           \\
+                \iff \quad                         & \underbrace{\left(x -\frac{b}{2a}\right)^2 + \left( y  + \frac{c}{2a} \right)^2}_{\text{Mittelpunkt: } \left(\frac{b}{2a}, -\frac{c}{2a}\right)} = \underbrace{\frac{d}{a} + \frac{b^2}{4a^2}  + \frac{c^2}{4a^2}}_{\text{Radius: } \sqrt{\frac{d}{a} + \frac{b^2}{4a^2}  + \frac{c^2}{4a^2}}}           \\
+            \end{aligned}
+        $$
+        Als einzige Bedingung erhalten wir in der Umformung bei $(*)$, dass $a \neq 0$ gelten muss.
+        Wir haben hier auch direkt die in der Aufgabe genannte Bedingung.
+
+        Gilt $a = 0$, dann sind die entsprechenden Zeilenvektoren linear abhängig. Lineare Abhängigkeit bedeutet hier aber auch, dass die Punkte auf einer Geraden liegen.
+        Das deckt sich auch mit der Aufgabenstellung, denn einen Kreis durch 3 Punkte auf einer Geraden kann man (ohne $r = \infty$) nicht konstruieren.\qed
     \end{solution}
 
-    \newpage 
-    \question 
-    Berechnen Sie die Determinante der beiden folgenden Matrizen nach einer beliebigen Methode. 
-    Es gibt in beiden Fällen eine sehr schnelle Methode. 
+    \newpage
+    \question
+    Berechnen Sie die Determinante der beiden folgenden Matrizen nach einer beliebigen Methode.
+    Es gibt in beiden Fällen eine sehr schnelle Methode.
     \begin{parts}
-        \part 
+        \part
         $
-        A = 
-        \vektor{
-            2 & -1 & 0 & 0 & -1 \\
-            -1 & 2 & -1 & 0 & 0 \\
-            0 & -1 & 2 & -1 & 0 \\
-            0 & 0 & -1 & 2 & -1 \\
-            -1 & 0 & 0 & -1 & 2
-        }$
+            A =
+            \vektor{
+                2 & -1 & 0 & 0 & -1 \\
+                -1 & 2 & -1 & 0 & 0 \\
+                0 & -1 & 2 & -1 & 0 \\
+                0 & 0 & -1 & 2 & -1 \\
+                -1 & 0 & 0 & -1 & 2
+            }$
         \begin{solution}
             Wir erkennen schnell:
             $$
-            \forall a_{i, 5}, \, i \in \interval{1, 5}_\N : a_{i, 5} = \sum^4_{j=1} a_{i, j}
+                \forall a_{i, 5}, \, i \in \interval{1, 5}_\N : a_{i, 5} = -\sum^4_{j=1} a_{i, j}
             $$
 
             Damit ist die letzte Spalte der Matrix eine Linearkombination der anderen und damit gilt
             $$
-            \det A = 0
+                \det A = 0.
             $$\qed
         \end{solution}
 
-        \part 
+        \part
         $
-        B = 
-        \vektor{
-            1 & 1 & 1 \\
-            a & b & c \\
-            b+c & c+a & a+b
-        }
+            B =
+            \vektor{
+                1 & 1 & 1 \\
+                a & b & c \\
+                b+c & c+a & a+b
+            }
         $
         \begin{solution}
             Mit der Umformung
             $$
-            \vektor{
-            1 & 1 & 1 \\
-            a & b & c \\
-            b+c & c+a & a+b
-        }
-        \underset{}{\xrightarrow{\text{\Rnum{3}: \Rnum{3} + \Rnum{2}}}}
-        \vektor{
-        1 & 1 & 1 \\
-        a & b & c \\
-        a+b+c & a+b+c & a+b+c
-    }
+                \vektor{
+                    1 & 1 & 1 \\
+                    a & b & c \\
+                    b+c & c+a & a+b
+                }
+                \underset{}{\xrightarrow{\text{\Rnum{3}: \Rnum{3} + \Rnum{2}}}}
+                \vektor{
+                    1 & 1 & 1 \\
+                    a & b & c \\
+                    a+b+c & a+b+c & a+b+c
+                }
             $$
-            wird offensichtlich, dass die dritte Zeile lediglich ein Vielfaches von der ersten Zeile ist. 
-            
-            Damit sind die Zeilenvektoren linear abhängig und damit $\det B = 0$
+            wird offensichtlich, dass die dritte Zeile lediglich ein Vielfaches von der ersten Zeile ist.
+
+            Damit sind die Zeilenvektoren linear abhängig und damit gilt
+            $$\det B = 0.$$\qed
         \end{solution}
     \end{parts}
 \end{questions}

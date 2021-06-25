@@ -1,0 +1,386 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman, shorthands=off]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,angles,quotes,calc}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+  \newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[r] #1 \end{pmatrix*}}
+\newcommand{\dvektor}[1]{\begin{vmatrix*}[r] #1 \end{vmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\Sol}{Sol}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\col}{col}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 10}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 10}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 06. Juni 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    In der Elektrotechnik ergeben sich eine Widerstandsmatrix $R$ und ein Quellspannungsvektor $U$:
+    $$
+        R = \vektor{1 & 3 & 0 \\ 1 & 4 & 1 \\ 2 & 1 & 1}, \quad U = \vektor{5 \\ 9 \\ 8}.
+    $$
+    Gesucht ist der Stromvektor $I$, der sich durch Lösen des linearen Gleichungssystems
+    $$
+        R \cdot I = U
+    $$
+    ergibt.
+    Bestimmen Sie die Lösung mithilfe der Cramerschen Regel.
+    \begin{solution}
+        Es gilt:
+        $$
+            \vektor{1 & 3 & 0 \\ 1 & 4 & 1 \\ 2 & 1 & 1}  \vektor{i_1 \\ i_2 \\ i_3} = \vektor{5 \\ 9 \\ 8}
+        $$
+
+        Nach der Cramerschen Regel gilt:\footnote{$\abs{R} = -1 \cdot (1-6) + 1 \cdot (4-3) = 6$}
+        $$
+            i_1 = \frac{\dvektor{5 & 3 & 0 \\ 9 & 4 & 1 \\ 8 & 1 & 1}}{\abs{R}} = \frac{-1 \cdot (5-24) + 1 \cdot (20-27)}{6} = \frac{12}{6} = 2
+        $$
+        $$
+            i_2 = \frac{\dvektor{1 & 5 & 0 \\ 1 & 9 & 1 \\ 2 & 8 & 1}}{\abs{R}} = \frac{-1 \cdot (8-10) + 1 \cdot (9-5)}{6} = \frac{6}{6} = 1
+        $$
+        $$
+            i_3 = \frac{\dvektor{1 & 3 & 5 \\ 1 & 4 & 9 \\ 2 & 1 & 8}}{\abs{R}} = \frac{32+54+5-40-9-24}{6} = \frac{18}{6} = 3
+        $$
+
+        Damit ist der Stromvektor $I$ gegeben mit $I = \vektor{2 & 1 & 3}^T$.\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Gegeben seien die Messpunkte $(t_i; y_i)$ für $i = 1, \ldots, 3$:
+    $$
+        (3;7),(2;4),(5;9).
+    $$
+    Stellen Sie das überbestimmte Gleichungssystem für die unbekannten Parameter $a$ und $b$ auf, wenn folgende Beziehung zwischen den $y$ und den $t$ gilt:
+    $$
+        y = a + b \cdot t
+    $$
+    Bestimmen Sie die Parameter $a$ und $b$ nach der Methode der kleinsten Quadrate.
+    Fertigen Sie eine Skizze an.
+    \begin{solution}
+        \begin{center}
+            \begin{tikzpicture}[scale=1]
+                \begin{axis}[
+                        %view={45}{15},
+                        width=15cm,
+                        unit vector ratio*=1 1,
+                        axis lines = middle,
+                        grid=major,
+                        ymin=0,
+                        ymax=10,
+                        xmin=0,
+                        xmax=6,
+                        %zmin=-1,
+                        %zmax=10,
+                        xlabel = $t$,
+                        ylabel = $y$,
+                        %zlabel = $z$,
+                        %xtick style={draw=none},
+                        %ytick style={draw=none},
+                        %ztick style={draw=none},
+                        xtick distance={1},
+                        ytick distance={1},
+                        %ztick distance={1},
+                        %xticklabels=\empty,
+                        %yticklabels=\empty,
+                        %zticklabels=\empty,
+                        disabledatascaling,
+                    ]
+
+                    \node[label={135:{(3,7)}},circle,fill,inner sep=1pt] at (axis cs:3,7) {};
+                    \node[label={45:{(2,4)}},circle,fill,inner sep=1pt] at (axis cs:2,4) {};
+                    \node[label={45:{(5,9)}},circle,fill,inner sep=1pt] at (axis cs:5,9) {};
+
+                    \addplot[domain=0:6, color=red]{10/7 + 11/7 * x};
+                \end{axis}
+            \end{tikzpicture}
+        \end{center}
+        Wir schreiben das gegebene LGS wie folgt:
+        $$
+            Ax = \tilde{b} \quad \iff \quad \vektor{1 & 2 \\ 1 & 3 \\ 1 & 5}\vektor{a \\ b} = \vektor{4 \\ 7 \\ 9}
+        $$
+        mit
+        $$
+            \rank(A) = 2 = n \quad \implies \quad A^TAx = A^Tb \quad \iff \quad x = \left(A^T A\right)^{-1} A^T b
+        $$
+        Dann gilt nach der Methode der kleinsten Quadrate:
+        $$
+            \begin{aligned}
+                x_s \quad = \quad & \left(A^T A\right)^{-1} A^T b             \\
+                = \quad           & \left(\vektor{ 1              & 1   & 1   \\ 2 & 3 & 5} \vektor{1 & 2 \\ 1 & 3 \\ 1 & 5}\right)^{-1} \vektor{1 & 1 & 1 \\ 2                                & 3  & 5 } \vektor{4 \\ 7 \\ 9} \\
+                = \quad           & \vektor{3                     & 10        \\ 10 & 38}^{-1} \vektor{1 & 1 & 1 \\ 2                                & 3  & 5 } \vektor{4 \\ 7 \\ 9} \\
+                = \quad           & \frac{1}{14}\vektor{38        & -10       \\ -10 & 3} \vektor{1 & 1 & 1 \\ 2                                & 3  & 5 } \vektor{4 \\ 7 \\ 9} \\
+                = \quad           & \frac{1}{14} \vektor{18       & 8   & -12 \\ -4 & -1 & 5} \vektor{4 \\ 7 \\ 9} \\
+                = \quad           & \frac{1}{14} \vektor{20                   \\ 22} = \vektor{\nicefrac{10}{7} \\ \nicefrac{11}{7}} = \vektor{a \\ b}
+            \end{aligned}
+        $$
+
+        Damit gilt insgesamt:
+        $$
+            y = a + b\cdot t = \frac{10}{7} + \frac{11}{7} \cdot t
+        $$\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Ermitteln Sie das Ausgleichspolynom zweiten Grades zu den Punkten
+    $$
+        (-2;10), (-1;3), (1;5), (2;12).
+    $$
+    Stellen Sie die Normalgleichung auf und lösen Sie diese.
+    Fertigen Sie eine Skizze der Punkte und der Lösungskurve an.
+    \begin{solution}
+        \begin{center}
+            \begin{tikzpicture}[scale=1]
+                \begin{axis}[
+                        %view={45}{15},
+                        width=15cm,
+                        unit vector ratio*=1 1,
+                        axis lines = middle,
+                        grid=major,
+                        ymin=-.5,
+                        ymax=14,
+                        xmin=-5,
+                        xmax=5,
+                        %zmin=-1,
+                        %zmax=10,
+                        xlabel = $x$,
+                        ylabel = $y$,
+                        %zlabel = $z$,
+                        %xtick style={draw=none},
+                        %ytick style={draw=none},
+                        %ztick style={draw=none},
+                        xtick distance={1},
+                        ytick distance={1},
+                        %ztick distance={1},
+                        %xticklabels=\empty,
+                        %yticklabels=\empty,
+                        %zticklabels=\empty,
+                        disabledatascaling,
+                    ]
+
+                    \addplot[domain=-5:5, samples=100, color=red]{7/3 * x^2 + 3/5 * x + 5/3};
+
+                    \node[label={225:{(-2,10)}},circle,fill,inner sep=1pt] at (axis cs:-2,10) {};
+                    \node[label={225:{(-1,3)}},circle,fill,inner sep=1pt] at (axis cs:-1,3) {};
+                    \node[label={315:{(1,5)}},circle,fill,inner sep=1pt] at (axis cs:1,5) {};
+                    \node[label={315:{(2,12)}},circle,fill,inner sep=1pt] at (axis cs:2,12) {};
+                \end{axis}
+            \end{tikzpicture}
+        \end{center}
+
+        Wir suchen ein Ausgleichspolynom $p(x)$ der Form
+        $$
+            p(x) = ax^2 + bx + c
+        $$
+        Mit den gegebenen Punkten erhalten wir das folgende LGS:
+        $$
+            Ax = \tilde{b} \quad \iff \quad \vektor{4 & -2 & 1 \\ 1 & -1 & 1 \\ 1 & 1 & 1 \\ 4 & 2 & 1} \vektor{a \\ b \\ c} = \vektor{10 \\ 3 \\ 5 \\ 12}
+        $$
+        mit
+        $$
+            \rank(A) = 3 = n \quad \implies \quad A^TAx = A^Tb \quad \iff \quad x = \left(A^T A\right)^{-1} A^T b
+        $$
+
+        Es gilt dann:
+        $$
+            \begin{aligned}
+                x \quad = \quad                & \left(A^T A\right)^{-1} A^T b                  \\
+                x \quad = \quad                & \left(\vektor{4               & 1   & 1   & 4  \\ -2 & -1 & 1 & 2 \\ 1 & 1 & 1 & 1} \vektor{4 & -2 & 1 \\ 1 & -1 & 1 \\ 1 & 1 & 1 \\ 4 & 2 & 1}\right)^{-1} \vektor{4                     & 1 & 1 & 4 \\ -2 & -1 & 1 & 2 \\ 1 & 1 & 1 & 1} \vektor{10 \\ 3 \\ 5 \\ 12}             \\
+                x \quad = \quad                & \vektor{34                    & 0   & 10       \\ 0 & 10 & 0 \\ 10 & 0 & 4}^{-1} \vektor{4                     & 1 & 1 & 4 \\ -2 & -1 & 1 & 2 \\ 1 & 1 & 1 & 1} \vektor{10 \\ 3 \\ 5 \\ 12}             \\
+                x \quad \overset{(*)}{=} \quad & \frac{1}{90}\vektor{10        & 0   & -25      \\ 0 & 9 & 0 \\ -25 & 0 & 85} \vektor{4                     & 1 & 1 & 4 \\ -2 & -1 & 1 & 2 \\ 1 & 1 & 1 & 1} \vektor{10 \\ 3 \\ 5 \\ 12}             \\
+                x \quad = \quad                & \frac{1}{90}\vektor{15        & -15 & -15 & 15 \\ -18 & -9 & 9 & 18 \\ -15 & 60 & 60 & -15} \vektor{10 \\ 3 \\ 5 \\ 12}             \\
+                x \quad = \quad                & \frac{1}{90}\vektor{210                        \\ 54 \\ 150} = \vektor{\nicefrac{7}{3} \\ \nicefrac{3}{5} \\ \nicefrac{5}{3}} = \vektor{a \\ b \\ c}
+            \end{aligned}
+        $$
+
+        Damit gilt insgesamt:
+        $$
+            p(x) = ax^2 + bx + c = \frac{7}{3} \cdot x^2 + \frac{3}{5} \cdot x + \frac{5}{3}
+        $$\qed
+
+        \rule{\textwidth}{0.4pt}
+        $$
+            (*) \quad
+            \begin{sysmatrix}{rrr|rrr}
+                34 & 0 & 10 & 1 & 0 & 0  \\
+                0 & 10 & 0 & 0 & 1 & 0  \\
+                10 & 0 & 4 & 0 & 0 & 1
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{rrr|rrr}
+                9 & 0 & 0 & 1 & 0 & -\frac{5}{2}  \\
+                0 & 1 & 0 & 0 & \nicefrac{1}{10} & 0  \\
+                10 & 0 & 4 & 0 & 0 & 1
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{rrr|rrr}
+                1 & 0 & 0 & \nicefrac{1}{9} & 0 & -\frac{5}{18}  \\
+                0 & 1 & 0 & 0 & \nicefrac{1}{10} & 0  \\
+                0 & 0 & 1 & -\nicefrac{5}{18} & 0 & \nicefrac{17}{18}
+            \end{sysmatrix}
+        $$
+    \end{solution}
+
+    \newpage
+    \question
+    Eine Messreihe ergibt zu den Zeiten $t = 1,2,3,4,5$ in Sekunden folgende Temperaturwerte:
+
+    \begin{center}
+        \begin{tabular}{l | CCCCC}
+            $t$ Sekunden        & 1   & 2   & 3    & 4    & 5    \\
+            \hline
+            $y(t)\si{\celsius}$ & 0.9 & 5.8 & 11.4 & 12.1 & 12.9 \\
+        \end{tabular}
+    \end{center}
+
+    Stellen Sie das überbestimmte Gleichungssystem für die unbekannten Parameter $a$ und $b$ auf und bestimmen Sie diese nach der Methode der kleinsten Quadrate, wenn folgende Beziehung zwischen $y$ und $t$ gilt:
+    $$
+        y(t) = a \cdot t + b \cdot \sin\left( -t \cdot \frac{\pi}{2} \right)
+    $$
+    \begin{solution}
+
+        \begin{center}
+            \begin{tikzpicture}[scale=1]
+                \begin{axis}[
+                        %view={45}{15},
+                        width=15cm,
+                        unit vector ratio*=1 1,
+                        axis lines = middle,
+                        grid=major,
+                        ymin=-.5,
+                        ymax=14,
+                        xmin=0,
+                        xmax=7,
+                        %zmin=-1,
+                        %zmax=10,
+                        xlabel = $x$,
+                        ylabel = $y$,
+                        %zlabel = $z$,
+                        %xtick style={draw=none},
+                        %ytick style={draw=none},
+                        %ztick style={draw=none},
+                        xtick distance={1},
+                        ytick distance={1},
+                        %ztick distance={1},
+                        %xticklabels=\empty,
+                        %yticklabels=\empty,
+                        %zticklabels=\empty,
+                        disabledatascaling,
+                    ]
+
+                    \addplot[domain=0:6, samples=100, color=red]{3.02308 * x - 2.22308 * sin(deg(x * pi/2))};
+
+                    \node[label={315:{(1,0.9)}},circle,fill,inner sep=1pt] at (axis cs:1,0.9) {};
+                    \node[label={135:{(2,5.8)}},circle,fill,inner sep=1pt] at (axis cs:2,5.8) {};
+                    \node[label={135:{(3,11.4)}},circle,fill,inner sep=1pt] at (axis cs:3,11.4) {};
+                    \node[label={135:{(4,12.1)}},circle,fill,inner sep=1pt] at (axis cs:4,12.1) {};
+                    \node[label={315:{(5,12.9)}},circle,fill,inner sep=1pt] at (axis cs:5,12.9) {};
+                \end{axis}
+            \end{tikzpicture}
+        \end{center}
+
+        Mit den gegebenen Daten erhalten wir folgendes LGS:
+        $$
+            Ax = b \quad \iff \quad \vektor{1 & -\sin \frac{\pi}{2} \\ 2 & -\sin \pi \\ 3 & -\sin \frac{3\pi}{2} \\ 4 & -\sin 2 \pi \\ 5 & -\sin \frac{5\pi}{2}}\vektor{a \\ b} = \vektor{0.9 \\ 5.8 \\ 11.4 \\ 12.1 \\ 12.9} \quad \iff \quad \vektor{1 & -1 \\ 2 & 0 \\ 3 & 1 \\ 4 & 0 \\ 5 & -1}\vektor{a \\ b} = \vektor{0.9 \\ 5.8 \\ 11.4 \\ 12.1 \\ 12.9}
+        $$
+        mit
+        $$
+            \rank(A) = 2 = n \quad \implies \quad A^TAx = A^Tb \quad \iff \quad x = \left(A^T A\right)^{-1} A^T b
+        $$
+        Dann gilt nach der Methode der kleinsten Quadrate:
+        $$
+            \begin{aligned}
+                x_s \quad = \quad & \left(A^T A\right)^{-1} A^T b                     \\
+                = \quad           & \left(\vektor{1               & 2  & 3  & 4  & 5  \\ -1 & 0 & 1 & 0 & -1} \vektor{1 & -1 \\ 2 & 0 \\ 3 & 1 \\ 4 & 0 \\ 5 & -1}\right)^{-1} \vektor{1 & 2 & 3 & 4 & 5 \\ -1 & 0 & 1 & 0 & -1} \vektor{0.9 \\ 5.8 \\ 11.4 \\ 12.1 \\ 12.9} \\
+                = \quad           & \vektor{55                    & -3                \\ -3 & 3}^{-1} \vektor{1 & 2 & 3 & 4 & 5 \\ -1 & 0 & 1 & 0 & -1} \vektor{0.9 \\ 5.8 \\ 11.4 \\ 12.1 \\ 12.9} \\
+                = \quad           & \frac{1}{156}\vektor{3        & 3                 \\ 3 & 55} \vektor{1 & 2 & 3 & 4 & 5 \\ -1 & 0 & 1 & 0 & -1} \vektor{0.9 \\ 5.8 \\ 11.4 \\ 12.1 \\ 12.9} \\
+                = \quad           & \frac{1}{156}\vektor{0        & 6  & 12 & 12 & 12 \\ -52 & 6 & 64 & 12 & -40} \vektor{0.9 \\ 5.8 \\ 11.4 \\ 12.1 \\ 12.9} \\
+                = \quad           & \frac{1}{156}\vektor{471.6                        \\ 346.8} = \vektor{3.02308 \\ 2.22308} = \vektor{a \\ b}
+            \end{aligned}
+        $$
+
+        Damit gilt insgesamt:
+        $$
+            y(t) = a \cdot t + b \cdot \sin\left( -t \cdot \frac{\pi}{2} \right) = 3.02308 \cdot t + 2.22308 \cdot \sin\left( -t \cdot \frac{\pi}{2} \right)
+        $$\qed
+
+    \end{solution}
+\end{questions}
+\end{document}

@@ -1,0 +1,306 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman, shorthands=off]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,angles,quotes,calc}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+  \newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[r] #1 \end{pmatrix*}}
+\newcommand{\dvektor}[1]{\begin{vmatrix*}[r] #1 \end{vmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\Sol}{Sol}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\col}{col}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 09}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 09}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 30. Mai 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Finden Sie die Lösung des linearen Gleichungssystems
+    $$
+        \vektor{-1 & 1 & 0 \\ 0 & 1 & 1}x = \vektor{0 \\ 2}
+    $$
+    mit Hilfe folgender Schritte:
+    \begin{parts}
+        \part
+        Bestimmen Sie den Kern der Abbildungsmatrix:
+        \begin{solution}
+            $$
+                \begin{sysmatrix}{rrr|r}
+                    -1 & 1 & 0 & 0 \\
+                    0 & 1 & 1 & 0
+                \end{sysmatrix}
+                \quad \implies \quad
+                \ker \vektor{-1 & 1 & 0 \\ 0 & 1 & 1} = \span{ \left\{\vektor{1 \\ 1 \\ -1}\right\} }
+            $$\qed
+        \end{solution}
+
+        \part
+        Erraten Sie eine spezielle Lösung.
+        \begin{solution}
+            $$
+                x = \vektor{0\\0\\2} \quad \implies \quad \vektor{-1 & 1 & 0 \\ 0 & 1 & 1}\cdot \vektor{0\\0\\2} = \vektor{0 \\ 2}
+            $$\qed
+        \end{solution}
+        \part
+        Bestimmen Sie die allgemeine Lösung.
+        \begin{solution}
+            Es gilt:
+            $$
+                \Sol \left({\vektor{-1 & 1 & 0 \\ 0 & 1 & 1}, \vektor{0 \\ 2}} \right) = \vektor{0\\0\\2} + \ker\vektor{-1 & 1 & 0 \\ 0 & 1 & 1} = \vektor{0\\0\\2} + \lambda \cdot \vektor{1 \\ 1 \\ -1}, \quad \lambda \in \R
+            $$\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Gegeben ist das lineare Gleichungssystems $Ax = b$, wobei
+    $$
+        A = \vektor{1 & 1 & 1 \\ 2 & 1 & 1 \\ 1 & 2 & \lambda}
+    $$
+    und
+    $$
+        b = \vektor{3 \\ 5 \\ 2\alpha}
+    $$
+    Für welche Werte von $\lambda, \alpha \in \R$ existieren
+    \begin{parts}
+        \part
+        keine Lösung,
+        \begin{solution}
+            $$
+                \Sol(A, b) = \emptyset \iff b \notin \span A \iff \rank(A) \neq \rank(A, b)
+            $$
+            Wir definieren $A'$ wie folgt:
+            $$
+                A' = \vektor{1 & 1 & 3 \\ 2 & 1 & 5 \\ 1 & 2 & 2\alpha}
+            $$
+
+            Dann gilt:
+            $$
+                \rank(A) \neq \rank(A, b) \iff \abs{A} = 0 \land \abs{A'} \neq 0
+            $$
+            mit
+            $$
+                \abs{A} = \lambda + 1 + 4 - 1 - 2\lambda - 2 = 2 - \lambda \implies \abs{A} = 0 \iff \lambda = 2
+            $$
+            $$
+                \abs{A'} = 2\alpha + 5 + 12 - 3 - 10 - 4 \alpha = 4 - 2 \alpha \implies \abs{A'} \neq \iff \alpha \neq 2
+            $$
+            Damit existiert keine Lösung genau dann, wenn $\lambda = 2$ und $\alpha \neq 2$.\qed
+        \end{solution}
+
+        \part
+        unendlich viele Lösungen,
+        \begin{solution}
+            $$
+                n = 3 \implies \left(  \left( \abs{A} = 0  \land \rank(A) = \rank(A, b) \right) \implies \abs{\Sol(A, b)} = \infty\right)
+            $$
+
+            Wir erkennen, dass $\lambda = 2 \implies \abs{A} = 0$ und $\rank(A) = 2$.
+
+            Da $\vektor{1 & 1 & \lambda}^T = \vektor{1 & 1 & 2}^T$, ist unsere Bedingung erfüllt, wenn $\abs{A'} = 0$ mit:
+            $$
+                A' = \vektor{1 & 1 & 3 \\ 2 & 1 & 5 \\ 1 & 2 & 2\alpha}
+            $$
+
+            $$
+                \abs{A'} = 2\alpha + 5 + 12 - 3 - 10 - 4 \alpha = 4 - 2 \alpha \implies \abs{A'} = 0 \iff \alpha = 2
+            $$
+            Damt existieren unendlich viele Lösungen genau dann, wenn $\lambda = \alpha = 2$.\qed
+        \end{solution}
+
+        \newpage
+        \part
+        eine eindeutige Lösung?
+        \begin{solution}
+            $$
+                n = 3 \implies \left(\abs{A} \neq 0 \implies \rank(A) = \rank(A, b) \implies \abs{\Sol(A, b) = 1}\right)
+            $$
+
+            $$
+                \abs{A} = \lambda + 1 + 4 - 1 - 2\lambda - 2 = 2 - \lambda \implies \abs{A} \neq 0 \iff \lambda \neq 2
+            $$
+
+            Damit existiert eine eindeutige Lösung genau dann, wenn $\lambda \neq 2$ und $\alpha \in \R$.\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Anna, Berta und Carla kaufen im Schmuckbedarfsgroßhandel Perlen unterschiedlicher Qualität.
+
+    Es gibt drei verschiedene Sorten.
+    Anna kauft jeweils 10 Perlen jeder Sorte und bezahlt 50 Euro.
+    Berta nimmt auch 30 Perlen, aber nur von Sorte 1 und 2.
+    Sie nimmt jeweils gleich viele und bezahlt 60 Euro.
+    Carla bezahlt per Kreditkarte für ihre 60 Perlen 110 Euro.
+    Sie wählt 25 von Sorte 1, 25 von Sorte 2 und 10 von Sorte 3.
+
+    Welche Ober- und Untergrenzen für die Einzelpreise ergeben sich?
+    \begin{solution}
+        Es ist gegeben:
+        $$
+            \vektor{10 & 10 & 10 \\ 15 & 15 & 0 \\ 25 & 25 & 10} \cdot \vektor{a \\ b \\ c} = \vektor{50 \\ 60 \\ 110}
+        $$
+        Damit gilt:
+        $$
+            \begin{sysmatrix}{ccc|c}
+                10 & 10 & 10 & 50 \\
+                15 & 15 & 0 & 60 \\
+                25 & 25 & 10 & 110
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{ccc|c}
+                10 & 10 & 10 & 50 \\
+                15 & 15 & 0 & 60 \\
+                0 & 0 & 0 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{ccc|c}
+                15 & 15 & 15 & 75 \\
+                15 & 15 & 0 & 60 \\
+                0 & 0 & 0 & 0
+            \end{sysmatrix}
+            \sim
+            \begin{sysmatrix}{ccc|c}
+                0 & 0 & 1 & 1 \\
+                1 & 1 & 0 & 4 \\
+                0 & 0 & 0 & 0
+            \end{sysmatrix}
+        $$
+
+        Damit sieht man direkt, dass
+        $$
+            a \in \interval{0, 4}, \quad b = 4-a, \quad c = 1.
+        $$
+
+        Es gilt für die Grenzen:
+
+        \begin{tabular}{c||c|c}
+            Perle & Obergrenze & Untergrenze \\
+            \hline
+            $a$   & $4$        & $0$         \\
+            $b$   & $4$        & $0$         \\
+            $c$   & $1$        & $1$
+        \end{tabular}
+    \end{solution}
+
+    \newpage
+    \question
+    Welchen Rang haben die Matrizen $A \in \R^{4\times 3}$ und $B \in \R^{n\times 2}$ mit $n\geq 2$?
+    \begin{parts}
+        \part
+        $
+            A = \vektor{
+                4 & 3 & 6 \\
+                -2 & 1 & -8 \\
+                1 & 5 & -7 \\
+                4 & 2 & -1
+            }
+        $
+        \begin{solution}
+            Wir schauen uns die folgende Unterdeterminante an:
+            $$
+                \dvektor{-2 & 1 & -8 \\ 1 & 5 & -7 \\ 4 & 2 & -1} = 10 -28 -16 + 160 -28 + 1 = 99 \neq 0 \implies \rank(A) = 3
+            $$\qed
+        \end{solution}
+
+        \part
+        $b_{ij} =
+            \begin{cases}
+                -i,  & i \ \text{gerade}   \\
+                i,   & i \ \text{ungerade} \\
+                n,   & i = n, j=1          \\
+                n-1, & i = n, j=2
+            \end{cases}
+        $
+        \begin{solution}
+            $$
+                B = \vektor{
+                    1 & -2 & 3 & -4 & \ldots & n\\
+                    1 & -2 & 3 & -4 & \ldots & n-1
+                }^T
+            $$
+            Wir wissen, dass $\row\rank B = \col\rank B$ und $\rank B \leq 2$.
+
+            Offensichtlich sind $\vektor{1 & 1}$ und $\vektor{n && n-1}$ linear unabhängig.
+            Damit ist $\rank B = 2$.\qed
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}

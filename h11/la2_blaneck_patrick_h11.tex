@@ -1,0 +1,253 @@
+\documentclass[answers]{exam}
+
+\usepackage[ngerman, shorthands=off]{babel}
+\usepackage{amsmath,amsthm,amsfonts,stmaryrd,amssymb,mathtools}
+\usepackage{xcolor,soul}
+\usepackage{polynom}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,angles,quotes,calc}
+\usepackage{footnote}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+\usepackage{array}   % for \newcolumntype macro
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.8}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{R}{>{$}r<{$}} % math-mode version of "r" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\newcolumntype{P}{>{$}p<{$}} % math-mode version of "l" column type
+
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+
+  \newenvironment{sysmatrix}[1]
+  {\left(\begin{array}{@{}#1@{}}}
+  {\end{array}\right)}
+
+  \newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\cis}[1]{\left( \cos\left( #1 \right) + i \sin\left( #1 \right) \right)}
+\newcommand{\sgn}{\text{sgn}} % Signum-Funktion
+\newcommand{\diff}{\mathrm{d}} % Differentialquotienten d
+\newcommand{\dx}{~\mathrm{d}x} % dx
+\newcommand{\du}{~\mathrm{d}u} % du
+\newcommand{\dv}{~\mathrm{d}v} % dv
+\newcommand{\dw}{~\mathrm{d}w} % dw
+\newcommand{\dt}{~\mathrm{d}t} % dt
+\newcommand{\dn}{~\mathrm{d}n} % dn
+\newcommand{\dudx}{~\frac{\mathrm{d}u}{\mathrm{d}x}} % du/dx
+\newcommand{\dudn}{~\frac{\mathrm{d}u}{\mathrm{d}n}} % du/dn
+\newcommand{\dvdx}{~\frac{\mathrm{d}v}{\mathrm{d}x}} % dv/dx
+\newcommand{\dwdx}{~\frac{\mathrm{d}w}{\mathrm{d}x}} % dw/dx
+\newcommand{\dtdx}{~\frac{\mathrm{d}t}{\mathrm{d}x}} % dt/dx
+\newcommand{\ddx}{\frac{\mathrm{d}}{\mathrm{d}x}} % d/dx
+\newcommand{\dFdx}{\frac{\mathrm{d}F}{\mathrm{d}x}} % dF/dx
+\newcommand{\dfdx}{\frac{\mathrm{d}f}{\mathrm{d}x}}  % df/dx
+\newcommand{\interval}[1]{\left[ #1 \right]}
+
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\scalarprod}[1]{\left\langle #1 \right\rangle}
+\newcommand{\vektor}[1]{\begin{pmatrix*}[c] #1 \end{pmatrix*}}
+\newcommand{\dvektor}[1]{\begin{vmatrix*}[c] #1 \end{vmatrix*}}
+\renewcommand{\span}[1]{\operatorname{span}\left(#1\right)}
+
+\newcommand{\Nplus}{\mathbb{N}^+}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Rnonneg}{\mathbb{R}^+_0}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\bigo}{\mathcal{O}}
+\newcommand{\Pot}{\mathcal{P}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\defect}{defect}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\trace}{trace}
+\DeclareMathOperator{\Sol}{Sol}
+\DeclareMathOperator{\row}{row}
+\DeclareMathOperator{\col}{col}
+
+\renewcommand{\solutiontitle}{\noindent\textbf{Lösung:}\par}
+
+
+\makesavenoteenv{solution}
+\lhead{Hausaufgabenblatt 11}
+\rhead{Lineare Algebra 2}
+\runningheadrule
+
+\title{Lineare Algebra 2 \\ \large{Hausaufgabenblatt 11}}
+\author{Patrick Gustav Blaneck}
+\date{Abgabetermin: 13. Juni 2021}
+
+\begin{document}
+\maketitle
+\begin{questions}
+    \setcounter{question}{4}
+    \question
+    Die Punkte $A(6;0;0)$, $B(2;1;3)$ und $C(-2;-2;2)$ liegen in einer Ebene $E$.
+    \begin{parts}
+        \part
+        Stellen Sie die Hessesche Normalform der Ebene auf.
+        Wie groß ist der Abstand der Ebene zum Ursprung?
+        \begin{solution}
+            Wir wählen uns $\vec{a}$ (Ortsvektor von $A$) als Stützvektor und die Vektoren $v = \vec{b} - \vec{a}$ und $w = \vec{c} - \vec{a}$ als Richtungsvektoren der Ebene.
+            Dann gilt:
+            $$
+                v = \vektor{2\\1\\3} - \vektor{6\\0\\0} = \vektor{-4\\1\\3}, \qquad w = \vektor{-2\\-2\\2} - \vektor{6\\0\\0} = \vektor{-8\\-2\\2}
+            $$
+            $$
+                n = \frac{v \times w}{\abs{v \times w}} = \frac{1}{\abs{v \times w}} \vektor{8 \\ -16 \\ 16} = \frac{1}{24} \vektor{8 \\ -16 \\ 16} = \vektor{\nicefrac{1}{3} \\ -\nicefrac{2}{3} \\ \nicefrac{2}{3}}
+            $$
+
+            Mit $n$ als (normierten) Normalenvektor erhalten wir dann die Hessesche Normalform der Ebene mit
+            $$
+                E: \scalarprod{x,n} = \scalarprod{\vec{a}, n} \quad \iff \quad \frac{1}{3} \cdot x - \frac{2}{3} \cdot y + \frac{2}{3} \cdot z = 2
+            $$
+
+            Setzen wir nun den Nullpunkt in die Ebene ein, erhalten wir sofort den Abstand mit $d = 2$.\qed
+        \end{solution}
+
+        \part
+        Welcher Punkt in der Ebene hat den kleinsten Abstand zum Ursprung?
+        Stellen Sie dazu das zugehörige unterbestimmte LGS auf und finden Sie die Lösung mit Hilfe der verallgemeinerten Inverse.
+        \begin{solution}
+            Mit der Ebenengleichung
+            $$
+                E: \frac{1}{3} \cdot x - \frac{2}{3} \cdot y + \frac{2}{3} \cdot z = 2
+            $$
+            können wir folgendes unterbestimmte LGS aufstellen:
+            $$
+                Ax = b \quad \iff \quad \vektor{\nicefrac{1}{3} & -\nicefrac{2}{3} & \nicefrac{2}{3}} \vektor{x \\ y \\ z} = \vektor{2}
+            $$
+            mit
+            $$
+                \rank(A) = 1 = m \quad \implies \quad x = A^T \left(AA^T\right)^{-1}b
+            $$
+
+            Dann gilt:
+            $$
+                \begin{aligned}
+                    x_s \quad = \quad & A^T \left(AA^T\right)^{-1}b \\
+                    = \quad           & \vektor{\nicefrac{1}{3}     \\ -\nicefrac{2}{3} \\ \nicefrac{2}{3}} \left( \vektor{\nicefrac{1}{3} & -\nicefrac{2}{3} & \nicefrac{2}{3}} \vektor{\nicefrac{1}{3} \\ -\nicefrac{2}{3} \\ \nicefrac{2}{3}} \right)^{-1} \cdot 2 \\
+                    = \quad           & \vektor{\nicefrac{1}{3}     \\ -\nicefrac{2}{3} \\ \nicefrac{2}{3}} \cdot 1^{-1} \cdot 2 \\
+                    = \quad           & \vektor{\nicefrac{1}{3}     \\ -\nicefrac{2}{3} \\ \nicefrac{2}{3}} \cdot 1 \cdot 2 \\
+                    = \quad           & \vektor{\nicefrac{2}{3}     \\ -\nicefrac{4}{3} \\ \nicefrac{4}{3}} = \vektor{x\\y\\z}
+                \end{aligned}
+            $$
+            Damit ist dann $\vektor{\nicefrac{2}{3} & -\nicefrac{4}{3} & \nicefrac{4}{3}}^T$ der gesuchte Punkt in der Ebene mit dem geringsten Abstand.\qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    Zeigen Sie, dass die Matrix
+    $$
+        Q = \vektor{
+            \cos \beta & -\sin\beta & 0 \\
+            \cos \alpha \sin\beta & \cos\alpha \cos\beta & -\sin\alpha \\
+            \sin\alpha \sin\beta & \sin\alpha \cos\beta & \cos\alpha
+        }
+    $$
+    eine Orthogonalmatrix ist und bestimmen Sie ihre Inverse.
+    \begin{solution}
+        Genau dann, wenn $Q$ eine Orthogonalmatrix ist, ist $QQ^T = I$ und damit auch $Q^T = Q^{-1}$:
+        $$
+            \begin{aligned}
+                QQ^T \quad = \quad  &
+                \vektor{ \cos \beta & -\sin\beta                        & 0                        \\ \cos \alpha \sin\beta & \cos\alpha \cos\beta & -\sin\alpha \\ \sin\alpha \sin\beta & \sin\alpha \cos\beta & \cos\alpha }
+                \vektor{ \cos\beta  & \cos\alpha \sin\beta              & \sin\alpha \sin\beta     \\ -\sin\beta & \cos\alpha \cos\beta & \sin\alpha \cos\beta \\ 0 & -\sin\alpha & \cos\alpha} \\
+                = \quad             & \vektor{\cos^2\beta + \sin^2\beta & 0                    & 0 \\ 0 & \cos^2\alpha \left( \sin^2\beta + \cos^2\beta \right) + \sin^2\alpha & 0  \\ 0 & 0 & \sin^2\alpha \left( \sin^2\beta + \cos^2\beta \right) + \cos^2\alpha} \\
+                = \quad             & \vektor{\cos^2\beta + \sin^2\beta & 0                    & 0 \\ 0 & \cos^2\alpha  + \sin^2\alpha & 0  \\ 0 & 0 & \sin^2\alpha + \cos^2\alpha} \\
+                = \quad             & \vektor{1                         & 0                    & 0 \\ 0 & 1 & 0  \\ 0 & 0 & 1}
+            \end{aligned}
+        $$
+
+        Damit ist $Q$ eine Orthogonalmatrix und $Q^T$ die Inverse von $Q$.\qed
+    \end{solution}
+
+    \newpage
+    \question
+    Die Abbildung $f_A$ dreht einen Vektor im $\R^3$ innerhalb der $x$-$z$-Ebene um einen Winkel $\phi$.
+    Die Abbildung $f_B$ spiegelt einen Vektor im $\R^3$ an der $x$-Achse.
+    \begin{parts}
+        \part
+        Stellen Sie die zugehörigen Abbildungsmatrizen $A$ und $B$ auf.
+        \begin{solution}
+            Es gilt:
+            $$
+                A = \vektor{\cos\phi & 0 & -\sin\phi \\ 0 & 1 & 0 \\ \sin\phi & 0 & \cos\phi}, \qquad B = \vektor{1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1}
+            $$\qed
+        \end{solution}
+
+        \part
+        Stellen Sie die zugehörige Abbildungsmatrix der hintereinander geschalteten Abbildungen $f_B \circ f_A$ auf.
+        \begin{solution}
+            Die Abbildungsmatrix von $f_B \circ f_A$ ist gegeben mit:
+            $$
+                M = BA = \vektor{1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & -1} \vektor{\cos\phi & 0 & -\sin\phi \\ 0 & 1 & 0 \\ \sin\phi & 0 & \cos\phi} = \vektor{\cos\phi & 0 & -\sin\phi \\ 0 & -1 & 0 \\ -\sin\phi & 0 & -\cos\phi }
+            $$\qed
+        \end{solution}
+
+        \part Bestimmen Sie auch die zugehörige Abbildungsmatrix der Umkehrabbildung $\left( f_B \circ f_A \right)^{-1}$.
+        \begin{solution}
+            Wir erkennen sehr schnell, dass $M$ eine Orthogonalmatrix ist (und insbesondere $M = M^T$).
+            Damit gilt dann:
+            $$
+                \begin{aligned}
+                    MM^T \quad = \quad & \vektor{\cos\phi                & 0 & -\sin\phi \\ 0 & -1 & 0 \\ -\sin\phi & 0 & -\cos\phi } \vektor{\cos\phi & 0 & -\sin\phi \\ 0 & -1 & 0 \\ -\sin\phi & 0 & -\cos\phi } \\
+                    = \quad            & \vektor{\cos^2\phi + \sin^2\phi & 0 & 0         \\ 0 & 1 & 0  \\ 0 & 0 & \sin^2\phi + \cos^2\phi } \\
+                    = \quad            & \vektor{1                       & 0 & 0         \\ 0 & 1 & 0  \\ 0 & 0 & 1}
+                \end{aligned}
+            $$
+
+            Damit ist $M$ also insgesamt involutorisch (selbstinvers). \qed
+        \end{solution}
+    \end{parts}
+
+    \newpage
+    \question
+    \begin{parts}
+        \part Zeigen Sie, dass die symmetrische Matrix $H_n$ für jeden Spaltenvektor $u \in \R^n \setminus \{0\}$ orthogonal ist:
+        $$
+            H_n := I_n - 2 \cdot \frac{uu^T}{u^Tu}
+        $$
+        $I_n$ ist dabei die $(n\times n)$-Einheitsmatrix.
+
+        \emph{Hinweis:} Berechnen Sie nicht die Komponenten von $H_n$.
+        \begin{solution}
+            Es gilt offensichtlich:
+            $$
+                \begin{aligned}
+                    H_n := \quad                                                                                                & I_n - 2 \cdot \frac{uu^T}{u^Tu} \quad \overset{\footnotemark[1]}{=} \footnotetext[1]{$u \in \R^{n\times 1} \implies \left(uu^T\in \R^{n\times n}\right) \land \left(u^Tu  = \scalarprod{u, u}\in \R\right)$} \quad  I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}} \\
+                    \implies \footnotetext[2]{$H_n = (H_n)^T$} \quad H_n \left(H_n\right)^T \overset{\footnotemark[2]}{=} \quad & \left( I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}} \right)^2                                                                                                                                                                                                    \\
+                    = \quad                                                                                                     & \left( I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}} \right) \left( I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}} \right)                                                                                                                                           \\
+                    = \quad                                                                                                     & I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}}  - 2\left( \frac{uu^T}{\scalarprod{u, u}} \right) \left( I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}} \right)                                                                                                        \\
+                    = \quad                                                                                                     & I_n - 2\cdot \frac{uu^T}{\scalarprod{u, u}} - 2 \cdot \frac{uu^T}{\scalarprod{u, u}} + \left(-2 \cdot  \frac{uu^T}{\scalarprod{u, u}} \right)^2                                                                                                                 \\
+                    = \quad                                                                                                     & I_n - 4\cdot \frac{uu^T}{\scalarprod{u, u}} + 4 \left( \frac{uu^T}{\scalarprod{u, u}} \right)^2                                                                                                                                                                 \\
+                    = \quad                                                                                                     & I_n - 4\cdot \frac{uu^T}{\scalarprod{u, u}} + 4 \cdot \frac{uu^Tuu^T}{\scalarprod{u, u}^2}                                                                                                                                                                      \\
+                    = \quad                                                                                                     & I_n - 4\cdot \frac{uu^T}{\scalarprod{u, u}} + 4 \cdot \frac{u\left(u^Tu\right)u^T}{\scalarprod{u, u}^2}                                                                                                                                                         \\
+                    = \quad                                                                                                     & I_n - 4\cdot \frac{uu^T}{\scalarprod{u, u}} + 4 \cdot \frac{uu^T}{\scalarprod{u, u}} \quad = \quad I_n                                                                                                                                                          \\
+                \end{aligned}
+            $$
+
+            Damit ist $H_n \left(H_n\right)^T = I_n$ und nach Definition $H_n$ eine Orthogonalmatrix. \qed
+        \end{solution}
+
+        \part
+        Verifizieren Sie das Ergebnis für $u = \vektor{1\\0\\2}$.
+        \begin{solution}
+            Es gilt:
+            $$
+                I_3 - 2 \cdot \frac{uu^T}{u^Tu} = I_3 - \frac{2}{5} \vektor{1 & 0 & 2 \\ 0 & 0 & 0 \\ 2 & 0 & 4} = \vektor{\nicefrac{3}{5} & 0 & -\nicefrac{4}{5} \\ 0 & 1 & 0 \\ -\nicefrac{4}{5} & 0 & -\nicefrac{3}{5}} \in O(3)
+            $$\qed
+        \end{solution}
+    \end{parts}
+\end{questions}
+\end{document}
